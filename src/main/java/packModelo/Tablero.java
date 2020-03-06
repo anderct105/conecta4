@@ -1,5 +1,9 @@
 package packModelo;
 
+import org.json.simple.JSONObject;
+
+import java.util.Collection;
+
 public class Tablero {
 
 	private boolean[][] matriz;
@@ -11,7 +15,7 @@ public class Tablero {
 	}
 
 	public static Tablero getmTablero() {
-		return this.mTablero;
+		return mTablero;
 	}
 
 	/**
@@ -19,7 +23,7 @@ public class Tablero {
 	 * @param pColumna
 	 * @param pJugador
 	 */
-	public JSON introducirFicha(int pColumna, boolean pJugador) {
+	public JSONObject introducirFicha(int pColumna, boolean pJugador) {
 		// TODO - implement Tablero.introducirFicha
 		throw new UnsupportedOperationException();
 	}
@@ -38,7 +42,7 @@ public class Tablero {
 	 * @param pX
 	 * @param pY
 	 */
-	public JSON haGanado(int pX, int pY) {
+	public JSONObject haGanado(int pX, int pY) {
 		// TODO - implement Tablero.haGanado
 		throw new UnsupportedOperationException();
 	}
@@ -132,7 +136,7 @@ public class Tablero {
 	 * @param pY
 	 * @param pColor
 	 */
-	public JSON getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
+	public JSONObject getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
 		// TODO - implement Tablero.getCoordenadasGanadoras
 		throw new UnsupportedOperationException();
 	}

@@ -1,5 +1,6 @@
 package packControlador;
 
+import org.json.simple.JSONObject;
 import packModelo.*;
 
 public class GestorPartidas {
@@ -13,14 +14,14 @@ public class GestorPartidas {
 	}
 
 	public static GestorPartidas getmGestorPartidas() {
-		return this.mGestorPartidas;
+		return mGestorPartidas;
 	}
 
 	/**
 	 * 
 	 * @param pColumna
 	 */
-	public JSON jugarPartida(int pColumna) {
+	public JSONObject jugarPartida(int pColumna) {
 		// TODO - implement GestorPartidas.jugarPartida
 		throw new UnsupportedOperationException();
 	}
@@ -34,12 +35,12 @@ public class GestorPartidas {
 		throw new UnsupportedOperationException();
 	}
 
-	public JSON cargarRankingFacil() {
+	public JSONObject cargarRankingFacil() {
 		// TODO - implement GestorPartidas.cargarRankingFacil
 		throw new UnsupportedOperationException();
 	}
 
-	public JSON cargarRankingDificil() {
+	public JSONObject cargarRankingDificil() {
 		// TODO - implement GestorPartidas.cargarRankingDificil
 		throw new UnsupportedOperationException();
 	}

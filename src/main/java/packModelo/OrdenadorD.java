@@ -1,5 +1,7 @@
 package packModelo;
 
+import org.json.simple.JSONObject;
+
 public class OrdenadorD implements Modo {
 
 	public OrdenadorD() {
@@ -8,10 +10,11 @@ public class OrdenadorD implements Modo {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pColumna
+	 * @return
 	 */
-	public JSON jugar(int pColumna) {
+	public JSONObject jugar(int pColumna) {
 		// TODO - implement OrdenadorD.jugar
 		throw new UnsupportedOperationException();
 	}

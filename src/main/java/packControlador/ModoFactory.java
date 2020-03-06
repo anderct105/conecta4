@@ -12,7 +12,7 @@ public class ModoFactory {
 	}
 
 	public static ModoFactory getmModoFactory() {
-		return this.mModoFactory;
+		return mModoFactory;
 	}
 
 	/**

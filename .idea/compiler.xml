@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Conecta4" />
+        <module name="conecta4" />
       </profile>
     </annotationProcessing>
   </component>

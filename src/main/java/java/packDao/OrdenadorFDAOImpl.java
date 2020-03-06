@@ -1,5 +1,7 @@
 package java.packDao;
 
+import org.json.simple.JSONObject;
+
 public class OrdenadorFDAOImpl implements IPartidaDAO {
 
 	public OrdenadorFDAOImpl() {
@@ -7,7 +9,7 @@ public class OrdenadorFDAOImpl implements IPartidaDAO {
 		throw new UnsupportedOperationException();
 	}
 
-	public JSON cargarRanking() {
+	public JSONObject cargarRanking() {
 		// TODO - implement OrdenadorFDAOImpl.cargarRanking
 		throw new UnsupportedOperationException();
 	}

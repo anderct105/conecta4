@@ -33,7 +33,7 @@ public class Juego {
 	 * 
 	 * @param pColumna
 	 */
-	public JSON jugarPartida(int pColumna) {
+	public JSONObject jugarPartida(int pColumna) {
 		// TODO - implement Juego.jugarPartida
 		throw new UnsupportedOperationException();
 	}

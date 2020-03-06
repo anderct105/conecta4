@@ -12,8 +12,9 @@ public class OvO implements Modo {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pColumna
+	 * @return
 	 */
 	public JSONObject jugar(int pColumna) {
 		// TODO - implement OvO.jugar
