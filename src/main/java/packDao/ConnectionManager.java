@@ -27,6 +27,7 @@ public class ConnectionManager {
 		return this.connection;
 	}
 
+
 	public ResultSet execSQL(String sql) {
 		ResultSet res = null;
 		try {
@@ -37,7 +38,7 @@ public class ConnectionManager {
 			else {
 				query.executeUpdate(sql);
 			}
-			connection.close();
+			//connection.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 			System.out.println("No se ha podido ejecutar la sql");

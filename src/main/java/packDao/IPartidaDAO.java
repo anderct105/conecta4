@@ -1,10 +1,12 @@
 package packDao;
 
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
+import java.sql.SQLException;
 
 public interface IPartidaDAO {
 
-	JSONObject cargarRanking();
+	JSONArray cargarRanking() throws SQLException;
 
 	/**
 	 * 
