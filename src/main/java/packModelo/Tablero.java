@@ -2,6 +2,7 @@ package packModelo;
 
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Tablero {
@@ -140,7 +141,8 @@ public class Tablero {
 	 * @param pColor
 	 */
 	public JSONObject getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
-		// TODO - implement Tablero.getCoordenadasGanadoras
+		Collection<int[]> combinaciones = getPosiblesCombinaciones();
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -158,9 +160,21 @@ public class Tablero {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Collection<Integer>> getPosiblesCombinaciones() {
-		// TODO - implement Tablero.getPosiblesCombinaciones
-		throw new UnsupportedOperationException();
+	/**
+	 * @author Ander Cejudo
+	 * @return lista que cotiene todas las combinaciones posibles para desplazarse por el tablero
+	 */
+	public Collection<int[]> getPosiblesCombinaciones() {
+		ArrayList<int[]> combinaciones = new ArrayList<int[]>();
+		int[] i1 = {1,0};
+		int[] i2 = {0,1};
+		int[] i3 = {1,1};
+		int[] i4 = {1,-1};
+		combinaciones.add(i1);
+		combinaciones.add(i2);
+		combinaciones.add(i3);
+		combinaciones.add(i4);
+		return combinaciones;
 	}
 
 }
