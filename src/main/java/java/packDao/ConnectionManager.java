@@ -1,5 +1,7 @@
 package java.packDao;
 
+import java.sql.Connection;
+
 public class ConnectionManager {
 
 	private static String url;

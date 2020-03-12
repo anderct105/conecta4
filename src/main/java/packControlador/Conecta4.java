@@ -12,6 +12,9 @@ public class Conecta4 {
 	}
 
 	public static Conecta4 getmConecta4() {
+		if (mConecta4 == null){
+			mConecta4 = new Conecta4();
+		}
 		return mConecta4;
 	}
 

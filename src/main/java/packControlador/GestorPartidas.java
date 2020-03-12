@@ -8,12 +8,15 @@ public class GestorPartidas {
 	private static GestorPartidas mGestorPartidas;
 	private Juego juego;
 
-	private void Conecta4() {
+	private void GestorPartidas() {
 		// TODO - implement GestorPartidas.Conecta4
 		throw new UnsupportedOperationException();
 	}
 
 	public static GestorPartidas getmGestorPartidas() {
+		if (mGestorPartidas == null) {
+			mGestorPartidas = new GestorPartidas();
+		}
 		return mGestorPartidas;
 	}
 

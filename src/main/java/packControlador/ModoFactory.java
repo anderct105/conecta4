@@ -12,6 +12,9 @@ public class ModoFactory {
 	}
 
 	public static ModoFactory getmModoFactory() {
+		if (mModoFactory == null) {
+			mModoFactory = new ModoFactory();
+		}
 		return mModoFactory;
 	}
 

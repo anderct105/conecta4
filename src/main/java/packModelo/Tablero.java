@@ -15,6 +15,9 @@ public class Tablero {
 	}
 
 	public static Tablero getmTablero() {
+		if (mTablero == null) {
+			mTablero = new Tablero();
+		}
 		return mTablero;
 	}
 
