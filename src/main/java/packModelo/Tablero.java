@@ -1,5 +1,6 @@
 package packModelo;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -52,18 +53,17 @@ public class Tablero {
 	}
 
 	/**
-	 * 
+	 * Comprueba si el color de la posición dada es igual a pColor
 	 * @param pX
 	 * @param pY
 	 * @param pColor
 	 */
 	public boolean esColor(int pX, int pY, boolean pColor) {
-		// TODO - implement Tablero.esColor
-		throw new UnsupportedOperationException();
+		return matriz[pX][pY] == pColor;
 	}
 
 	/**
-	 * 
+	 * Comprueba si los valores recibidos  están dentro del tablero
 	 * @param pX
 	 * @param pY
 	 */
@@ -138,17 +138,39 @@ public class Tablero {
 	}
 
 	/**
-	 * 
-	 * @param pX
-	 * @param pY
-	 * @param pColor
+	 * Obtiene las posiciones del tablero que hacen 4 en raya
+	 * @author Ander Cejudo
+	 * @param pX valor del eje x de la coordenada
+	 * @param pY valor del eje y de la coordenada
+	 * @param pColor color de la posición a mirar
+	 * @return JSON con las posiciones ganadoras y en caso de que no es hayan encontrado null
 	 */
-	public JSONObject getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
+	public JSONArray getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
 		Collection<int[]> combinaciones = getPosiblesCombinaciones();
+		JSONArray j = new JSONArray();
+		ArrayList<int[]> coordenadas = new ArrayList<int[]>();
+		boolean obtenidas = false;
 		for (int[] c : combinaciones){
-			listaSeguidas(pX,pY,1,combinaciones,c,pColor);
+			coordenadas = listaSeguidas(pX,pY,1,new ArrayList<int[]>(),c,pColor);
+			if (coordenadas.size() != 4) {
+				c[0] *= -1;
+				c[1] *= -1;
+				coordenadas = listaSeguidas(pX, pY, 1, new ArrayList<int[]>(), c, pColor);
+			}
+			if (coordenadas.size() == 4){
+				obtenidas = true;
+				break;
+			}
 		}
-		throw new UnsupportedOperationException();
+		if (obtenidas){
+			for (int[] c : coordenadas) {
+				JSONObject o = new JSONObject();
+				o.put("x",c[0]);
+				o.put("y",c[1]);
+				j.add(o);
+			}
+		}
+		return j;
 	}
 
 	/**
@@ -160,9 +182,13 @@ public class Tablero {
 	 * @param pCombinacion
 	 * @param pColor
 	 */
-	public Collection<int[]> listaSeguidas(int pX, int pY, int pCont, Collection<int[]> pC, int[] pCombinacion, boolean pColor) {
-		// TODO - implement Tablero.listaSeguidas
-		throw new UnsupportedOperationException();
+	public ArrayList<int[]> listaSeguidas(int pX, int pY, int pCont, ArrayList<int[]> pC, int[] pCombinacion, boolean pColor) {
+		if (posValida(pX,pY) && esColor(pX,pY,pColor) && pCont < 4) {
+			int[] coordenada = {pX,pY};
+			pC.add(coordenada);
+			listaSeguidas(pX+pCombinacion[0],pY+pCombinacion[1],pCont+1,pC,pCombinacion,pColor);
+		}
+		return pC;
 	}
 
 	/**
