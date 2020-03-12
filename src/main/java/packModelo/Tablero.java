@@ -68,8 +68,11 @@ public class Tablero {
 	 * @param pY
 	 */
 	public boolean posValida(int pX, int pY) {
-		// TODO - implement Tablero.posValida
-		throw new UnsupportedOperationException();
+		boolean valida = false;
+		if (pX >= 0 && pX < matriz.length && pY >= 0 && pY < matriz.length){
+			valida = true;
+		}
+		return valida;
 	}
 
 	public void inicializarTablero() {
@@ -142,7 +145,9 @@ public class Tablero {
 	 */
 	public JSONObject getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
 		Collection<int[]> combinaciones = getPosiblesCombinaciones();
-
+		for (int[] c : combinaciones){
+			listaSeguidas(pX,pY,1,combinaciones,c,pColor);
+		}
 		throw new UnsupportedOperationException();
 	}
 
