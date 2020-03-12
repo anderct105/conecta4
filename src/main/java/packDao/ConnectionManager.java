@@ -1,25 +1,25 @@
-package java.packDao;
+package packDao;
 
 import java.sql.*;
 
 public class ConnectionManager {
 
-	private static String bd;
+	private static String bd="conecta4";
 	private static String driverName;
-	private static String username;
-	private static String password;
+	private static String username="adminConecta4";
+	private static String password="adminConecta4";
 	private Connection connection;
 
 	public ConnectionManager() {
 		Connection conexion = null;
 		try {
-			conexion = DriverManager.getConnection("jdbc:mariadb://localhost:3306/" + bd,username,password);
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd,username,password);
 			this.connection=conexion;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		throw new UnsupportedOperationException();
+
 	}
 
 	public Connection getConnection() throws SQLException {

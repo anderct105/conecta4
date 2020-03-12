@@ -1,4 +1,4 @@
-package java.packDao;
+package packDao;
 
 import org.json.simple.JSONObject;
 
