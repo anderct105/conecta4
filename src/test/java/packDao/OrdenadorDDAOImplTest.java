@@ -21,7 +21,6 @@ public class OrdenadorDDAOImplTest {
     public void setUp() throws Exception {
         ConnectionManager conexion=new ConnectionManager();
         ordenadorDificil=new OrdenadorDDAOImpl();
-
         nombre = "Pedro";
         tiempo = 3000;
         conexionM = new ConnectionManager();
@@ -31,7 +30,6 @@ public class OrdenadorDDAOImplTest {
     @After
     public void tearDown() throws Exception {
         ordenadorDificil=null;
-    public void tearDown() {
         nombre = null;
         tiempo = 0;
         conexionM = null;
@@ -46,20 +44,43 @@ public class OrdenadorDDAOImplTest {
 
     @Test
     public void create(){
-        OrdenadorDDAOImpl ordenadorDificil = new OrdenadorDDAOImpl();
+        OrdenadorDDAOImpl ordenadorDificil = this.ordenadorDificil;
         assertNotNull(con);
-        ordenadorDificil.create(nombre,tiempo);
-        int cuantos = -1;
+
+        int cuantosInicio = -1;
+        int cuantosFin = -1;
         try {
             Statement s = con.createStatement();
             ResultSet resultado = s.executeQuery("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
             if(resultado.next()) {
-                cuantos= resultado.getInt(1);
+                cuantosInicio = resultado.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        assertSame(0, cuantos); //Para cuando la tabla está vacia
-        //assertSame(1, cuantos); //Al hacer create por primera vez
+
+        ordenadorDificil.create(nombre,tiempo);
+        try {
+            Statement s = con.createStatement();
+            ResultSet resultado = s.executeQuery("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
+            if(resultado.next()) {
+                cuantosFin = resultado.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        assertSame(cuantosInicio+1,cuantosFin);
+
+        try {
+            Statement s = con.createStatement();
+            ResultSet resultado = s.executeQuery("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
+            if(resultado.next()) {
+                int id = resultado.getInt("id");
+                s.executeUpdate("DELETE FROM Partida WHERE id ="+id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

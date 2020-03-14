@@ -10,12 +10,11 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 
 	public OrdenadorDDAOImpl() {}
 
-	/*
-	*Método que devuelve el ranking de las partidas jugadas en modo ordenador fácil
+	/**
+	* Método que devuelve el ranking de las partidas jugadas en modo ordenador fácil
 	* @author Nuria Lebeña
 	* @param
-	*@return Devuelve un JSONArray con el ranking de las partidas realizadas en el modo ordenador fácil
-
+	* @return Devuelve un JSONArray con el ranking de las partidas realizadas en el modo ordenador fácil
 	 */
 	public JSONArray cargarRanking() throws SQLException {
 		JSONArray ranking= new JSONArray();
@@ -37,10 +36,13 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	}
 
 	/**
-	 * 
+	 * El método añade una partida en modo difícil y el id de esa partida a OrdenadorDificil en la base de datos
+	 * @author Naiara Maneiro
 	 * @param pNombre
 	 * @param pPuntuacion
+	 * @return No devuelve nada
 	 */
+
 	public void create(String pNombre, int pPuntuacion){
 		ConnectionManager conexion = new ConnectionManager();
 		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
