@@ -8,8 +8,7 @@ import java.sql.SQLException;
 
 public class OrdenadorFDAOImpl implements IPartidaDAO {
 
-	public OrdenadorFDAOImpl() {
-		// TODO - implement OrdenadorFDAOImpl.Ordenhrow new UnsupportedOperationException();
+	public OrdenadorFDAOImpl() {}
 
 	}
 	/*
@@ -33,7 +32,6 @@ public class OrdenadorFDAOImpl implements IPartidaDAO {
 			json.put("puntuacion",puntuacion);
 			ranking.add(json);
 			hayResultado=resultado.next();
-
 		}
 
 		return ranking;
@@ -44,9 +42,10 @@ public class OrdenadorFDAOImpl implements IPartidaDAO {
 	 * @param pNombre
 	 * @param pPuntuacion
 	 */
-	public void create(String pNombre, int pPuntuacion) {
-		// TODO - implement OrdenadorFDAOImpl.create
-		throw new UnsupportedOperationException();
+	public void create(String pNombre, int pPuntuacion){
+		ConnectionManager conexion = new ConnectionManager();
+		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
+		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE nombre='"+pNombre+"' AND tiempo="+pPuntuacion);
+		conexion.execSQL("INSERT INTO OrdenadorFacil id VALUES "+resultado+"");
 	}
-
 }

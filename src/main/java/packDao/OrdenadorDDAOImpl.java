@@ -1,6 +1,5 @@
 package packDao;
 
-import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -9,10 +8,7 @@ import java.sql.SQLException;
 
 public class OrdenadorDDAOImpl implements IPartidaDAO {
 
-	public OrdenadorDDAOImpl() {
-		// TODO - implement OrdenadorDDAOImpl.OrdenadorDDAOImpl
-
-	}
+	public OrdenadorDDAOImpl() {}
 
 	/*
 	*Método que devuelve el ranking de las partidas jugadas en modo ordenador fácil
@@ -35,7 +31,6 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 			json.put("puntuacion",puntuacion);
 			ranking.add(json);
 			hayResultado=resultado.next();
-
 		}
 
 		return ranking;
@@ -46,9 +41,11 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	 * @param pNombre
 	 * @param pPuntuacion
 	 */
-	public void create(String pNombre, int pPuntuacion) {
-		// TODO - implement OrdenadorDDAOImpl.create
-		throw new UnsupportedOperationException();
+	public void create(String pNombre, int pPuntuacion){
+		ConnectionManager conexion = new ConnectionManager();
+		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
+		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE nombre='"+pNombre+"' AND tiempo="+pPuntuacion);
+		conexion.execSQL("INSERT INTO OrdenadorDificil id VALUES "+resultado+"");
 	}
 
 }
