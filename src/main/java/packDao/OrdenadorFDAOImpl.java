@@ -12,7 +12,13 @@ public class OrdenadorFDAOImpl implements IPartidaDAO {
 		// TODO - implement OrdenadorFDAOImpl.Ordenhrow new UnsupportedOperationException();
 
 	}
+	/*
+	 *Método que devuelve el ranking de las partidas jugadas en modo ordenador dificil
+	 * @author Nuria Lebeña
+	 * @param
+	 *@return Devuelve un JSONArray con el ranking de las partidas realizadas en el modo ordenador dificil
 
+	 */
 	public JSONArray cargarRanking() throws SQLException {
 		JSONArray ranking= new JSONArray();
 		ConnectionManager con= new ConnectionManager();

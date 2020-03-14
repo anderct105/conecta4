@@ -14,6 +14,13 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 
 	}
 
+	/*
+	*Método que devuelve el ranking de las partidas jugadas en modo ordenador fácil
+	* @author Nuria Lebeña
+	* @param
+	*@return Devuelve un JSONArray con el ranking de las partidas realizadas en el modo ordenador fácil
+
+	 */
 	public JSONArray cargarRanking() throws SQLException {
 		JSONArray ranking= new JSONArray();
 		ConnectionManager con= new ConnectionManager();

@@ -11,21 +11,22 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class OrdenadorDDAOImplTest {
-
+    OrdenadorDDAOImpl ordenadorDificil;
     @Before
     public void setUp() throws Exception {
         ConnectionManager conexion=new ConnectionManager();
-
+        ordenadorDificil=new OrdenadorDDAOImpl();
 
     }
 
     @After
     public void tearDown() throws Exception {
+        ordenadorDificil=null;
     }
 
     @Test
     public void cargarRanking() throws SQLException {
-         OrdenadorDDAOImpl ordenadorDificil=new OrdenadorDDAOImpl();
+
         System.out.println(ordenadorDificil.cargarRanking());
 
     }
