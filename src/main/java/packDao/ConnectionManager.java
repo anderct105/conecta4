@@ -11,22 +11,17 @@ public class ConnectionManager {
 	private Connection connection;
 
 	public ConnectionManager() {
-		Connection conexion = null;
 		try {
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd,username,password);
-			this.connection=conexion;
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd,username,password);
+			this.connection = conexion;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
-	public Connection getConnection() throws SQLException {
-
+	public Connection getConnection(){
 		return this.connection;
 	}
-
 
 	public ResultSet execSQL(String sql) {
 		ResultSet res = null;
@@ -44,5 +39,9 @@ public class ConnectionManager {
 			System.out.println("No se ha podido ejecutar la sql");
 		}
 		return res;
+	}
+
+	public void closeConnection() throws SQLException {
+		connection.close();
 	}
 }

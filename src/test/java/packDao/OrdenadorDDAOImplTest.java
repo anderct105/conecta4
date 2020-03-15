@@ -8,43 +8,41 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class OrdenadorDDAOImplTest {
     OrdenadorDDAOImpl ordenadorDificil;
     private String nombre;
     private int tiempo;
     private ConnectionManager conexionM;
-    private Connection con;
+    //private Connection con;
 
     @Before
-    public void setUp() throws Exception {
-        ordenadorDificil=new OrdenadorDDAOImpl();
+    public void setUp(){
+        ordenadorDificil = new OrdenadorDDAOImpl();
         nombre = "Pedro";
         tiempo = 3000;
         conexionM = new ConnectionManager();
-        con = conexionM.getConnection();
+        //con = conexionM.getConnection();
     }
 
     @After
-    public void tearDown() throws Exception {
-        ordenadorDificil=null;
+    public void tearDown(){
+        ordenadorDificil = null;
         nombre = null;
         tiempo = 0;
         conexionM = null;
-        con = null;
+        //con = null;
     }
 
     @Test
     public void cargarRanking() throws SQLException {
-
         System.out.println(ordenadorDificil.cargarRanking());
     }
 
     @Test
-    public void create(){
+    public void create() throws SQLException {
         OrdenadorDDAOImpl ordenadorDificil = this.ordenadorDificil;
-        assertNotNull(con);
+        assertNotNull(conexionM);
 
         int cuantosInicio = -1;
         int cuantosFin = -1;
@@ -78,5 +76,7 @@ public class OrdenadorDDAOImplTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conexionM.closeConnection();
     }
 }

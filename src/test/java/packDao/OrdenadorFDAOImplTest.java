@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
@@ -16,15 +15,13 @@ public class OrdenadorFDAOImplTest {
     private String nombre;
     private int tiempo;
     private ConnectionManager conexionM;
-    private Connection con;
     private OrdenadorFDAOImpl ordenadorFacil;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         nombre = "Pedro";
         tiempo = 3000;
         conexionM = new ConnectionManager();
-        con = conexionM.getConnection();
         ordenadorFacil=new OrdenadorFDAOImpl();
     }
 
@@ -33,21 +30,18 @@ public class OrdenadorFDAOImplTest {
         nombre = null;
         tiempo = 0;
         conexionM = null;
-        con = null;
         ordenadorFacil=null;
     }
 
     @Test
     public void cargarRanking() throws SQLException {
-        
         System.out.println(ordenadorFacil.cargarRanking());
-
     }
 
     @Test
-    public void create() {
+    public void create() throws SQLException {
         OrdenadorFDAOImpl ordenadorFacil = this.ordenadorFacil;
-        assertNotNull(con);
+        assertNotNull(conexionM);
 
         int cuantosInicio = -1;
         int cuantosFin = -1;
@@ -81,5 +75,7 @@ public class OrdenadorFDAOImplTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conexionM.closeConnection();
     }
 }
