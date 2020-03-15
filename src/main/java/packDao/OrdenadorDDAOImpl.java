@@ -20,7 +20,7 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 		JSONArray ranking= new JSONArray();
 		ConnectionManager con= new ConnectionManager();
 
-		ResultSet resultado=con.execSQL("SELECT nombre, tiempo FROM Partida NATURAL JOIN OrdenadorDificil");
+		ResultSet resultado=con.execSQL("SELECT nombre, tiempo FROM Partida NATURAL JOIN OrdenadorDificil ORDER BY tiempo ASC Limit 10");
 		Boolean hayResultado=resultado.next();
 		while (hayResultado){
 			String nombre=resultado.getString("nombre");
@@ -43,11 +43,20 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	 * @return No devuelve nada
 	 */
 
-	public void create(String pNombre, int pPuntuacion){
+	public void create(String pNombre, int pPuntuacion) throws SQLException {
 		ConnectionManager conexion = new ConnectionManager();
 		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
 		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE nombre='"+pNombre+"' AND tiempo="+pPuntuacion);
-		conexion.execSQL("INSERT INTO OrdenadorDificil id VALUES "+resultado+"");
+		boolean hayResultado=resultado.next();
+		int valor=resultado.getInt("id");
+		while (hayResultado){
+			boolean ultimo=resultado.isLast();
+			if(ultimo){
+				valor=resultado.getInt("id");
+			}
+			hayResultado=resultado.next();
+		}
+		conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
 	}
 
 }

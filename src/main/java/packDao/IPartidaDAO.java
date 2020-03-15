@@ -13,6 +13,6 @@ public interface IPartidaDAO {
 	 * @param pNombre
 	 * @param pPuntuacion
 	 */
-	void create(String pNombre, int pPuntuacion);
+	void create(String pNombre, int pPuntuacion) throws SQLException;
 
 }
