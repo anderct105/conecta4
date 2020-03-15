@@ -92,11 +92,14 @@ public class OrdenadorDDAOImplTest {
         assertTrue(json2.equals(ordenadorDificil.cargarRanking()));
 
         //Prueba4: Hay más de diez elementos en el ranking
-
-        ordenadorDificil.create("Pedro",3000);
-
-
         assertTrue(json2.equals(ordenadorDificil.cargarRanking()));
+        ordenadorDificil.create("Pedro",3000);
+        conexionM.execSQL("truncate table OrdenadorDificil");
+        conexionM.execSQL("delete from Partida where nombre='Pedro'");
+        conexionM.execSQL("delete from Partida where nombre='Pepe'");
+        conexionM.execSQL("delete from Partida where nombre='Lola'");
+
+
 
     }
 

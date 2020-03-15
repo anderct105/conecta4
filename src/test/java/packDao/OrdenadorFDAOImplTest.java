@@ -31,9 +31,10 @@ public class OrdenadorFDAOImplTest {
     public void tearDown() {
         nombre = null;
         tiempo = 0;
+        conexionM.execSQL("truncate table Partida");
         conexionM.execSQL("truncate table OrdenadorFacil");
         conexionM.execSQL("truncate table OrdenadorDificil");
-        conexionM.execSQL("truncate table Partida");
+
         conexionM = null;
         ordenadorFacil=null;
     }
@@ -47,6 +48,7 @@ public class OrdenadorFDAOImplTest {
 
         //Prueba2: Hay pocos elementos en el ranking
         ordenadorFacil.create("Pedro",3000);
+
         ordenadorFacil.create("Lola",34);
         ordenadorFacil.create("Pepe",20);
         JSONObject pedro=new JSONObject();
@@ -86,11 +88,15 @@ public class OrdenadorFDAOImplTest {
         assertTrue(json2.equals(ordenadorFacil.cargarRanking()));
 
         //Prueba4: Hay más de diez elementos en el ranking
+        assertTrue(json2.equals(ordenadorFacil.cargarRanking()));
 
         ordenadorFacil.create("Pedro",3000);
+        conexionM.execSQL("truncate table OrdenadorFacil");
+        conexionM.execSQL("delete from Partida where nombre='Pedro'");
+        conexionM.execSQL("delete from Partida where nombre='Pepe'");
+        conexionM.execSQL("delete from Partida where nombre='Lola'");
 
 
-        assertTrue(json2.equals(ordenadorFacil.cargarRanking()));
 
     }
 
