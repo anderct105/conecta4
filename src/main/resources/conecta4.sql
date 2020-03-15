@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `OrdenadorDificil`;
 CREATE TABLE `OrdenadorDificil` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
-  CONSTRAINT `OrdenadorDificil_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Partida` (`id`)
+  CONSTRAINT `OrdenadorDificil_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Partida` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `OrdenadorFacil`;
 CREATE TABLE `OrdenadorFacil` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
-  CONSTRAINT `OrdenadorFacil_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Partida` (`id`)
+  CONSTRAINT `OrdenadorFacil_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Partida` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
