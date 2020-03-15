@@ -35,9 +35,9 @@ public class OrdenadorDDAOImplTest {
         nombre = null;
         tiempo = 0;
 
-        conexionM.execSQL("truncate table OrdenadorFacil");
-        conexionM.execSQL("truncate table OrdenadorDificil");
-        conexionM.execSQL("truncate table Partida");
+        //conexionM.execSQL("truncate table OrdenadorFacil");
+        //conexionM.execSQL("truncate table OrdenadorDificil");
+        //conexionM.execSQL("truncate table Partida");
         conexionM = null;
         //con = null;
     }
@@ -135,7 +135,7 @@ public class OrdenadorDDAOImplTest {
             ResultSet resultado = conexionM.execSQL("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
             if(resultado.next()) {
                 int id = resultado.getInt("id");
-                conexionM.execSQL("DELETE FROM Partida WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM OrdenadorDificil WHERE id ="+id);
             }
         } catch (SQLException e) {
             e.printStackTrace();

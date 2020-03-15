@@ -95,9 +95,6 @@ public class OrdenadorFDAOImplTest {
         conexionM.execSQL("delete from Partida where nombre='Pedro'");
         conexionM.execSQL("delete from Partida where nombre='Pepe'");
         conexionM.execSQL("delete from Partida where nombre='Lola'");
-
-
-
     }
 
     @Test
@@ -127,16 +124,16 @@ public class OrdenadorFDAOImplTest {
         }
 
         assertSame(cuantosInicio+1,cuantosFin);
-
+/*
         try {
             ResultSet resultado = conexionM.execSQL("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
             if(resultado.next()) {
                 int id = resultado.getInt("id");
-                conexionM.execSQL("DELETE FROM Partida WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM OrdenadorFacil WHERE id ="+id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
         conexionM.closeConnection();
     }
