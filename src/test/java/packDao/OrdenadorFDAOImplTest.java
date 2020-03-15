@@ -52,8 +52,7 @@ public class OrdenadorFDAOImplTest {
         int cuantosInicio = -1;
         int cuantosFin = -1;
         try {
-            Statement s = con.createStatement();
-            ResultSet resultado = s.executeQuery("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
+            ResultSet resultado = conexionM.execSQL("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
             if(resultado.next()) {
                 cuantosInicio = resultado.getInt(1);
             }
@@ -63,8 +62,7 @@ public class OrdenadorFDAOImplTest {
 
         ordenadorFacil.create(nombre,tiempo);
         try {
-            Statement s = con.createStatement();
-            ResultSet resultado = s.executeQuery("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
+            ResultSet resultado = conexionM.execSQL("SELECT count(*) FROM Partida"); //Con count vemos las tuplas que tiene la bd
             if(resultado.next()) {
                 cuantosFin = resultado.getInt(1);
             }
@@ -75,11 +73,10 @@ public class OrdenadorFDAOImplTest {
         assertSame(cuantosInicio+1,cuantosFin);
 
         try {
-            Statement s = con.createStatement();
-            ResultSet resultado = s.executeQuery("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
+            ResultSet resultado = conexionM.execSQL("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
             if(resultado.next()) {
                 int id = resultado.getInt("id");
-                s.executeUpdate("DELETE FROM Partida WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM Partida WHERE id ="+id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
