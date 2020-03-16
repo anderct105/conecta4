@@ -52,13 +52,14 @@ public class Conecta4 {
 	}
 
 	/**
-	 * 
-	 * @param pNombre
-	 * @param pPuntuacion
+	 * El método se encarga de guardar las partidas de los usuarios, tanto del modo fácil como el difícil
+	 * @author Naiara Maneiro
+	 * @param pNombre el nombre del usuario que ha jugado la partida
+	 * @param pPuntuacion el tiempo que ha durado la partida
 	 */
+
 	public void guardarPartida(String pNombre, int pPuntuacion) {
-		// TODO - implement Conecta4.guardarPartida
-		throw new UnsupportedOperationException();
+		GestorPartidas.getmGestorPartidas().guardarPartida(pNombre, pPuntuacion);
 	}
 
 	public void inicializarTablero() {

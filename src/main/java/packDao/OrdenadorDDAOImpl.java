@@ -61,5 +61,4 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 		}
 		conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
 	}
-
 }

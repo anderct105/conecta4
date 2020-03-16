@@ -7,24 +7,32 @@ public class Juego {
 	private Tablero tablero;
 	private Modo modo;
 
-	public Juego() {
-		// TODO - implement Juego.Juego
-		throw new UnsupportedOperationException();
-	}
+	public Juego() {}
+
+	/**
+	 * El método obtiene el modo en el que el usuario está jugando
+	 * @author Naiara Maneiro
+	 * @return El modo del juego en modo String
+	 */
 
 	public String getModoJuego() {
-		// TODO - implement Juego.getModoJuego
-		throw new UnsupportedOperationException();
+		String modoS = "";
+		if (modo instanceof OrdenadorD) {
+			modoS = "OrdenadorD";
+		} else if (modo instanceof OrdenadorF){
+			modoS = "OrdenadorF";
+		} else {
+			modoS = "OvO";
+		}
+		return modoS;
 	}
 
 	/**
-	 * 
-	 * @param pModo
+	 * El método añade el modo que el usuario quiere jugar
+	 * @author Naiara Maneiro
+	 * @param pModo El modo que se le quiere asignar al juego
 	 */
-	public void setModoJuego(Modo pModo) {
-		// TODO - implement Juego.setModoJuego
-		throw new UnsupportedOperationException();
-	}
+	public void setModoJuego(Modo pModo) { this.modo = pModo; }
 
 	public void notificar() {
 		// TODO - implement Juego.notificar
