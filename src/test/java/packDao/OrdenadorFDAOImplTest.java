@@ -31,9 +31,9 @@ public class OrdenadorFDAOImplTest {
     public void tearDown() {
         nombre = null;
         tiempo = 0;
-        conexionM.execSQL("truncate table Partida");
-        conexionM.execSQL("truncate table OrdenadorFacil");
-        conexionM.execSQL("truncate table OrdenadorDificil");
+    //    conexionM.execSQL("truncate table Partida");
+      //  conexionM.execSQL("truncate table OrdenadorFacil");
+        //conexionM.execSQL("truncate table OrdenadorDificil");
 
         conexionM = null;
         ordenadorFacil=null;
@@ -41,12 +41,17 @@ public class OrdenadorFDAOImplTest {
 
     @Test
     public void cargarRanking() throws SQLException {
+        conexionM.execSQL("delete from Partida where nombre='Pedro'");
+        conexionM.execSQL("delete from Partida where nombre='Pepe'");
+        conexionM.execSQL("delete from Partida where nombre='Lola'");
         //Prueba1: No hay elementos en el ranking
+
         JSONArray jsonVacio=new JSONArray();
         assertTrue(jsonVacio.equals(ordenadorFacil.cargarRanking()));
         System.out.println();
 
         //Prueba2: Hay pocos elementos en el ranking
+
         ordenadorFacil.create("Pedro",3000);
 
         ordenadorFacil.create("Lola",34);
