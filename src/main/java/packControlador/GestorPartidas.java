@@ -1,10 +1,11 @@
 package packControlador;
 
 import org.json.simple.JSONObject;
-import packDao.ConnectionManager;
+import packDao.OrdenadorDDAOImpl;
+import packDao.OrdenadorFDAOImpl;
 import packModelo.*;
 
-import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class GestorPartidas {
@@ -58,16 +59,15 @@ public class GestorPartidas {
 	 * @param pPuntuacion el tiempo que ha durado la partida
 	 */
 
-	public void guardarPartida(String pNombre, int pPuntuacion) {
-		ConnectionManager conexion = new ConnectionManager();
+	public void guardarPartida(String pNombre, int pPuntuacion) throws SQLException {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", "+timestamp);
-		ResultSet id = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora="+timestamp);
 		String modo = juego.getModoJuego();
 		if (modo == "OrdenadorF"){
-			conexion.execSQL("INSERT INTO OrdenadorFacil id VALUES "+id);
+			OrdenadorFDAOImpl of = new OrdenadorFDAOImpl();
+			of.create(timestamp, pNombre, pPuntuacion);
 		} else if (modo == "OrdenadorD") {
-			conexion.execSQL("INSERT INTO OrdenadorDificil id VALUES " + id);
+			OrdenadorDDAOImpl od = new OrdenadorDDAOImpl();
+			od.create(timestamp, pNombre, pPuntuacion);
 		}
 	}
 

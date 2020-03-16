@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Realiza todas las operaciones relacionadas con la tabla OrdenadorD de la base de datos
@@ -41,15 +42,16 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	/**
 	 * El método añade una partida en modo difícil y el id de esa partida a OrdenadorDificil en la base de datos
 	 * @author Naiara Maneiro
+	 * @param pFechaHora la fecha y hora en la que el usuario juega
 	 * @param pNombre el nombre del usuario que ha jugado la partida
 	 * @param pPuntuacion el tiempo que ha durado la partida
 	 * @throws SQLException no se ha podido ejecutar la sentencia sql
 	 */
 
-	public void create(String pNombre, int pPuntuacion) throws SQLException {
+	public void create(Timestamp pFechaHora, String pNombre, int pPuntuacion) throws SQLException {
 		ConnectionManager conexion = new ConnectionManager();
-		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
-		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE nombre='"+pNombre+"' AND tiempo="+pPuntuacion);
+		conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", "+pFechaHora);
+		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora="+pFechaHora);
 		boolean hayResultado=resultado.next();
 		int valor=resultado.getInt("id");
 		while (hayResultado){
