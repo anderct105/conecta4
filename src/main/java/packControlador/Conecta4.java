@@ -2,6 +2,8 @@ package packControlador;
 
 import org.json.simple.JSONObject;
 
+import java.sql.SQLException;
+
 public class Conecta4 {
 
 	private static Conecta4 mConecta4;
@@ -58,7 +60,7 @@ public class Conecta4 {
 	 * @param pPuntuacion el tiempo que ha durado la partida
 	 */
 
-	public void guardarPartida(String pNombre, int pPuntuacion) {
+	public void guardarPartida(String pNombre, int pPuntuacion) throws SQLException {
 		GestorPartidas.getmGestorPartidas().guardarPartida(pNombre, pPuntuacion);
 	}
 

@@ -6,6 +6,9 @@ import org.json.simple.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Realiza todas las operaciones relacionadas con la tabla OrdenadorD de la base de datos
@@ -42,25 +45,31 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	/**
 	 * El método añade una partida en modo difícil y el id de esa partida a OrdenadorDificil en la base de datos
 	 * @author Naiara Maneiro
-	 * @param pFechaHora la fecha y hora en la que el usuario juega
 	 * @param pNombre el nombre del usuario que ha jugado la partida
 	 * @param pPuntuacion el tiempo que ha durado la partida
 	 * @throws SQLException no se ha podido ejecutar la sentencia sql
 	 */
 
-	public void create(Timestamp pFechaHora, String pNombre, int pPuntuacion) throws SQLException {
+	public void create(String pNombre, int pPuntuacion) {
+		Timestamp pFechaHora = new Timestamp(System.currentTimeMillis());
+		String pFechaHoraS = ""+pFechaHora.getTime()+"";
+		//long pFechaHoraL = pFechaHora.getTime();
 		ConnectionManager conexion = new ConnectionManager();
-		conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", "+pFechaHora);
-		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora="+pFechaHora);
-		boolean hayResultado=resultado.next();
-		int valor=resultado.getInt("id");
-		while (hayResultado){
-			boolean ultimo=resultado.isLast();
-			if(ultimo){
-				valor=resultado.getInt("id");
+		try {
+			conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", '"+pFechaHoraS+"'");
+			ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora = '"+pFechaHoraS+"'");
+			boolean hayResultado=resultado.next();
+			int valor=resultado.getInt("id");
+			while (hayResultado){
+				boolean ultimo=resultado.isLast();
+				if(ultimo){
+					valor=resultado.getInt("id");
+				}
+				hayResultado=resultado.next();
 			}
-			hayResultado=resultado.next();
+			conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
+		} catch (Exception e){
+			System.out.println(e.getMessage());
 		}
-		conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
 	}
 }

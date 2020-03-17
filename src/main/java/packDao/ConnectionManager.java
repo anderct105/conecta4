@@ -33,7 +33,6 @@ public class ConnectionManager {
 			else {
 				query.executeUpdate(sql);
 			}
-			//connection.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 			System.out.println("No se ha podido ejecutar la sql");

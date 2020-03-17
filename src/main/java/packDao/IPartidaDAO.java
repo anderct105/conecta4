@@ -11,10 +11,9 @@ public interface IPartidaDAO {
 
 	/**
 	 *
-	 * @param pFechaHora
 	 * @param pNombre
 	 * @param pPuntuacion
 	 */
-	void create(Timestamp pFechaHora, String pNombre, int pPuntuacion) throws SQLException;
+	void create(String pNombre, int pPuntuacion);
 
 }

@@ -60,14 +60,13 @@ public class GestorPartidas {
 	 */
 
 	public void guardarPartida(String pNombre, int pPuntuacion) throws SQLException {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		String modo = juego.getModoJuego();
-		if (modo == "OrdenadorF"){
+		if (modo.equals("OrdenadorF")){
 			OrdenadorFDAOImpl of = new OrdenadorFDAOImpl();
-			of.create(timestamp, pNombre, pPuntuacion);
-		} else if (modo == "OrdenadorD") {
+			of.create(pNombre, pPuntuacion);
+		} else if (modo.equals("OrdenadorD")) {
 			OrdenadorDDAOImpl od = new OrdenadorDDAOImpl();
-			od.create(timestamp, pNombre, pPuntuacion);
+			od.create(pNombre, pPuntuacion);
 		}
 	}
 

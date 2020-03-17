@@ -44,9 +44,6 @@ public class OrdenadorDDAOImplTest {
 
     @Test
     public void cargarRanking() throws SQLException {
-
-
-
         //Prueba1: No hay elementos en el ranking
         JSONArray jsonVacio=new JSONArray();
         assertTrue(jsonVacio.equals(ordenadorDificil.cargarRanking()));
@@ -98,13 +95,10 @@ public class OrdenadorDDAOImplTest {
         conexionM.execSQL("delete from Partida where nombre='Pedro'");
         conexionM.execSQL("delete from Partida where nombre='Pepe'");
         conexionM.execSQL("delete from Partida where nombre='Lola'");
-
-
-
     }
 
     @Test
-    public void create() throws SQLException {
+    public void create() {
         OrdenadorDDAOImpl ordenadorDificil = this.ordenadorDificil;
         assertNotNull(conexionM);
 
@@ -136,11 +130,11 @@ public class OrdenadorDDAOImplTest {
             if(resultado.next()) {
                 int id = resultado.getInt("id");
                 conexionM.execSQL("DELETE FROM OrdenadorDificil WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM Partida WHERE id ="+id);
+                conexionM.closeConnection();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        conexionM.closeConnection();
     }
 }
