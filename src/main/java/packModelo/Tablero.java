@@ -6,9 +6,19 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Se encarga de toda la lógica del juego, almacena una matriz con todas las posiciones del tablero y en cada posición una ficha.
+ */
+
 public class Tablero {
 
+	/**
+	 * La matriz representa el tablero, es de tipo booleano de modo que true será rojo, false azul y null que la posición está vacía
+	 */
 	private boolean[][] matriz;
+	/**
+	 * Atributo estático para el patrón singleton.
+	 */
 	private static Tablero mTablero;
 
 	private Tablero() {
