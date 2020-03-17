@@ -18,7 +18,7 @@ public class GestorPartidasTest {
     int cuantosI, cuantosF;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         miGestor = GestorPartidas.getmGestorPartidas();
         m1 = ModoFactory.getmModoFactory().createModo("1vs1");
         m2 = ModoFactory.getmModoFactory().createModo("Ordenador modo Facil");
@@ -29,7 +29,7 @@ public class GestorPartidasTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         miGestor = null;
         m1 = null;
         m2 = null;

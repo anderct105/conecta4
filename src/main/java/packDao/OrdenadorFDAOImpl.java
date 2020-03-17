@@ -52,17 +52,10 @@ public class  OrdenadorFDAOImpl implements IPartidaDAO {
 		Timestamp pFechaHora = new Timestamp(System.currentTimeMillis());
 		ConnectionManager conexion = new ConnectionManager();
 		try {
-			conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", "+pFechaHora);
-			ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora="+pFechaHora);
-			boolean hayResultado=resultado.next();
+			conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", '"+pFechaHora+"')");
+			ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora = '"+pFechaHora+"'");
+			resultado.next();
 			int valor=resultado.getInt("id");
-			while (hayResultado){
-				boolean ultimo=resultado.isLast();
-				if(ultimo){
-					valor=resultado.getInt("id");
-				}
-				hayResultado=resultado.next();
-			}
 			conexion.execSQL("INSERT INTO OrdenadorFacil(id) VALUES ("+valor+")");
 		} catch (Exception e){
 			System.out.println(e.getMessage());

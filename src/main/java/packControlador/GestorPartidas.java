@@ -59,7 +59,7 @@ public class GestorPartidas {
 	 * @param pPuntuacion el tiempo que ha durado la partida
 	 */
 
-	public void guardarPartida(String pNombre, int pPuntuacion) throws SQLException {
+	public void guardarPartida(String pNombre, int pPuntuacion) {
 		String modo = juego.getModoJuego();
 		if (modo.equals("OrdenadorF")){
 			OrdenadorFDAOImpl of = new OrdenadorFDAOImpl();
