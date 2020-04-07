@@ -1,5 +1,6 @@
 package packControlador;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packDao.OrdenadorDDAOImpl;
 import packDao.OrdenadorFDAOImpl;
@@ -42,14 +43,15 @@ public class GestorPartidas {
 		juego.setModoJuego(pModo);
 	}
 
-	public JSONObject cargarRankingFacil() {
-		// TODO - implement GestorPartidas.cargarRankingFacil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingFacil() throws SQLException {
+
+		OrdenadorFDAOImpl ordenador=new OrdenadorFDAOImpl();
+		return ordenador.cargarRanking();
 	}
 
-	public JSONObject cargarRankingDificil() {
-		// TODO - implement GestorPartidas.cargarRankingDificil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingDificil() throws SQLException {
+		OrdenadorDDAOImpl ordenador=new OrdenadorDDAOImpl();
+		return ordenador.cargarRanking();
 	}
 
 	/**

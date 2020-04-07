@@ -1,6 +1,9 @@
 package packControlador;
 
+import com.mysql.cj.xdevapi.JsonArray;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import packDao.OrdenadorDDAOImpl;
 
 import java.sql.SQLException;
 
@@ -43,14 +46,24 @@ public class Conecta4 {
 		throw new UnsupportedOperationException();
 	}
 
-	public JSONObject cargarRankingFacil() {
-		// TODO - implement Conecta4.cargarRankingFacil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingFacil() {
+		JSONArray ranking=null;
+		try {
+			ranking=GestorPartidas.getmGestorPartidas().cargarRankingFacil();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ranking;
 	}
 
-	public JSONObject cargarRankingDificil() {
-		// TODO - implement Conecta4.cargarRankingDificil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingDificil() {
+		JSONArray ranking=null;
+		try {
+			ranking=GestorPartidas.getmGestorPartidas().cargarRankingDificil();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ranking;
 	}
 
 	/**
