@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 public class Juego {
 
-	private Tablero tablero;
+
 	private Modo modo;
 
 	public Juego() {}
@@ -39,18 +39,22 @@ public class Juego {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param pColumna
+	/**Pre: recibe como parámetro la columna introducida por el jugador
+	 * Post:devuelve un json que contiene la información de lo sucedido durante la partida
+	 * @author Nuria Lebeña
+	 * @param pColumna la columna en la que se va a introducir la ficha en la jugada
+	 * @return Json de la forma {x:int, y:int, lleno: boolean, posicionesGanadoras {x1:,y1:,x2:,y2:...}} que contiene la
+	 * información de lo sucedido durante la partida y nulo en caso de que no se haya podido introducir la ficha
 	 */
 	public JSONObject jugarPartida(int pColumna) {
-		// TODO - implement Juego.jugarPartida
-		throw new UnsupportedOperationException();
+		return modo.jugar(pColumna);
 	}
-
+	/**
+	 * Post:El método se encarga de inicializar todas las posiciones del tablero a null
+	 * @author Nuria Lebeña
+	 */
 	public void inicializarTablero() {
-		// TODO - implement Juego.inicializarTablero
-		throw new UnsupportedOperationException();
+		Tablero.getmTablero().inicializarTablero();
 	}
 
 }
