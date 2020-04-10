@@ -123,19 +123,27 @@ public class Tablero {
 	}
 
 	/**
-	 * Comprueba si el color de la posición dada es igual a pColor
-	 * @param pX
-	 * @param pY
-	 * @param pColor
+	 * Comprueba si el color de la posición dada es igual a pColor.
+	 *
+	 * @param pX Coordenada x del tablero.
+	 * @param pY Coordenada y del tablero.
+	 * @param pColor Color de la ficha.
+	 * @return Si pColor es igual al color de la ficha de la posición dada.
+	 * @author Ander Cejudo
 	 */
 	public boolean esColor(int pX, int pY, boolean pColor) {
-		return matriz[pX][pY] == pColor;
+		if (posValida(pX,pY) && matriz[pX][pY] != null) {
+			return matriz[pX][pY] == pColor;
+		}
+		return false;
 	}
 
 	/**
-	 * Comprueba si los valores recibidos  están dentro del tablero
-	 * @param pX
-	 * @param pY
+	 * Comprueba si los valores recibidos  están dentro del tablero.
+	 *
+	 * @param pX Coordenada x del tablero.
+	 * @param pY Coordenada y del tablero.
+	 * @author Ander Cejudo
 	 */
 	public boolean posValida(int pX, int pY) {
 		boolean valida = false;
@@ -241,11 +249,12 @@ public class Tablero {
 
 	/**
 	 * Obtiene las posiciones del tablero que hacen 4 en raya.
+	 *
+	 * @param pX valor del eje x de la coordenada.
+	 * @param pY valor del eje y de la coordenada.
+	 * @param pColor color de la posición a mirar.
+	 * @return JSON con las posiciones ganadoras y en caso de que no es hayan encontrado, null.
 	 * @author Ander Cejudo
-	 * @param pX valor del eje x de la coordenada
-	 * @param pY valor del eje y de la coordenada
-	 * @param pColor color de la posición a mirar
-	 * @return JSON con las posiciones ganadoras y en caso de que no es hayan encontrado, null
 	 */
 	public JSONArray getCoordenadasGanadoras(int pX, int pY, boolean pColor) {
 		Collection<int[]> combinaciones = getPosiblesCombinaciones();
@@ -278,13 +287,14 @@ public class Tablero {
 	/**
 	 * Método recursivo para obtener las coordenadas de hasta 4 fichas seguidas del mismo color, las coordenadas recibidas
 	 * se aumentan con los valores de pCombinación en cada llamada recursiva.
-	 * @param pX Coordenada del eje X
-	 * @param pY Coordenada del eje Y
-	 * @param pCont Contador de las veces que se ha llamado al método de forma recursiva
-	 * @param pC Lista de las coordenadas del mismo color seguidas
-	 * @param pCombinacion Combinación que hace variar las coordenadas pX y pY
-	 * @param pColor Color que tienen que tener las fichas en cada coordenada
-	 * @return Lista de n coordenadas (donde 0<|n|<5) seguidas del mismo color
+	 * @param pX Coordenada del eje X.
+	 * @param pY Coordenada del eje Y.
+	 * @param pCont Contador de las veces que se ha llamado al método de forma recursiva.
+	 * @param pC Lista de las coordenadas del mismo color seguidas.
+	 * @param pCombinacion Combinación que hace variar las coordenadas pX y pY.
+	 * @param pColor Color que tienen que tener las fichas en cada coordenada.
+	 * @return Lista de n coordenadas (donde 0<|n|<5) seguidas del mismo color.
+	 * @author Ander Cejudo
 	 */
 	public ArrayList<int[]> listaSeguidas(int pX, int pY, int pCont, ArrayList<int[]> pC, int[] pCombinacion, boolean pColor) {
 		if (posValida(pX,pY) && esColor(pX,pY,pColor) && pCont < 4) {
@@ -298,8 +308,9 @@ public class Tablero {
 	/**
 	 * Obtiene las posibles combinaciones en las que se puede desplazar en el tablero (arriba, abajo, izquierda, derecha y las diagonales).
 	 * Hay 8 direcciones en las que se puede mirar, pero con 4 y multiplicando por -1 se obtienen todas.
+	 *
+	 * @return lista que cotiene todas las combinaciones posibles para desplazarse por el tablero.
 	 * @author Ander Cejudo
-	 * @return lista que cotiene todas las combinaciones posibles para desplazarse por el tablero
 	 */
 	public Collection<int[]> getPosiblesCombinaciones() {
 		ArrayList<int[]> combinaciones = new ArrayList<int[]>();
