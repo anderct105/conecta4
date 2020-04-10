@@ -1,6 +1,7 @@
 package packModelo;
 
 import org.json.simple.JSONObject;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.Collection;
 
@@ -10,8 +11,7 @@ public class Tablero {
 	private static Tablero mTablero;
 
 	private Tablero() {
-		// TODO - implement Tablero.Tablero
-		throw new UnsupportedOperationException();
+
 	}
 
 	public static Tablero getmTablero() {
@@ -44,6 +44,7 @@ public class Tablero {
 		}
 		else{
 			json.put("lleno",lleno);
+
 			return json;
 		}
 
@@ -59,10 +60,11 @@ public class Tablero {
 	 */
 	private JSONObject anadirFicha(int pColumna, boolean pJugador) {
 		int i=0;
-		Boolean pos=true;
+		Boolean pos=matriz[i][pColumna];
 		while(pos!=null){
-			pos=matriz[i][pColumna];
 			i++;
+			pos=matriz[i][pColumna];
+
 		}
 		matriz[i][pColumna]=pJugador;
 		JSONObject json=new JSONObject();
@@ -77,10 +79,15 @@ public class Tablero {
 	 * @param pColumna entero que hace referencia a la columna
 	 */
 	public boolean ocupada(int pColumna) {
-		Boolean pos=matriz[matriz[0].length][2];
+		int i=0;
 		boolean ocupada=true;
-		if(pos==null){
-			ocupada=false;
+		while(i<matriz.length && ocupada){
+			Boolean pos=matriz[i][pColumna];
+			if(pos==null){
+				ocupada=false;
+			}
+			i=i+1;
+
 		}
 		return ocupada;
 	}
@@ -128,13 +135,32 @@ public class Tablero {
 	 * @author Nuria Lebeña
 	 */
 	public void inicializarTablero() {
-		for (int x=0; x<matriz[0].length;x++){
-			for(int y=0;y<matriz[1].length;y++){
+		matriz =new Boolean[6][9];
+
+		for (int x=0; x<matriz.length;x++){
+			for(int y=0;y<matriz[0].length;y++){
 				matriz[x][y]= null;
 			}
 		}
 	}
 
+	public void imprimirTablero(){
+		System.out.println("\n");
+		for (int x=matriz.length-1; x>=0;x--){
+			for(int y=0;y<matriz[0].length;y++){
+				Boolean contenido=matriz[x][y];
+				if (contenido==null|| contenido){
+					System.out.print(contenido+"   ");
+				}
+				else{
+					System.out.print(contenido+"  ");
+				}
+
+
+			}
+			System.out.println("\n");
+		}
+	}
 	/**
 	 * 
 	 * @param pX
@@ -152,7 +178,7 @@ public class Tablero {
 	public boolean tableroLleno() {
 		boolean lleno=true;
 		for(int i=0;i<matriz[1].length;i++){
-			Boolean pos=matriz[matriz[0].length][i];
+			Boolean pos=matriz[matriz.length-1][i];
 			if(pos==null){
 				lleno=false;
 				return lleno;
