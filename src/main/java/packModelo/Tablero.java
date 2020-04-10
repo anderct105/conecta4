@@ -16,7 +16,7 @@ public class Tablero {
 	/**
 	 * La matriz representa el tablero, es de tipo booleano de modo que true será rojo, false azul y null que la posición está vacía
 	 */
-	private boolean[][] matriz;
+	private Boolean[][] matriz;
 	/**
 	 * Atributo estático para el patrón singleton.
 	 */
@@ -111,10 +111,10 @@ public class Tablero {
 	 * @param pColor: color de la ficha
 	 * @return JSONObject de la forma ..... si el jugador ha ganado, null si no ha ganado
 	 */
-	public JSONObject haGanado(int pX, int pY,boolean pColor) {
+	public JSONArray haGanado(int pX, int pY,boolean pColor) {
 		int colindantes=getColindantes(pX,pY,pColor);
 		boolean ganado=false;
-		JSONObject json=new JSONObject();
+		JSONArray json=new JSONArray();
 		if (colindantes==3){
 			ganado=true;
 			json=getCoordenadasGanadoras(pX,pY,pColor);

@@ -1,5 +1,6 @@
 package packModelo;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.GestorPartidas;
 
@@ -27,7 +28,7 @@ public class OvO implements Modo {
 		if(json!=null){
 			Integer x= (Integer) json.get("x");
 			Integer y= (Integer) json.get("y");
-			JSONObject ganado=Tablero.getmTablero().haGanado(x,y,turno);
+			JSONArray ganado=Tablero.getmTablero().haGanado(x,y,turno);
 			if(ganado==null){
 				turno=!turno;
 			}
