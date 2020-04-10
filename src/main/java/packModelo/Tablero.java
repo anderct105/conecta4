@@ -2,6 +2,7 @@ package packModelo;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +23,7 @@ public class Tablero {
 	private static Tablero mTablero;
 
 	private Tablero() {
-		// TODO - implement Tablero.Tablero
-		throw new UnsupportedOperationException();
+
 	}
 
 	public static Tablero getmTablero() {
@@ -33,33 +33,93 @@ public class Tablero {
 		return mTablero;
 	}
 
-	/**
-	 * 
-	 * @param pColumna
-	 * @param pJugador
+	/**Pre: recibe como parámetro una columna y un jugador
+	 * Post: introduce la ficha en la columna indicada en caso de que sea posible. Devuelve un json con la siguiente
+	 * forma: JSON{x:int,y:int, lleno:boolean} en caso de que la ficha se pueda introducir. Un JSON nulo
+	 *  en caso de que la ficha no se pueda introducir.
+	 * @author Nuria Lebeña
+	 * @param pColumna la columna en la que se va a introducir la ficha
+	 * @param pJugador el color de la ficha
 	 */
 	public JSONObject introducirFicha(int pColumna, boolean pJugador) {
-		// TODO - implement Tablero.introducirFicha
-		throw new UnsupportedOperationException();
+		boolean ocupada=true;
+		JSONObject json=new JSONObject();
+		if(!ocupada(pColumna)){
+			json=anadirFicha(pColumna,pJugador);
+			ocupada=false;
+		}
+		boolean lleno=tableroLleno();
+
+
+		if(ocupada){
+			return null;
+		}
+		else{
+			json.put("lleno",lleno);
+
+			return json;
+		}
+
+
+
+	}
+	/**Pre: recibe como parámetro una columna y el indicador de un jugador. Es posible introducir la ficha
+	 * Post: introduce la ficha en la columna indicada en caso de que sea posible. Devuelve un json con la siguiente
+	 * forma: JSON{x:int,y:int}
+	 * @author Nuria Lebeña
+	 * @param pColumna la columna en la que se va a introducir la ficha
+	 * @param pJugador el color de la ficha
+	 */
+	private JSONObject anadirFicha(int pColumna, boolean pJugador) {
+		int i=0;
+		Boolean pos=matriz[i][pColumna];
+		while(pos!=null){
+			i++;
+			pos=matriz[i][pColumna];
+
+		}
+		matriz[i][pColumna]=pJugador;
+		JSONObject json=new JSONObject();
+		json.put("x",i);
+		json.put("y",pColumna);
+		return json;
 	}
 
-	/**
-	 * 
-	 * @param pColumna
+	/* Precondición: recibe como parámetro una columna
+	 *Postcondición: devuelve un booleano indicando si la columna está llena o no
+	 * @author Nuria Lebeña
+	 * @param pColumna entero que hace referencia a la columna
 	 */
 	public boolean ocupada(int pColumna) {
-		// TODO - implement Tablero.ocupada
-		throw new UnsupportedOperationException();
+		int i=0;
+		boolean ocupada=true;
+		while(i<matriz.length && ocupada){
+			Boolean pos=matriz[i][pColumna];
+			if(pos==null){
+				ocupada=false;
+			}
+			i=i+1;
+
+		}
+		return ocupada;
 	}
 
-	/**
-	 * 
-	 * @param pX
-	 * @param pY
+	/**Precondición:recibe como parámetro las coordenadas de la última ficha introducida y su color
+	 * PostCondicion: si el jugador ha ganado devuelve las posiciones en las que están las fichas que forman 4 en raya
+	 * @param pX: posición x de la última ficha introducida
+	 * @param pY: posición y de la última ficha introducida
+	 * @param pColor: color de la ficha
+	 * @return JSONObject de la forma ..... si el jugador ha ganado, null si no ha ganado
 	 */
-	public JSONObject haGanado(int pX, int pY) {
-		// TODO - implement Tablero.haGanado
-		throw new UnsupportedOperationException();
+	public JSONObject haGanado(int pX, int pY,boolean pColor) {
+		int colindantes=getColindantes(pX,pY,pColor);
+		boolean ganado=false;
+		JSONObject json=new JSONObject();
+		if (colindantes==3){
+			ganado=true;
+			json=getCoordenadasGanadoras(pX,pY,pColor);
+		}
+		return json;
 	}
 
 	/**
@@ -84,12 +144,37 @@ public class Tablero {
 		}
 		return valida;
 	}
-
+	/**
+	 * Post:El método se encarga de inicializar todas las posiciones del tablero a null
+	 * @author Nuria Lebeña
+	 */
 	public void inicializarTablero() {
-		// TODO - implement Tablero.inicializarTablero
-		throw new UnsupportedOperationException();
+		matriz =new Boolean[6][9];
+
+		for (int x=0; x<matriz.length;x++){
+			for(int y=0;y<matriz[0].length;y++){
+				matriz[x][y]= null;
+			}
+		}
 	}
 
+	public void imprimirTablero(){
+		System.out.println("\n");
+		for (int x=matriz.length-1; x>=0;x--){
+			for(int y=0;y<matriz[0].length;y++){
+				Boolean contenido=matriz[x][y];
+				if (contenido==null|| contenido){
+					System.out.print(contenido+"   ");
+				}
+				else{
+					System.out.print(contenido+"  ");
+				}
+
+
+			}
+			System.out.println("\n");
+		}
+	}
 	/**
 	 * 
 	 * @param pX
@@ -105,8 +190,15 @@ public class Tablero {
 	}
 
 	public boolean tableroLleno() {
-		// TODO - implement Tablero.tableroLleno
-		throw new UnsupportedOperationException();
+		boolean lleno=true;
+		for(int i=0;i<matriz[1].length;i++){
+			Boolean pos=matriz[matriz.length-1][i];
+			if(pos==null){
+				lleno=false;
+				return lleno;
+			}
+		}
+		return lleno;
 	}
 
 	/**

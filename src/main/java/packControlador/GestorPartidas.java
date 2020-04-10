@@ -1,7 +1,13 @@
 package packControlador;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import packDao.OrdenadorDDAOImpl;
+import packDao.OrdenadorFDAOImpl;
 import packModelo.*;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class GestorPartidas {
 
@@ -20,13 +26,15 @@ public class GestorPartidas {
 		return mGestorPartidas;
 	}
 
-	/**
-	 * 
+	/**Pre: recibe como parámetro la columna introducida por el jugador
+	 * Post:devuelve un json que contiene la información de lo sucedido durante la partida
+	 * @author Nuria Lebeña
 	 * @param pColumna
+	 * @return Json de la forma {x:int, y:int, lleno: boolean, posicionesGanadoras {x1:,y1:,x2:,y2:...}} que contiene la
+	 * información de lo sucedido durante la partida y nulo en caso de que no se haya podido introducir la ficha
 	 */
 	public JSONObject jugarPartida(int pColumna) {
-		// TODO - implement GestorPartidas.jugarPartida
-		throw new UnsupportedOperationException();
+		return juego.jugarPartida(pColumna);
 	}
 
 	/**
@@ -34,33 +42,43 @@ public class GestorPartidas {
 	 * @param pModo
 	 */
 	public void setModoJuego(Modo pModo) {
-		// TODO - implement GestorPartidas.setModoJuego
-		throw new UnsupportedOperationException();
+		juego.setModoJuego(pModo);
 	}
 
-	public JSONObject cargarRankingFacil() {
-		// TODO - implement GestorPartidas.cargarRankingFacil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingFacil() throws SQLException {
+
+		OrdenadorFDAOImpl ordenador=new OrdenadorFDAOImpl();
+		return ordenador.cargarRanking();
 	}
 
-	public JSONObject cargarRankingDificil() {
-		// TODO - implement GestorPartidas.cargarRankingDificil
-		throw new UnsupportedOperationException();
+	public JSONArray cargarRankingDificil() throws SQLException {
+		OrdenadorDDAOImpl ordenador=new OrdenadorDDAOImpl();
+		return ordenador.cargarRanking();
 	}
 
 	/**
-	 * 
-	 * @param pNombre
-	 * @param pPuntuacion
+	 * El método se encarga de guardar las partidas de los usuarios, tanto del modo fácil como el difícil
+	 * @author Naiara Maneiro
+	 * @param pNombre el nombre del usuario que ha jugado la partida
+	 * @param pPuntuacion el tiempo que ha durado la partida
 	 */
-	public void guardarPartida(String pNombre, int pPuntuacion) {
-		// TODO - implement GestorPartidas.guardarPartida
-		throw new UnsupportedOperationException();
-	}
 
+	public void guardarPartida(String pNombre, int pPuntuacion) {
+		String modo = juego.getModoJuego();
+		if (modo.equals("OrdenadorF")){
+			OrdenadorFDAOImpl of = new OrdenadorFDAOImpl();
+			of.create(pNombre, pPuntuacion);
+		} else if (modo.equals("OrdenadorD")) {
+			OrdenadorDDAOImpl od = new OrdenadorDDAOImpl();
+			od.create(pNombre, pPuntuacion);
+		}
+	}
+	/**
+	 * Post:El método se encarga de inicializar todas las posiciones del tablero a null
+	 * @author Nuria Lebeña
+	 */
 	public void inicializarTablero() {
-		// TODO - implement GestorPartidas.inicializarTablero
-		throw new UnsupportedOperationException();
+		juego.inicializarTablero();
 	}
 
 }
