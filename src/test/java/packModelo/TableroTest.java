@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -221,7 +222,6 @@ public class TableroTest {
 
         }
         tablero.imprimirTablero();
-        // assertTrue(predicted.containsAll(reales) TODO: Probarlo
         // comprobar que fuera cual fuese la ultima ficha obtendria la misma cadena ganadora
         // TODO: el caso de la columna depende como este implementado puede dar fallo
         // (si no mira las superiores)
@@ -244,8 +244,70 @@ public class TableroTest {
 
     @Test
     public void listaSeguidas() {
-    }
+        Tablero tablero = Tablero.getmTablero();
+        tablero.inicializarTablero();
+        //esquina y no-esquina vacias
+        /*for(int[] combinacion : tablero.getPosiblesCombinaciones()){
+            assertEquals(tablero.listaSeguidas(0,0,0,
+                    new ArrayList<int[]>(),combinacion,true).size(),0);
+            assertEquals(tablero.listaSeguidas(1,0,0,
+                    new ArrayList<int[]>(),combinacion,true).size(),0);
+        }*/
+        int[] horizontal = {0,1};
+        int[] vertical = {1,0};
+        int[] diagonalUp = {1,1};
+        int[] diagonalDown = {1,-1};
+        tablero.introducirFicha(1,false);
+        tablero.introducirFicha(1,false);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(3,false);
+        tablero.introducirFicha(3,true);
+        tablero.introducirFicha(3,false);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(4,false);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(6,true);
+        
+        // left or right only
+        assertEquals(
+                tablero.listaSeguidas(1,2,0,
+                        new ArrayList<int[]>(),horizontal,false).size(),
+                1);
+        assertEquals(
+                tablero.listaSeguidas(1,2,0,
+                        new ArrayList<int[]>(),horizontal,true).size(),
+                1);
+        // horizontal
+        assertEquals(
+                tablero.listaSeguidas(0,5,0,
+                        new ArrayList<int[]>(),horizontal,true).size(),
+                2);
+        // down
+        assertEquals(
+                tablero.listaSeguidas(2,1,0,
+                        new ArrayList<int[]>(),vertical,false).size(),
+                2);
+        // diagonal one side
+        assertEquals(
+                tablero.listaSeguidas(0,5,0,
+                        new ArrayList<int[]>(),diagonalDown,false).size(),
+                2);
+        assertEquals(
+                tablero.listaSeguidas(0,0,0,
+                        new ArrayList<int[]>(),diagonalUp,false).size(),
+                1);
+        // diagonal both sides
+        assertEquals(
+                tablero.listaSeguidas(1,2,0,
+                        new ArrayList<int[]>(),diagonalUp,false).size(),
+                2);
+        assertEquals(
+                tablero.listaSeguidas(1,5,0,
+                        new ArrayList<int[]>(),diagonalUp,true).size(),
+                2);
 
+
+    }
     @Test
     public void getPosiblesCombinaciones() {
     }
