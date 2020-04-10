@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collection;
+
 import static org.junit.Assert.*;
 
 public class TableroTest {
@@ -186,6 +188,65 @@ public class TableroTest {
 
     @Test
     public void getOptimo() {
+        Tablero tablero=Tablero.getmTablero();
+        tablero.inicializarTablero();
+        //Prueba 1: tablero vacío
+        assertNotNull(tablero.getOptimo(true));
+
+        //Prueba 2: una ficha de color true en medio del tablero
+        tablero.introducirFicha(4,true);
+        Collection<Integer> lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(4));
+        assertTrue(lista.contains(5));
+        assertTrue(lista.contains(3));
+
+        //Prueba 3: óptimo en diagonal
+        tablero.inicializarTablero();
+        tablero.introducirFicha(0,true);
+        tablero.introducirFicha(1,false);
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(2,false);
+        lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(2));
+
+        //Prueba 4: 3 en raya o de bloquear al oponente
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        lista=tablero.getOptimo(false);
+        assertTrue(lista.contains(3));
+
+        //Prueba 5: ganar frente a bloquear al oponente
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(3));
+
+        //Prueba 6: bloquear o hacer 2 en raya
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(5,false);
+        lista=tablero.getOptimo(false);
+        assertTrue(lista.contains(3));
+        assertTrue(lista.contains(0));
+
+        //Prueba 7: hacer 2 en raya o bloquear
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(5,false);
+        lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(3));
+        assertTrue(lista.contains(0));
     }
 
     @Test
