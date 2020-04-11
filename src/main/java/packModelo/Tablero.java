@@ -195,7 +195,7 @@ public class Tablero {
 	 */
 	public int getColindantes(int pX, int pY, boolean pColor) {
 		// TODO - implement Tablero.getColindantes
-		throw new UnsupportedOperationException();
+		return 0;
 	}
 
 	public int[] getPosicionesPosibles() {
@@ -221,8 +221,7 @@ public class Tablero {
 	 * @param pColor
 	 */
 	public Collection<Integer> getOptimo(boolean pColor) {
-		// TODO - implement Tablero.getOptimo
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	/**

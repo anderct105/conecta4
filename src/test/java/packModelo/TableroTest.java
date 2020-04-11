@@ -210,7 +210,7 @@ public class TableroTest {
         lista=tablero.getOptimo(true);
         assertTrue(lista.contains(2));
 
-        //Prueba 4: 3 en raya o de bloquear al oponente
+        //Prueba 4: 3 en raya o bloquear al oponente de ganar
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
@@ -220,7 +220,7 @@ public class TableroTest {
         lista=tablero.getOptimo(false);
         assertTrue(lista.contains(3));
 
-        //Prueba 5: ganar frente a bloquear al oponente
+        //Prueba 5: ganar frente a bloquear al oponente de ganar
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
@@ -247,6 +247,37 @@ public class TableroTest {
         lista=tablero.getOptimo(true);
         assertTrue(lista.contains(3));
         assertTrue(lista.contains(0));
+
+        //Prueba 8: hacer 2 en raya o bloquear dos en raya del oponente
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,false);
+        lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(1)|| lista.contains(2)||lista.contains(3));
+
+        //Prueba 9: hacer 3 en raya o bloquear 3 en raya del oponente
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,false);
+        tablero.introducirFicha(2,false);
+        lista=tablero.getOptimo(true);
+        assertTrue(lista.contains(1)|| lista.contains(2));
+
+        //Prueba 10: bloquear oponente de ganar en diagonal
+        tablero.inicializarTablero();
+        tablero.introducirFicha(0,true);
+        tablero.introducirFicha(1,false);
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,false);
+        tablero.introducirFicha(2,false);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(3,true);
+        tablero.introducirFicha(3,false);
+        tablero.introducirFicha(3,false);
+        lista=tablero.getOptimo(false);
+        assertTrue(lista.contains(3));
+
     }
 
     @Test
