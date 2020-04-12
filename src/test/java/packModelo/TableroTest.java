@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TableroTest {
 
@@ -203,7 +204,37 @@ public class TableroTest {
         checkCoordenadasGanadoras(1, 1, true);
         // diagonal decreciente
         checkCoordenadasGanadoras(-1, 4, true);
-
+        //PRUEBA 1
+        Tablero.getmTablero().inicializarTablero();
+        Tablero.getmTablero().introducirFicha(0,true);
+        Tablero.getmTablero().introducirFicha(0,true);
+        Tablero.getmTablero().introducirFicha(0,true);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,0,true).size(),0);
+        Tablero.getmTablero().introducirFicha(0,true);
+        Tablero.getmTablero().imprimirTablero();
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,0,true).size(),4);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(2,0,true).size(),4);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(3,0,true).size(),4);
+        //PRUEBA2
+        Tablero.getmTablero().inicializarTablero();
+        Tablero.getmTablero().introducirFicha(0,true);
+        Tablero.getmTablero().introducirFicha(1,true);
+        Tablero.getmTablero().introducirFicha(1,true);
+        Tablero.getmTablero().introducirFicha(2,true);
+        Tablero.getmTablero().introducirFicha(2,true);
+        Tablero.getmTablero().introducirFicha(2,true);
+        Tablero.getmTablero().introducirFicha(3,true);
+        Tablero.getmTablero().introducirFicha(3,true);
+        Tablero.getmTablero().introducirFicha(3,true);
+        Tablero.getmTablero().introducirFicha(3,true);
+        Tablero.getmTablero().imprimirTablero();
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,0,true).size(),4);
+        Tablero.getmTablero().introducirFicha(0,true);
+        Tablero.getmTablero().imprimirTablero();
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,0,true).size(),4);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(2,3,true).size(),4);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,3,true).size(),4);
+        assertEquals(Tablero.getmTablero().getCoordenadasGanadoras(0,2,true).size(),4);
 
     }
 
@@ -286,10 +317,10 @@ public class TableroTest {
         assertEquals(
                 tablero.listaSeguidas(0,5,0,
                         new ArrayList<int[]>(),horizontal,true).size(),
-                3);
+                2);
         // down
         assertEquals(
-                tablero.listaSeguidas(2,1,0,
+                tablero.listaSeguidas(0,1,0,
                         new ArrayList<int[]>(),vertical,false).size(),
                 3);
         // diagonal one side
@@ -303,11 +334,11 @@ public class TableroTest {
                 3);
         // diagonal both sides
         assertEquals(
-                tablero.listaSeguidas(1,2,0,
+                tablero.listaSeguidas(0,1,0,
                         new ArrayList<int[]>(),diagonalUp,false).size(),
                 3);
         assertEquals(
-                tablero.listaSeguidas(1,5,0,
+                tablero.listaSeguidas(0,4,0,
                         new ArrayList<int[]>(),diagonalUp,true).size(),
                 2);
 
