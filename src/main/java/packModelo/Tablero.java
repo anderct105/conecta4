@@ -2,10 +2,10 @@ package packModelo;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Se encarga de toda la lógica del juego, almacena una matriz con todas las posiciones del tablero y en cada posición una ficha.
@@ -211,39 +211,107 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param pX
-	 * @param pY
+	 * @param pFila
+	 * @param pColumna
 	 * @param pColor
 	 */
-	public int getColindantes(int pX, int pY, boolean pColor) {
-		// TODO - implement Tablero.getColindantes
-		return 0;
+	public int getColindantes(int pFila, int pColumna, boolean pColor) {
+		int max = 0;
+		Collection<int[]> combinaciones = getPosiblesCombinaciones();
+		bucleColindantes:
+		for(int[] comb : combinaciones){
+			int[] complementario = new int[2];
+			complementario[0] = comb[0] * -1;
+			complementario[1] = comb[1] * -1;
+			int pos = numSeguidas(pFila,pColumna, comb, pColor);
+			int neg = numSeguidas(pFila, pColumna, complementario, pColor);
+			int colindantes = pos + neg;
+			if(colindantes>max){
+				max = colindantes;
+			}
+		}
+		if(max>3){
+			max = 3;
+		}
+		return max;
 	}
 
 	public int[] getPosicionesPosibles() {
-		// TODO - implement Tablero.getPosicionesPosibles
-		throw new UnsupportedOperationException();
+		int[] posiciones = new int[9];
+		for(int col = 0;col<9;col++){
+			posiciones[col] = -1;
+			for(int fila = 0; fila<6;fila++){
+				if (matriz[fila][col] == null){
+					posiciones[col] = fila;
+					break;
+				}
+			}
+		}
+		return posiciones;
 	}
 
 	/**
 	 * 
-	 * @param x
-	 * @param y
-	 * @param pCont
+	 * @param fila
+	 * @param col
 	 * @param pC
 	 * @param pColor
 	 */
-	public int numSeguidas(int x, int y, int pCont, int[] pC, boolean pColor) {
-		// TODO - implement Tablero.numSeguidas
-		throw new UnsupportedOperationException();
+	public int numSeguidas(int fila, int col, int[] pC, boolean pColor) {
+		int seguidas = 0;
+		bucleSeguidas:
+		while(true){
+			fila = fila + pC[0];
+			col = col + pC[1];
+			if(fila>=0 && fila<6 && col>=0 && col<9){
+				if(matriz[fila][col] != null){
+					if(matriz[fila][col] == pColor){
+						seguidas++;
+					} else{
+						break bucleSeguidas;
+					}
+				} else{
+					break bucleSeguidas;
+				}
+			} else{
+				break bucleSeguidas;
+			}
+		}
+		return seguidas;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pColor
+	 * @return
 	 */
 	public Collection<Integer> getOptimo(boolean pColor) {
-		return null;
+		int[] posiciones = getPosicionesPosibles();
+		int colindantesMax = 0;
+		ArrayList<Integer> mejor = new ArrayList();
+		for(int i = 0;i<posiciones.length;i++){
+			if(posiciones[i] != -1){
+				int colindantes = getColindantes(posiciones[i], i, pColor);
+				//SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
+				if(colindantes > colindantesMax){
+					colindantesMax = colindantes;
+					mejor = new ArrayList();
+					mejor.add(i);
+					mejor.add(colindantes);
+				}
+				//SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
+				if(colindantes == colindantesMax){
+					int random = ThreadLocalRandom.current().nextInt(0, 101);
+					if(random < 33){
+						mejor = new ArrayList();
+						mejor.add(i);
+						mejor.add(colindantes);
+					}
+				}
+			}
+
+		}
+		return mejor;
 	}
 
 	/**

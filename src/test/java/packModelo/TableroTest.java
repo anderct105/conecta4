@@ -6,16 +6,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-<<<<<<< HEAD
+
 import java.util.Collection;
 
 import static org.junit.Assert.*;
-=======
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
->>>>>>> getCoordenadasGanadoras
+
 
 public class TableroTest {
 
