@@ -72,6 +72,7 @@ CREATE TABLE `Partida` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   `tiempo` int(11) DEFAULT NULL,
+  `fechaHora` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

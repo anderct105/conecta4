@@ -103,7 +103,7 @@ public class OrdenadorFDAOImplTest {
     }
 
     @Test
-    public void create() throws SQLException {
+    public void create() {
         OrdenadorFDAOImpl ordenadorFacil = this.ordenadorFacil;
         assertNotNull(conexionM);
 
@@ -129,17 +129,17 @@ public class OrdenadorFDAOImplTest {
         }
 
         assertSame(cuantosInicio+1,cuantosFin);
-/*
+
         try {
             ResultSet resultado = conexionM.execSQL("SELECT id FROM Partida WHERE nombre ='"+nombre+"' AND tiempo ="+tiempo);
             if(resultado.next()) {
                 int id = resultado.getInt("id");
-                conexionM.execSQL("DELETE FROM OrdenadorFacil WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM OrdenadorDificil WHERE id ="+id);
+                conexionM.execSQL("DELETE FROM Partida WHERE id ="+id);
+                conexionM.closeConnection();
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
-
-        conexionM.closeConnection();
+        }
     }
 }

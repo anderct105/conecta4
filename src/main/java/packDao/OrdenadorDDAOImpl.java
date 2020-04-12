@@ -5,6 +5,10 @@ import org.json.simple.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Realiza todas las operaciones relacionadas con la tabla OrdenadorD de la base de datos
@@ -46,20 +50,17 @@ public class OrdenadorDDAOImpl implements IPartidaDAO {
 	 * @throws SQLException no se ha podido ejecutar la sentencia sql
 	 */
 
-	public void create(String pNombre, int pPuntuacion) throws SQLException {
+	public void create(String pNombre, int pPuntuacion) {
+		Timestamp pFechaHora = new Timestamp(System.currentTimeMillis());
 		ConnectionManager conexion = new ConnectionManager();
-		conexion.execSQL("INSERT INTO Partida (nombre, tiempo) VALUES ('"+pNombre+"', "+pPuntuacion+")");
-		ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE nombre='"+pNombre+"' AND tiempo="+pPuntuacion);
-		boolean hayResultado=resultado.next();
-		int valor=resultado.getInt("id");
-		while (hayResultado){
-			boolean ultimo=resultado.isLast();
-			if(ultimo){
-				valor=resultado.getInt("id");
-			}
-			hayResultado=resultado.next();
+		try {
+			conexion.execSQL("INSERT INTO Partida (nombre, tiempo, fechaHora) VALUES ('"+pNombre+"', "+pPuntuacion+", '"+pFechaHora+"')");
+			ResultSet resultado = conexion.execSQL("SELECT id FROM Partida WHERE fechaHora = '"+pFechaHora+"'");
+			resultado.next();
+			int valor=resultado.getInt("id");
+			conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
+		} catch (Exception e){
+			System.out.println(e.getMessage());
 		}
-		conexion.execSQL("INSERT INTO OrdenadorDificil(id) VALUES ("+valor+")");
 	}
-
 }
