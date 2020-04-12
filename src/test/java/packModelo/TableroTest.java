@@ -196,9 +196,9 @@ public class TableroTest {
     @Test
     public void getCoordenadasGanadoras() {
         // columna
-        //checkCoordenadasGanadoras(0, 1, false);
+        checkCoordenadasGanadoras(0, 1, false);
         // fila
-        //checkCoordenadasGanadoras(1, 1, false);
+        checkCoordenadasGanadoras(1, 1, false);
         // diagonal creciente
         checkCoordenadasGanadoras(1, 1, true);
         // diagonal decreciente
@@ -247,60 +247,65 @@ public class TableroTest {
         Tablero tablero = Tablero.getmTablero();
         tablero.inicializarTablero();
         //esquina y no-esquina vacias
-        /*for(int[] combinacion : tablero.getPosiblesCombinaciones()){
+        for(int[] combinacion : tablero.getPosiblesCombinaciones()){
             assertEquals(tablero.listaSeguidas(0,0,0,
                     new ArrayList<int[]>(),combinacion,true).size(),0);
             assertEquals(tablero.listaSeguidas(1,0,0,
                     new ArrayList<int[]>(),combinacion,true).size(),0);
-        }*/
+        }
         int[] horizontal = {0,1};
         int[] vertical = {1,0};
         int[] diagonalUp = {1,1};
         int[] diagonalDown = {1,-1};
+        tablero.introducirFicha(0,false);
+        tablero.introducirFicha(1,false);
         tablero.introducirFicha(1,false);
         tablero.introducirFicha(1,false);
         tablero.introducirFicha(2,true);
+        tablero.introducirFicha(2,false);
         tablero.introducirFicha(3,false);
         tablero.introducirFicha(3,true);
         tablero.introducirFicha(3,false);
         tablero.introducirFicha(4,true);
         tablero.introducirFicha(4,false);
         tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,true);
+        tablero.introducirFicha(5,true);
         tablero.introducirFicha(6,true);
-        
+        tablero.imprimirTablero();
         // left or right only
         assertEquals(
-                tablero.listaSeguidas(1,2,0,
+                tablero.listaSeguidas(0,0,0,
                         new ArrayList<int[]>(),horizontal,false).size(),
-                1);
+                2);
         assertEquals(
-                tablero.listaSeguidas(1,2,0,
+                tablero.listaSeguidas(0,4,0,
                         new ArrayList<int[]>(),horizontal,true).size(),
-                1);
+                3);
         // horizontal
         assertEquals(
                 tablero.listaSeguidas(0,5,0,
                         new ArrayList<int[]>(),horizontal,true).size(),
-                2);
+                3);
         // down
         assertEquals(
                 tablero.listaSeguidas(2,1,0,
                         new ArrayList<int[]>(),vertical,false).size(),
-                2);
+                3);
         // diagonal one side
         assertEquals(
-                tablero.listaSeguidas(0,5,0,
+                tablero.listaSeguidas(1,4,0,
                         new ArrayList<int[]>(),diagonalDown,false).size(),
                 2);
         assertEquals(
-                tablero.listaSeguidas(0,0,0,
-                        new ArrayList<int[]>(),diagonalUp,false).size(),
-                1);
+                tablero.listaSeguidas(0,2,0,
+                        new ArrayList<int[]>(),diagonalUp,true).size(),
+                3);
         // diagonal both sides
         assertEquals(
                 tablero.listaSeguidas(1,2,0,
                         new ArrayList<int[]>(),diagonalUp,false).size(),
-                2);
+                3);
         assertEquals(
                 tablero.listaSeguidas(1,5,0,
                         new ArrayList<int[]>(),diagonalUp,true).size(),
