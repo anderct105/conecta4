@@ -25,9 +25,9 @@ public class OvO implements Modo {
 
 
 		if(json!=null){
-			Integer x= (Integer) json.get("x");
-			Integer y= (Integer) json.get("y");
-			JSONObject ganado=Tablero.getmTablero().haGanado(x,y,turno);
+			Integer fila= (Integer) json.get("fila");
+			Integer columna= (Integer) json.get("columna");
+			JSONObject ganado=Tablero.getmTablero().haGanado(fila,columna,turno);
 			if(ganado==null){
 				turno=!turno;
 			}
