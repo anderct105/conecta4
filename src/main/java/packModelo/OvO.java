@@ -1,5 +1,6 @@
 package packModelo;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.GestorPartidas;
 
@@ -7,10 +8,7 @@ public class OvO implements Modo {
 
 	private boolean turno;
 
-	public OvO() {
-		// TODO - implement OvO.OvO
-		throw new UnsupportedOperationException();
-	}
+	public OvO() {}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
 	 * Post:devuelve un json que contiene la información de lo sucedido durante la partida
@@ -23,11 +21,10 @@ public class OvO implements Modo {
 
 		JSONObject json=Tablero.getmTablero().introducirFicha(pColumna,turno);
 
-
 		if(json!=null){
-			Integer fila= (Integer) json.get("fila");
-			Integer columna= (Integer) json.get("columna");
-			JSONObject ganado=Tablero.getmTablero().haGanado(fila,columna,turno);
+			Integer fila= (Integer) json.get("x");
+			Integer columna= (Integer) json.get("y");
+			JSONArray ganado=Tablero.getmTablero().haGanado(fila,columna,turno);
 			if(ganado==null){
 				turno=!turno;
 			}
@@ -39,7 +36,6 @@ public class OvO implements Modo {
 		else{
 			return null;
 		}
-
 	}
 
 	public String getNombre() {
