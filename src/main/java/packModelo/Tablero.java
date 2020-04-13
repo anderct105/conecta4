@@ -116,14 +116,7 @@ public class Tablero {
      * @return JSONObject de la forma ..... si el jugador ha ganado, null si no ha ganado
      */
     public JSONArray haGanado(int pFila, int pColumna, boolean pColor) {
-        int colindantes = getColindantes(pFila, pColumna, pColor);
-        boolean ganado = false;
-        JSONArray json = new JSONArray();
-        if (colindantes == 3) {
-            ganado = true;
-            json = getCoordenadasGanadoras(pFila, pColumna, pColor);
-        }
-        return json;
+        return new JSONArray();
     }
 
     /**

@@ -32,6 +32,7 @@ public class OrdenadorFTest {
         //INTRODUCIENDO SOLO UNA FICHA
         JSONObject ja = o.jugar(0);
         assertEquals(tamanoArrayJSON((JSONArray)ja.get("posicionesGanadoras")),0);
+        System.out.println(ja.toJSONString());
         assertEquals(false, ja.get("haGanadoA"));
         assertEquals(false,ja.get("haGanadoB"));
         assertEquals(false,ja.get("lleno"));
