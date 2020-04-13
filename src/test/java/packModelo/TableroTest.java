@@ -225,7 +225,7 @@ public class TableroTest {
 
         assertTrue(lista.contains(2));
 
-        //Prueba 4: 3 en raya o bloquear al oponente de ganar
+        //Prueba 4: 3 en raya vertical
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
@@ -234,37 +234,29 @@ public class TableroTest {
         tablero.introducirFicha(5,false);
         tablero.imprimirTablero();
         lista=tablero.getOptimo(false);
-        itr=lista.iterator();
-        while(itr.hasNext()){
-            System.out.println(itr.next());
-        }
-        assertTrue(lista.contains(3));
 
-        //Prueba 5: ganar frente a bloquear al oponente de ganar
+        assertTrue(lista.contains(5) && lista.contains(2));
+
+        //Prueba 5: ganar frente a hacer 3 en raya
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(4,true);
-        tablero.introducirFicha(5,false);
-        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(8,true);
+        tablero.introducirFicha(8,true);
         lista=tablero.getOptimo(true);
         assertTrue(lista.contains(3));
 
-        //Prueba 6: bloquear o hacer 2 en raya
+        //Prueba 6: hacer 2 en raya en vertical
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(5,false);
         lista=tablero.getOptimo(false);
-        tablero.imprimirTablero();
-        itr=lista.iterator();
-        while(itr.hasNext()){
-            System.out.println(itr.next());
-        }
 
-        assertTrue(lista.contains(3)|| lista.contains(0));
+        assertTrue(lista.contains(5) || lista.contains(4) || lista.contains(6));
 
-        //Prueba 7: hacer 3 en raya o bloquear
+        //Prueba 7: hacer 3 en raya de dos formas
         tablero.inicializarTablero();
 
         tablero.introducirFicha(1,true);
@@ -273,18 +265,16 @@ public class TableroTest {
 
         lista=tablero.getOptimo(true);
 
+        assertTrue(lista.contains(0)||lista.contains(3));
 
-
-        assertTrue(lista.contains(3)||lista.contains(0));
-
-        //Prueba 8: hacer 2 en raya o bloquear dos en raya del oponente
+        //Prueba 8: hacer 2 en raya de 3 formas
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,false);
         lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(1)|| lista.contains(2)||lista.contains(3));
+        assertTrue(lista.contains(1)|| lista.contains(2)||lista.contains(0));
 
-        //Prueba 9: hacer 3 en raya o bloquear 3 en raya del oponente
+        //Prueba 9: hacer 3 en raya
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(1,true);
@@ -293,7 +283,7 @@ public class TableroTest {
         lista=tablero.getOptimo(true);
         assertTrue(lista.contains(1)|| lista.contains(2));
 
-        //Prueba 10: bloquear oponente de ganar en diagonal
+        //Prueba 10: ganar en diagonal
         tablero.inicializarTablero();
         tablero.introducirFicha(0,true);
         tablero.introducirFicha(1,false);
@@ -304,7 +294,8 @@ public class TableroTest {
         tablero.introducirFicha(3,true);
         tablero.introducirFicha(3,false);
         tablero.introducirFicha(3,false);
-        lista=tablero.getOptimo(false);
+        tablero.imprimirTablero();
+        lista=tablero.getOptimo(true);
         assertTrue(lista.contains(3));
 
     }
