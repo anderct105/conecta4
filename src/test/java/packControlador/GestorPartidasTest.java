@@ -5,7 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import packDao.ConnectionManager;
 import packModelo.Modo;
+import packModelo.OrdenadorD;
+import packModelo.OrdenadorF;
+import packModelo.OvO;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -20,9 +24,9 @@ public class GestorPartidasTest {
     @Before
     public void setUp() {
         miGestor = GestorPartidas.getmGestorPartidas();
-        m1 = ModoFactory.getmModoFactory().createModo("1vs1");
-        m2 = ModoFactory.getmModoFactory().createModo("Ordenador modo Facil");
-        m3 = ModoFactory.getmModoFactory().createModo("Ordenador modo Dificil");
+        m1 = new OvO();
+        m2 = new OrdenadorF();
+        m3 = new OrdenadorD();
         con = new ConnectionManager();
         cuantosI = 0;
         cuantosF = 0;
@@ -39,22 +43,34 @@ public class GestorPartidasTest {
 
     @Test
     public void guardarPartida() throws SQLException {
-        cuantosI = con.execSQL("SELECT count(*) as cuantos from Partida").getInt(0);
+        ResultSet rs = con.execSQL("SELECT count(*) as cuantos from Partida");
+        rs.next();
+        cuantosI = rs.getInt(1);
         miGestor.setModoJuego(m1);
         miGestor.guardarPartida("pruebaGP",0);
-        cuantosF = con.execSQL("SELECT count(*) as cuantos from Partida").getInt(0);
+        rs = con.execSQL("SELECT count(*) as cuantos from Partida");
+        rs.next();
+        cuantosF = rs.getInt(1);
         assertNotEquals(cuantosI + 1, cuantosF);
 
-        cuantosI = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil").getInt(0);
+        rs = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil");
+        rs.next();
+        cuantosI = rs.getInt(1);
         miGestor.setModoJuego(m2);
         miGestor.guardarPartida("pruebaGP",0);
-        cuantosF = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil").getInt(0);
+        rs = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil");
+        rs.next();
+        cuantosF = rs.getInt(1);
         assertEquals(cuantosI + 1, cuantosF);
 
-        cuantosI = con.execSQL("SELECT count(*) as cuantos from OrdenadorDificil").getInt(0);
+        rs = con.execSQL("SELECT count(*) as cuantos from OrdenadorDificil");
+        rs.next();
+        cuantosI = rs.getInt(1);
         miGestor.setModoJuego(m3);
         miGestor.guardarPartida("pruebaGP",0);
-        cuantosF = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil").getInt(0);
+        rs = con.execSQL("SELECT count(*) as cuantos from OrdenadorFacil");
+        rs.next();
+        cuantosF = rs.getInt(1);
         assertEquals(cuantosI + 1, cuantosF);
 
         con.execSQL("DELETE FROM Partida where nombre='pruebaGP'");

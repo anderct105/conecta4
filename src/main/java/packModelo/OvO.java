@@ -7,8 +7,6 @@ public class OvO implements Modo {
 	private boolean turno;
 
 	public OvO() {
-		// TODO - implement OvO.OvO
-		throw new UnsupportedOperationException();
 	}
 
 	/**

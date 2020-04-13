@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 
 public class Juego {
 
-	private Tablero tablero;
 	private Modo modo;
 
 	public Juego() {}
