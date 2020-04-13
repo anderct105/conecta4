@@ -20,10 +20,6 @@ public class ConnectionManager {
 		}
 	}
 
-	public Connection getConnection(){
-		return this.connection;
-	}
-
 	public ResultSet execSQL(String sql) {
 		ResultSet res = null;
 		try {
