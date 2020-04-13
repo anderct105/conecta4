@@ -39,13 +39,11 @@ public class OvO implements Modo {
 	}
 
 	public String getNombre() {
-		// TODO - implement OvO.getNombre
-		throw new UnsupportedOperationException();
+		return "OvO";
 	}
 
 	public void cambiarTurno() {
-		// TODO - implement OvO.cambiarTurno
-		throw new UnsupportedOperationException();
+		turno=!turno;
 	}
 
 }
