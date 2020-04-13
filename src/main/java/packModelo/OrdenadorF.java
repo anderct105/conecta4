@@ -20,10 +20,10 @@ public class OrdenadorF implements Modo {
 	public JSONObject jugar(int pColumna) {
 		JSONObject json = Tablero.getmTablero().introducirFicha(pColumna,turno);
 		if(json != null){
-			Integer x = (Integer) json.get("x");
-			Integer y = (Integer) json.get("y");
-			JSONArray ganado = Tablero.getmTablero().haGanado(x,y,turno);
-			if (ganado == null){
+			Integer xA = (Integer) json.get("x");
+			Integer yA = (Integer) json.get("y");
+			JSONArray ganadoA = Tablero.getmTablero().haGanado(xA,yA,turno);
+			if (ganadoA == null){
 				turno =! turno;
 				boolean enc = false;
 				Random r = new Random();
@@ -31,12 +31,18 @@ public class OrdenadorF implements Modo {
 					int col = r.nextInt(9);
 					boolean ocupada = Tablero.getmTablero().ocupada(col);
 					if (!ocupada){
-						Tablero.getmTablero().introducirFicha(col,turno);
+						json = Tablero.getmTablero().introducirFicha(col,turno);
 						enc = true;
+						Integer xB = (Integer) json.get("x");
+						Integer yB = (Integer) json.get("y");
+						JSONArray ganadoB = Tablero.getmTablero().haGanado(xB,yB,turno);
+						if (ganadoB != null){
+							json.put("posicionesGanadoras", ganadoB);
+						}
 					}
 				}
 			} else{
-				json.put("posicionesGanadoras", ganado);
+				json.put("posicionesGanadoras", ganadoA);
 			}
 			return json;
 		}
