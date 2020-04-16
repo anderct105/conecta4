@@ -190,32 +190,34 @@ public class Tablero {
         }
     }
 
-	/**
-	 * 
-	 * @param pFila
-	 * @param pColumna
-	 * @param pColor
-	 */
-	public int getColindantes(int pFila, int pColumna, boolean pColor) {
-		int max = 0;
-		Collection<int[]> combinaciones = getPosiblesCombinaciones();
-		bucleColindantes:
-		for(int[] comb : combinaciones){
-			int[] complementario = new int[2];
-			complementario[0] = comb[0] * -1;
-			complementario[1] = comb[1] * -1;
-			int pos = numSeguidas(pFila,pColumna, comb, pColor);
-			int neg = numSeguidas(pFila, pColumna, complementario, pColor);
-			int colindantes = pos + neg;
-			if(colindantes>max){
-				max = colindantes;
-			}
-		}
-		if(max>3){
-			max = 3;
-		}
-		return max;
-	}
+    /**
+     * Devuelve el numero de fichas del color introducido tiene una determinada casilla, mirando hacia todas las direcciones (horizontal, vertical y las dos diagonales)
+     *
+     * @param pFila La fila de la casilla a mirar
+     * @param pColumna La columna de la casilla a mirar
+     * @param pColor El color del que se quiere saber el número de colindantes en esa casilla
+    ] @return El número de colindantes de esa casilla
+     */
+    public int getColindantes(int pFila, int pColumna, boolean pColor) {
+        int max = 0;
+        Collection<int[]> combinaciones = getPosiblesCombinaciones();
+        bucleColindantes:
+        for(int[] comb : combinaciones){
+            int[] complementario = new int[2];
+            complementario[0] = comb[0] * -1;
+            complementario[1] = comb[1] * -1;
+            int pos = numSeguidas(pFila,pColumna, comb, pColor);
+            int neg = numSeguidas(pFila, pColumna, complementario, pColor);
+            int colindantes = pos + neg;
+            if(colindantes>max){
+                max = colindantes;
+            }
+        }
+        if(max>3){
+            max = 3;
+        }
+        return max;
+    }
     /**
      * @param pFila
      * @param pColumna
@@ -229,19 +231,24 @@ public class Tablero {
         throw new UnsupportedOperationException();
     }
 
-	public int[] getPosicionesPosibles() {
-		int[] posiciones = new int[9];
-		for(int col = 0;col<9;col++){
-			posiciones[col] = -1;
-			for(int fila = 0; fila<6;fila++){
-				if (matriz[fila][col] == null){
-					posiciones[col] = fila;
-					break;
-				}
-			}
-		}
-		return posiciones;
-	}
+    /**
+     * Devuelve una lista en la que cada posición indica una columna y el valor en dicha posición, la fila en la que se introducirá la ficha en esa columna
+     *
+     * @return La lista de valores que representa la primera casilla vacía de cada columna
+     */
+    public int[] getPosicionesPosibles() {
+        int[] posiciones = new int[9];
+        for(int col = 0;col<9;col++){
+            posiciones[col] = -1;
+            for(int fila = 0; fila<6;fila++){
+                if (matriz[fila][col] == null){
+                    posiciones[col] = fila;
+                    break;
+                }
+            }
+        }
+        return posiciones;
+    }
     public boolean tableroLleno() {
         boolean lleno = true;
         for (int i = 0; i < matriz[1].length; i++) {
@@ -254,89 +261,74 @@ public class Tablero {
         return lleno;
     }
 
-	/**
-	 * 
-	 * @param fila
-	 * @param col
-	 * @param pC
-	 * @param pColor
-	 */
-	public int numSeguidas(int fila, int col, int[] pC, boolean pColor) {
-		int seguidas = 0;
-		bucleSeguidas:
-		while(true){
-			fila = fila + pC[0];
-			col = col + pC[1];
-			if(fila>=0 && fila<6 && col>=0 && col<9){
-				if(matriz[fila][col] != null){
-					if(matriz[fila][col] == pColor){
-						seguidas++;
-					} else{
-						break bucleSeguidas;
-					}
-				} else{
-					break bucleSeguidas;
-				}
-			} else{
-				break bucleSeguidas;
-			}
-		}
-		return seguidas;
-	}
-
-	/**
-	 *
-	 * @param pColor
-	 * @return
-	 */
-	public Collection<Integer> getOptimo(boolean pColor) {
-		int[] posiciones = getPosicionesPosibles();
-		int colindantesMax = 0;
-		ArrayList<Integer> mejor = new ArrayList();
-		for(int i = 0;i<posiciones.length;i++){
-			if(posiciones[i] != -1){
-				int colindantes = getColindantes(posiciones[i], i, pColor);
-				//SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
-				if(colindantes > colindantesMax){
-					colindantesMax = colindantes;
-					mejor = new ArrayList();
-					mejor.add(i);
-					mejor.add(colindantes);
-				}
-				//SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
-				if(colindantes == colindantesMax){
-					int random = ThreadLocalRandom.current().nextInt(0, 101);
-					if(random < 33){
-						mejor = new ArrayList();
-						mejor.add(i);
-						mejor.add(colindantes);
-					}
-				}
-			}
-
-		}
-		return mejor;
-	}
-
     /**
-     * @param x
-     * @param y
-     * @param pCont
-     * @param pC
-     * @param pColor
+     * Indica el numero de fichas seguidas de un color que hay desde una determinada casilla en la dirección indicada
+     *
+     * @param fila La fila de la casilla que se quiere comprobar
+     * @param col La columna de la casilla que se quiere comprobar
+     * @param pC La dirección en la que se mirará la cantidad de fichas seguidas
+     * @param pColor El color de la ficha a mirar
+     * @author Igor garcía
      */
-    public int numSeguidas(int x, int y, int pCont, int[] pC, boolean pColor) {
-        // TODO - implement Tablero.numSeguidas
-        throw new UnsupportedOperationException();
+    public int numSeguidas(int fila, int col, int[] pC, boolean pColor) {
+        int seguidas = 0;
+        bucleSeguidas:
+        while(true){
+            fila = fila + pC[0];
+            col = col + pC[1];
+            if(fila>=0 && fila<6 && col>=0 && col<9){
+                if(matriz[fila][col] != null){
+                    if(matriz[fila][col] == pColor){
+                        seguidas++;
+                    } else{
+                        break bucleSeguidas;
+                    }
+                } else{
+                    break bucleSeguidas;
+                }
+            } else{
+                break bucleSeguidas;
+            }
+        }
+        return seguidas;
     }
 
     /**
-     * @param pColor
+     * Indica la columna en la que se debe introducir la ficha de un determinado color para obtener el merjor resultado
+     *
+     * @param pColor True = rojo, False = azul
+     * @return Array de dos posiciones: 1-La columna en la que se debe meter 2-La cantidad de fichas colindantes de ese color que hay
+     * @author Igor García
      */
     public Collection<Integer> getOptimo(boolean pColor) {
-        // TODO - implement Tablero.getOptimo
-        throw new UnsupportedOperationException();
+        int[] posiciones = getPosicionesPosibles();
+        int colindantesMax = 0;
+        ArrayList<Integer> mejor = new ArrayList();
+        for(int i = 0;i<posiciones.length;i++){
+            if(posiciones[i] != -1){
+                int colindantes = getColindantes(posiciones[i], i, pColor);
+                //SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
+                if(colindantes > colindantesMax){
+                    colindantesMax = colindantes;
+                    mejor = new ArrayList();
+                    mejor.add(i);
+                    mejor.add(colindantes);
+                }
+                //SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
+                if(colindantes == colindantesMax){
+                    int random = ThreadLocalRandom.current().nextInt(0, 101);
+                    if(random < 33){
+                        mejor = new ArrayList();
+                        mejor.add(i);
+                        mejor.add(colindantes);
+                    }
+                }
+            }
+
+        }
+        return mejor;
     }
+
 
     /**
      * Obtiene las posiciones del tablero que hacen 4 en raya.
