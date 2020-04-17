@@ -277,17 +277,15 @@ public class Tablero {
         while(true){
             pFila = pFila + pC[0];
             pColumna = pColumna + pC[1];
-            if(pFila>=0 && pFila<matriz.length && pColumna>=0 && pColumna<matriz[0].length){
-                if(matriz[pFila][pColumna] != null){
-                    if(esColor(pFila,pColumna,pColor)){
-                        seguidas++;
-                    } else{
-                        break bucleSeguidas;
-                    }
-                } else{
+            if(posValida(pFila,pColumna)){
+                if(esColor(pFila,pColumna,pColor)){
+                    seguidas++;
+                }
+                else{
                     break bucleSeguidas;
                 }
-            } else{
+            }
+            else{
                 break bucleSeguidas;
             }
         }
