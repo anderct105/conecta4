@@ -15,15 +15,7 @@ public class Juego {
 	 */
 
 	public String getModoJuego() {
-		String modoS = "";
-		if (modo instanceof OrdenadorD) {
-			modoS = "OrdenadorD";
-		} else if (modo instanceof OrdenadorF){
-			modoS = "OrdenadorF";
-		} else {
-			modoS = "OvO";
-		}
-		return modoS;
+		return modo.getNombre();
 	}
 
 	/**
