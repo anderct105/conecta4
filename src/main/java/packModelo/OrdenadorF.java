@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import java.util.Random;
 
 public class OrdenadorF implements Modo {
-	private boolean turno;
+	//private boolean turno;
 
 	public OrdenadorF() {}
 
@@ -18,6 +18,7 @@ public class OrdenadorF implements Modo {
 	 * información de lo sucedido durante la partida y nulo en caso de que no se haya podido introducir la ficha
 	 */
 	public JSONObject jugar(int pColumna) {
+		boolean turno = false;
 		JSONObject json = Tablero.getmTablero().introducirFicha(pColumna,turno);
 		if(json != null){
 			Integer xA = (Integer) json.get("x");
@@ -38,11 +39,18 @@ public class OrdenadorF implements Modo {
 						JSONArray ganadoB = Tablero.getmTablero().haGanado(xB,yB,turno);
 						if (ganadoB != null){
 							json.put("posicionesGanadoras", ganadoB);
+							json.put("haGanadoA", false);
+							json.put("haGanadoB", true);
+						} else {
+							json.put("haGanadoA", false);
+							json.put("haGanadoB", false);
 						}
 					}
 				}
 			} else{
 				json.put("posicionesGanadoras", ganadoA);
+				json.put("haGanadoA", true);
+				json.put("haGanadoB", false);
 			}
 			return json;
 		}

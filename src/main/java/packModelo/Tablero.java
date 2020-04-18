@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Se encarga de toda la lógica del juego, almacena una matriz con todas las posiciones del tablero y en cada posición una ficha.
@@ -116,7 +117,14 @@ public class Tablero {
      * @return JSONObject de la forma ..... si el jugador ha ganado, null si no ha ganado
      */
     public JSONArray haGanado(int pFila, int pColumna, boolean pColor) {
-        return new JSONArray();
+        int colindantes = getColindantes(pFila, pColumna, pColor);
+        JSONArray json = new JSONArray();
+        if (colindantes == 3) {
+            json = getCoordenadasGanadoras(pFila, pColumna, pColor);
+        } else {
+            json = null;
+        }
+        return json;
     }
 
     /**
@@ -213,33 +221,103 @@ public class Tablero {
      * @param pColor
      */
     public int getColindantes(int pFila, int pColumna, boolean pColor) {
-        // TODO - implement Tablero.getColindantes
-        throw new UnsupportedOperationException();
+        int max = 0;
+        Collection<int[]> combinaciones = getPosiblesCombinaciones();
+        for (int[] comb : combinaciones) {
+            int[] complementario = new int[2];
+            complementario[0] = comb[0] * -1;
+            complementario[1] = comb[1] * -1;
+            int pos = numSeguidas(pFila, pColumna, comb, pColor);
+            int neg = numSeguidas(pFila, pColumna, complementario, pColor);
+            int colindantes = pos + neg;
+            if (colindantes > max) {
+                max = colindantes;
+            }
+        }
+        if(max>3){
+            max = 3;
+        }
+        return max;
     }
 
     public int[] getPosicionesPosibles() {
-        // TODO - implement Tablero.getPosicionesPosibles
-        throw new UnsupportedOperationException();
+        int[] posiciones = new int[matriz[0].length];
+        for(int col = 0;col<matriz[0].length;col++){
+            posiciones[col] = -1;
+            for(int fila = 0; fila<matriz.length;fila++){
+                if (matriz[fila][col] == null){
+                    posiciones[col] = fila;
+                    break;
+                }
+            }
+        }
+        return posiciones;
     }
 
     /**
-     * @param x
-     * @param y
-     * @param pCont
-     * @param pC
-     * @param pColor
+     * Indica el numero de fichas seguidas de un color que hay desde una determinada casilla en la dirección indicada
+     *
+     * @param pFila La fila de la casilla que se quiere comprobar
+     * @param pColumna La columna de la casilla que se quiere comprobar
+     * @param pC La dirección en la que se mirará la cantidad de fichas seguidas
+     * @param pColor El color de la ficha a mirar
+     * @author Igor garcía
      */
-    public int numSeguidas(int x, int y, int pCont, int[] pC, boolean pColor) {
-        // TODO - implement Tablero.numSeguidas
-        throw new UnsupportedOperationException();
+    public int numSeguidas(int pFila, int pColumna, int[] pC, boolean pColor) {
+        int seguidas = 0;
+        bucleSeguidas:
+        while(true){
+            pFila = pFila + pC[0];
+            pColumna = pColumna + pC[1];
+            if(posValida(pFila,pColumna)){
+                if(esColor(pFila,pColumna,pColor)){
+                    seguidas++;
+                }
+                else{
+                    break bucleSeguidas;
+                }
+            }
+            else{
+                break bucleSeguidas;
+            }
+        }
+        return seguidas;
     }
 
     /**
-     * @param pColor
+     * Indica la columna en la que se debe introducir la ficha de un determinado color para obtener el merjor resultado
+     *
+     * @param pColor True = rojo, False = azul
+     * @return Array de dos posiciones: 1-La columna en la que se debe meter 2-La cantidad de fichas colindantes de ese color que hay
+     * @author Igor García
      */
     public Collection<Integer> getOptimo(boolean pColor) {
-        // TODO - implement Tablero.getOptimo
-        throw new UnsupportedOperationException();
+        int[] posiciones = getPosicionesPosibles();
+        int colindantesMax = 0;
+        ArrayList<Integer> mejor = new ArrayList();
+        for(int i = 0;i<posiciones.length;i++){
+            if(posiciones[i] != -1){
+                int colindantes = getColindantes(posiciones[i], i, pColor);
+                //SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
+                if(colindantes > colindantesMax){
+                    colindantesMax = colindantes;
+                    mejor = new ArrayList();
+                    mejor.add(i);
+                    mejor.add(colindantes);
+                }
+                //SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
+                if(colindantes == colindantesMax){
+                    int random = ThreadLocalRandom.current().nextInt(0, 101);
+                    if(random < 33){
+                        mejor = new ArrayList();
+                        mejor.add(i);
+                        mejor.add(colindantes);
+                    }
+                }
+            }
+
+        }
+        return mejor;
     }
 
     /**
