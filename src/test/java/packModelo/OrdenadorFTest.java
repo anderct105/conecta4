@@ -31,7 +31,7 @@ public class OrdenadorFTest {
         t.imprimirTablero();
         //INTRODUCIENDO SOLO UNA FICHA
         JSONObject ja = o.jugar(0);
-        //assertEquals(tamanoArrayJSON((JSONArray)ja.get("posicionesGanadoras")),0);
+        assertNull(ja.get("posicionesGanadoras"));
         //System.out.println(ja.toJSONString());
         assertEquals(false, ja.get("haGanadoA"));
         assertEquals(false,ja.get("haGanadoB"));
@@ -50,7 +50,7 @@ public class OrdenadorFTest {
         ja = o.jugar(0);
         assertNull(ja);
         //LLENANDO TODO EL TABLERO
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i <= 6; i++) {
             for (int j = 0; j < 9; j++) {
                 t.introducirFicha(j,true);
                 if (i == 5 && j == 7) {
@@ -63,13 +63,5 @@ public class OrdenadorFTest {
         ja = o.jugar(8);
         t.imprimirTablero();
         assertEquals(true,ja.get("lleno"));
-    }
-
-    public int tamanoArrayJSON(JSONArray j) {
-        int cont = 0;
-        for (Object o : j) {
-            cont++;
-        }
-        return cont;
     }
 }
