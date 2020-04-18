@@ -37,11 +37,18 @@ public class OvO implements Modo {
 			return null;
 		}
 	}
+	/*Devuelve un String que contiene el nombre del modo de juego
+	 * @author Nuria Lebeña
+	 * @return String que contiene el nombre del modo de juego
+	 */
 
 	public String getNombre() {
 		return "OvO";
 	}
 
+	/*Cambia el turno al contrario
+	 * @author Nuria Lebeña
+	*/
 	public void cambiarTurno() {
 		turno=!turno;
 	}
