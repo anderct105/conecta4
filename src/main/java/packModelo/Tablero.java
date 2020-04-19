@@ -1,5 +1,6 @@
 package packModelo;
 
+import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -244,7 +245,7 @@ public class Tablero {
     /**
      * @param pColor
      */
-    public Collection<Integer> getOptimo(boolean pColor) {
+    public Pair<Integer,Integer> getOptimo(boolean pColor) {
         // TODO - implement Tablero.getOptimo
         throw new UnsupportedOperationException();
     }
