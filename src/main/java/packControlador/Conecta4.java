@@ -1,9 +1,7 @@
 package packControlador;
 
-import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import packDao.OrdenadorDDAOImpl;
 import packModelo.Modo;
 
 import java.sql.SQLException;
@@ -13,8 +11,6 @@ public class Conecta4 {
 	private static Conecta4 mConecta4;
 
 	private Conecta4() {
-		// TODO - implement Conecta4.Conecta4
-		throw new UnsupportedOperationException();
 	}
 
 	public static Conecta4 getmConecta4() {
