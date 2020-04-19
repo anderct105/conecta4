@@ -52,7 +52,6 @@ public class Tablero {
         }
         boolean lleno = tableroLleno();
 
-
         if (ocupada) {
             return null;
         } else {
@@ -60,8 +59,6 @@ public class Tablero {
 
             return json;
         }
-
-
     }
 
     /**
@@ -79,7 +76,6 @@ public class Tablero {
         while (pos != null) {
             i++;
             pos = matriz[i][pColumna];
-
         }
         matriz[i][pColumna] = pJugador;
         JSONObject json = new JSONObject();
@@ -88,7 +84,7 @@ public class Tablero {
         return json;
     }
 
-    /* Precondición: recibe como parámetro una columna
+    /** Precondición: recibe como parámetro una columna
      *Postcondición: devuelve un booleano indicando si la columna está llena o no
      * @author Nuria Lebeña
      * @param pColumna entero que hace referencia a la columna
@@ -118,11 +114,11 @@ public class Tablero {
      */
     public JSONArray haGanado(int pFila, int pColumna, boolean pColor) {
         int colindantes = getColindantes(pFila, pColumna, pColor);
-        boolean ganado = false;
         JSONArray json = new JSONArray();
         if (colindantes == 3) {
-            ganado = true;
             json = getCoordenadasGanadoras(pFila, pColumna, pColor);
+        } else {
+            json = null;
         }
         return json;
     }
@@ -323,10 +319,6 @@ public class Tablero {
                     }
                 }
             }
-
-        }
-        return mejor;
-    }
 
 
     /**
