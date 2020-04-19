@@ -3,11 +3,11 @@ package packModelo;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.Random;
+public class OrdenadorF extends Modo {
 
-public class OrdenadorF implements Modo {
-
-	public OrdenadorF() {}
+	public OrdenadorF() {
+		super("OrdenadorF");
+	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
 	 * Post: devuelve un json que contiene la información de lo sucedido durante la partida
@@ -58,9 +58,4 @@ public class OrdenadorF implements Modo {
 			return null;
 		}
 	}
-
-	public String getNombre() {
-		return "OrdenadorF";
-	}
-
 }

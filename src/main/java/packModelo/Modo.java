@@ -2,15 +2,22 @@ package packModelo;
 
 import org.json.simple.JSONObject;
 
-public interface Modo {
+public abstract class Modo {
 
+	private final String nombre;
+
+	public Modo(String pNombre) {
+		this.nombre = pNombre;
+	}
 	/**
 	 *
 	 * @param pColumna
 	 * @return
 	 */
-	JSONObject jugar(int pColumna);
+	public abstract JSONObject jugar(int pColumna);
 
-	String getNombre();
+	public String getNombre() {
+		return this.nombre;
+	}
 
 }

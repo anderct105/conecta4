@@ -4,11 +4,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.GestorPartidas;
 
-public class OvO implements Modo {
+public class OvO extends Modo {
 
 	private boolean turno;
 
 	public OvO() {
+		super("OvO");
 	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
@@ -43,9 +44,6 @@ public class OvO implements Modo {
 	 * @return String que contiene el nombre del modo de juego
 	 */
 
-	public String getNombre() {
-		return "OvO";
-	}
 
 	/*Cambia el turno al contrario
 	 * @author Nuria Lebeña

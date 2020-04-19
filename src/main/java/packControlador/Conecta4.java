@@ -1,9 +1,8 @@
 package packControlador;
 
-import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import packDao.OrdenadorDDAOImpl;
+import packModelo.Modo;
 
 import java.sql.SQLException;
 
@@ -12,8 +11,6 @@ public class Conecta4 {
 	private static Conecta4 mConecta4;
 
 	private Conecta4() {
-		// TODO - implement Conecta4.Conecta4
-		throw new UnsupportedOperationException();
 	}
 
 	public static Conecta4 getmConecta4() {
@@ -34,18 +31,23 @@ public class Conecta4 {
 		return GestorPartidas.getmGestorPartidas().jugarPartida(pColumna);
 	}
 
+	/**
+	 * El método obtiene el modo en el que la aplicación esta configurada para jugar.
+	 * @author Alvaro Dueñas
+	 * @return El nombre del modo de juego
+	 */
 	public String getModoJuego() {
-		// TODO - implement Conecta4.getModoJuego
-		throw new UnsupportedOperationException();
+		return GestorPartidas.getmGestorPartidas().getModoJuego();
 	}
 
 	/**
-	 * 
-	 * @param pModo
+	 * El método establece el modo en el que la aplicación estará configurada para jugar.
+	 * @author Alvaro Dueñas
+	 * @param pModo el nombre del modo especificado
 	 */
 	public void setModoJuego(String pModo) {
-		// TODO - implement Conecta4.setModoJuego
-		throw new UnsupportedOperationException();
+		Modo modo = ModoFactory.getmModoFactory().createModo(pModo);
+		GestorPartidas.getmGestorPartidas().setModoJuego(modo);
 	}
 
 	public JSONArray cargarRankingFacil() {
