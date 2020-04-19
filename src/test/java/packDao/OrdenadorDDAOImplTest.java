@@ -26,7 +26,6 @@ public class OrdenadorDDAOImplTest {
         nombre = "Pedro";
         tiempo = 3000;
         conexionM = new ConnectionManager();
-        //con = conexionM.getConnection();
     }
 
     @After
@@ -34,12 +33,7 @@ public class OrdenadorDDAOImplTest {
         ordenadorDificil = null;
         nombre = null;
         tiempo = 0;
-
-        //conexionM.execSQL("truncate table OrdenadorFacil");
-        //conexionM.execSQL("truncate table OrdenadorDificil");
-        //conexionM.execSQL("truncate table Partida");
         conexionM = null;
-        //con = null;
     }
 
     @Test
@@ -48,7 +42,6 @@ public class OrdenadorDDAOImplTest {
         JSONArray jsonVacio=new JSONArray();
         assertTrue(jsonVacio.equals(ordenadorDificil.cargarRanking()));
         System.out.println();
-
         //Prueba2: Hay pocos elementos en el ranking
         ordenadorDificil.create("Pedro",3000);
         ordenadorDificil.create("Lola",34);

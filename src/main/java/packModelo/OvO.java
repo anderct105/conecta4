@@ -8,7 +8,8 @@ public class OvO implements Modo {
 
 	private boolean turno;
 
-	public OvO() {}
+	public OvO() {
+	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
 	 * Post:devuelve un json que contiene la información de lo sucedido durante la partida
@@ -22,9 +23,9 @@ public class OvO implements Modo {
 		JSONObject json=Tablero.getmTablero().introducirFicha(pColumna,turno);
 
 		if(json!=null){
-			Integer fila= (Integer) json.get("x");
-			Integer columna= (Integer) json.get("y");
-			JSONArray ganado=Tablero.getmTablero().haGanado(fila,columna,turno);
+			Integer x= (Integer) json.get("x");
+			Integer y= (Integer) json.get("y");
+			JSONArray ganado=Tablero.getmTablero().haGanado(x,y,turno);
 			if(ganado==null){
 				cambiarTurno();
 			}

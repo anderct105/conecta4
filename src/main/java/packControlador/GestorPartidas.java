@@ -14,9 +14,8 @@ public class GestorPartidas {
 	private static GestorPartidas mGestorPartidas;
 	private Juego juego;
 
-	private void GestorPartidas() {
-		// TODO - implement GestorPartidas.Conecta4
-		throw new UnsupportedOperationException();
+	private GestorPartidas() {
+		juego = new Juego();
 	}
 
 	public static GestorPartidas getmGestorPartidas() {
