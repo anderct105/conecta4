@@ -6,9 +6,10 @@ import org.json.simple.JSONObject;
 
 import java.util.Random;
 
-public class OrdenadorD implements Modo {
+public class OrdenadorD extends Modo {
 
     public OrdenadorD() {
+        super("OrdenadorD");
     }
 
     /**
