@@ -60,9 +60,4 @@ public class OrdenadorD extends Modo {
         return res;
     }
 
-    public String getNombre() {
-        // TODO - implement OrdenadorD.getNombre
-        throw new UnsupportedOperationException();
-    }
-
 }
