@@ -37,8 +37,9 @@ public class GestorPartidas {
 	}
 
 	/**
-	 * 
-	 * @param pModo
+	 * El método establece el modo en el que la aplicación estará configurada para jugar.
+	 * @author Alvaro Dueñas
+	 * @param pModo el nombre del modo especificado
 	 */
 	public void setModoJuego(Modo pModo) {
 		juego.setModoJuego(pModo);
@@ -80,4 +81,12 @@ public class GestorPartidas {
 		juego.inicializarTablero();
 	}
 
+	/**
+	 * El método obtiene el modo en el que la aplicación esta configurada para jugar.
+	 * @author Alvaro Dueñas
+	 * @return el modo de juego
+	 */
+	public String getModoJuego() {
+		return juego.getModoJuego();
+	}
 }

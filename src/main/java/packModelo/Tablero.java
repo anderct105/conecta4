@@ -188,34 +188,13 @@ public class Tablero {
     }
 
     /**
-     * @param pFila
-     * @param pColumna
-     * @param combinacion
-     * @param pCuantos
-     * @param pIteracion
-     * @param pCol
-     */
-    public int colFichasBloquear(int pFila, int pColumna, int[] combinacion, int pCuantos, int pIteracion, int pCol) {
-        // TODO - implement Tablero.colFichasBloquear
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean tableroLleno() {
-        boolean lleno = true;
-        for (int i = 0; i < matriz[1].length; i++) {
-            Boolean pos = matriz[matriz.length - 1][i];
-            if (pos == null) {
-                lleno = false;
-                return lleno;
-            }
-        }
-        return lleno;
-    }
-
-    /**
-     * @param pFila
-     * @param pColumna
-     * @param pColor
+     * Devuelve el numero de fichas del color introducido tiene una determinada casilla, mirando hacia todas las direcciones (horizontal, vertical y las dos diagonales)
+     *
+     * @param pFila La fila de la casilla a mirar
+     * @param pColumna La columna de la casilla a mirar
+     * @param pColor El color del que se quiere saber el número de colindantes en esa casilla
+     * @return El número de colindantes de esa casilla
+     * @author Igor García
      */
     public int getColindantes(int pFila, int pColumna, boolean pColor) {
         int max = 0;
@@ -236,7 +215,25 @@ public class Tablero {
         }
         return max;
     }
+    /**
+     * @param pFila
+     * @param pColumna
+     * @param combinacion
+     * @param pCuantos
+     * @param pIteracion
+     * @param pCol
+     */
+    public int colFichasBloquear(int pFila, int pColumna, int[] combinacion, int pCuantos, int pIteracion, int pCol) {
+        // TODO - implement Tablero.colFichasBloquear
+        throw new UnsupportedOperationException();
+    }
 
+    /**
+     * Devuelve una lista en la que cada posición indica una columna y el valor en dicha posición, la fila en la que se introducirá la ficha en esa columna
+     *
+     * @return La lista de valores que representa la primera casilla vacía de cada columna
+     * @author Igor García
+     */
     public int[] getPosicionesPosibles() {
         int[] posiciones = new int[matriz[0].length];
         for(int col = 0;col<matriz[0].length;col++){
@@ -249,6 +246,17 @@ public class Tablero {
             }
         }
         return posiciones;
+    }
+    public boolean tableroLleno() {
+        boolean lleno = true;
+        for (int i = 0; i < matriz[1].length; i++) {
+            Boolean pos = matriz[matriz.length - 1][i];
+            if (pos == null) {
+                lleno = false;
+                return lleno;
+            }
+        }
+        return lleno;
     }
 
     /**

@@ -4,11 +4,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.GestorPartidas;
 
-public class OvO implements Modo {
+public class OvO extends Modo {
 
 	private boolean turno;
 
 	public OvO() {
+		super("OvO");
 	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
@@ -22,13 +23,12 @@ public class OvO implements Modo {
 
 		JSONObject json=Tablero.getmTablero().introducirFicha(pColumna,turno);
 
-
 		if(json!=null){
 			Integer x= (Integer) json.get("x");
 			Integer y= (Integer) json.get("y");
 			JSONArray ganado=Tablero.getmTablero().haGanado(x,y,turno);
 			if(ganado==null){
-				turno=!turno;
+				cambiarTurno();
 			}
 			else{
 				json.put("posicionesGanadoras",ganado);
@@ -38,17 +38,18 @@ public class OvO implements Modo {
 		else{
 			return null;
 		}
-
 	}
+	/*Devuelve un String que contiene el nombre del modo de juego
+	 * @author Nuria Lebeña
+	 * @return String que contiene el nombre del modo de juego
+	 */
 
-	public String getNombre() {
-		// TODO - implement OvO.getNombre
-		throw new UnsupportedOperationException();
-	}
 
+	/*Cambia el turno al contrario
+	 * @author Nuria Lebeña
+	*/
 	public void cambiarTurno() {
-		// TODO - implement OvO.cambiarTurno
-		throw new UnsupportedOperationException();
+		turno=!turno;
 	}
 
 }

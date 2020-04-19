@@ -7,8 +7,6 @@ public class ModoFactory {
 	private static ModoFactory mModoFactory;
 
 	private ModoFactory() {
-		// TODO - implement ModoFactory.ModoFactory
-		throw new UnsupportedOperationException();
 	}
 
 	public static ModoFactory getmModoFactory() {
@@ -19,12 +17,15 @@ public class ModoFactory {
 	}
 
 	/**
-	 * 
-	 * @param pModo
+	 * El método genera la modalidad de juego en la que la aplicación se configurará para jugar
+	 * especificado por el usuario.
+	 * @author Alvaro Dueñas
+	 * @param pModo el modo de juego especificado
 	 */
 	public Modo createModo(String pModo) {
-		// TODO - implement ModoFactory.createModo
-		throw new UnsupportedOperationException();
+		if("OrdenadorD".equals(pModo)) return new OrdenadorD();
+		else if("OrdenadorF".equals(pModo)) return new OrdenadorF();
+		return new OvO();
 	}
 
 }
