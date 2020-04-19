@@ -38,7 +38,7 @@ public class OrdenadorD implements Modo {
                     Pair<Integer, Integer> optA = tablero.getOptimo(true);
                     if (optA.getValue() > optB.getValue()) posIn2 = tablero.introducirFicha(optA.getKey(), false);
                     else if (optB.getValue() > optA.getValue())
-                        posIn2 = tablero.introducirFicha(optB.getKey(), true);
+                        posIn2 = tablero.introducirFicha(optB.getKey(), false);
                     else {
                         if ((new Random()).nextBoolean()) posIn2 = tablero.introducirFicha(optA.getKey(), false);
                         else posIn2 = tablero.introducirFicha(optB.getKey(), false);
