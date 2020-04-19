@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import java.util.Random;
 
 public class OrdenadorF implements Modo {
-	//private boolean turno;
 
 	public OrdenadorF() {}
 
@@ -24,7 +23,8 @@ public class OrdenadorF implements Modo {
 			Integer xA = (Integer) json.get("x");
 			Integer yA = (Integer) json.get("y");
 			JSONArray ganadoA = Tablero.getmTablero().haGanado(xA,yA,turno);
-			if (ganadoA == null){
+			boolean lleno = (boolean) json.get("lleno");
+			if (ganadoA == null && !lleno){
 				turno =! turno;
 				boolean enc = false;
 				Random r = new Random();
