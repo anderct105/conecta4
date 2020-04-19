@@ -288,33 +288,36 @@ public class Tablero {
      * @return Array de dos posiciones: 1-La columna en la que se debe meter 2-La cantidad de fichas colindantes de ese color que hay
      * @author Igor García
      */
-    public Collection<Integer> getOptimo(boolean pColor) {
+    public Pair<Integer,Integer> getOptimo(boolean pColor) {
         int[] posiciones = getPosicionesPosibles();
         int colindantesMax = 0;
-        ArrayList<Integer> mejor = new ArrayList();
+        //ArrayList<Integer> mejor = new ArrayList();
+        Pair<Integer,Integer> optimo = null;
         for(int i = 0;i<posiciones.length;i++){
             if(posiciones[i] != -1){
                 int colindantes = getColindantes(posiciones[i], i, pColor);
                 //SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
                 if(colindantes > colindantesMax){
                     colindantesMax = colindantes;
-                    mejor = new ArrayList();
+                    /*mejor = new ArrayList();
                     mejor.add(i);
-                    mejor.add(colindantes);
+                    mejor.add(colindantes);*/
+                    optimo = new Pair<>(i,colindantes);
                 }
                 //SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
                 if(colindantes == colindantesMax){
                     int random = ThreadLocalRandom.current().nextInt(0, 101);
                     if(random < 33){
-                        mejor = new ArrayList();
+                        /*mejor = new ArrayList();
                         mejor.add(i);
-                        mejor.add(colindantes);
+                        mejor.add(colindantes);*/
+                        optimo = new Pair<>(i,colindantes);
                     }
                 }
             }
 
         }
-        return mejor;
+        return optimo;
     }
 
     /**
