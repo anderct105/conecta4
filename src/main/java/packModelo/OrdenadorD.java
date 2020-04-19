@@ -5,8 +5,6 @@ import org.json.simple.JSONObject;
 public class OrdenadorD implements Modo {
 
 	public OrdenadorD() {
-		// TODO - implement OrdenadorD.OrdenadorD
-		throw new UnsupportedOperationException();
 	}
 
 	/**
