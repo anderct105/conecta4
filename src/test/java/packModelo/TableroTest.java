@@ -194,6 +194,160 @@ public class TableroTest {
 
     @Test
     public void numSeguidas() {
+        Tablero.getmTablero().inicializarTablero();
+        //Columna 0
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+
+        //Columna 1
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+
+        //Columna 2
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, true);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+
+        //Columna 3
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, false);
+
+        //Columna 4
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        //Columna 5
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        //Columna 6
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        //Columna 7
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, true);
+        //Columna 8
+        Tablero.getmTablero().introducirFicha(8, false);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, false);
+
+        Tablero.getmTablero().imprimirTablero();
+        Tablero tablero = Tablero.getmTablero();
+        //Prueba1: colindantes hacia todas las direcciones
+        //hacia arriba
+       int[] combinacion=new int[2];
+       combinacion[0]=1;
+       combinacion[1]=0;
+       assertEquals(tablero.numSeguidas(3,6,combinacion,false),1);
+
+       //hacia abajo
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=0;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),1);
+
+        //hacia la derecha
+        combinacion=new int[2];
+        combinacion[0]=0;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),1);
+
+        //diagonal hacia arriba a la derecha
+        combinacion=new int[2];
+        combinacion[0]=1;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),2);
+
+        //diagonal hacia abajo a la izquierda
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=-1;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),0);
+
+        //diagonal hacia arriba a la izquierda
+        combinacion=new int[2];
+        combinacion[0]=1;
+        combinacion[1]=-1;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),1);
+
+        //diagonal hacia abajo a la derecha
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(3,6,combinacion,false),1);
+
+        //Prueba 2:al mirar se sale del tablero
+        //hacia la derecha
+
+        combinacion=new int[2];
+        combinacion[0]=0;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(0,8,combinacion,false),0);
+
+        //hacia abajo
+
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=0;
+        assertEquals(tablero.numSeguidas(0,8,combinacion,false),0);
+
+        //diagonal hacia arriba a la derecha
+        combinacion=new int[2];
+        combinacion[0]=1;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(0,8,combinacion,false),0);
+
+        //diagonal hacia abajo a la izquierda
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=-1;
+        assertEquals(tablero.numSeguidas(0,8,combinacion,false),0);
+
+        //diagonal hacia abajo a la derecha
+        combinacion=new int[2];
+        combinacion[0]=-1;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(0,8,combinacion,false),0);
+
+        //Prueba 3: más de tres fichas en filas
+        combinacion=new int[2];
+        combinacion[0]=0;
+        combinacion[1]=1;
+        assertEquals(tablero.numSeguidas(4,0,combinacion,false),7);
+
+       
     }
 
     @Test
