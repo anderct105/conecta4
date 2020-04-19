@@ -26,7 +26,7 @@ public class OvO implements Modo {
 			Integer columna= (Integer) json.get("y");
 			JSONArray ganado=Tablero.getmTablero().haGanado(fila,columna,turno);
 			if(ganado==null){
-				turno=!turno;
+				cambiarTurno();
 			}
 			else{
 				json.put("posicionesGanadoras",ganado);
