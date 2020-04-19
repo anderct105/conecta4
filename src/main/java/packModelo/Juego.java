@@ -9,6 +9,7 @@ public class Juego extends Observable {
     private Modo modo;
 
     public Juego() {
+        setModoJuego(new OvO());
     }
 
     /**
