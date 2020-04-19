@@ -2,9 +2,10 @@ package packModelo;
 
 import org.json.simple.JSONObject;
 
-public class OrdenadorF implements Modo {
+public class OrdenadorF extends Modo {
 
 	public OrdenadorF() {
+		super("OrdenadorF");
 	}
 
 	/**
@@ -16,10 +17,4 @@ public class OrdenadorF implements Modo {
 		// TODO - implement OrdenadorF.jugar
 		throw new UnsupportedOperationException();
 	}
-
-	public String getNombre() {
-		// TODO - implement OrdenadorF.getNombre
-		throw new UnsupportedOperationException();
-	}
-
 }

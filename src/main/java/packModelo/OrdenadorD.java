@@ -2,9 +2,10 @@ package packModelo;
 
 import org.json.simple.JSONObject;
 
-public class OrdenadorD implements Modo {
+public class OrdenadorD extends Modo {
 
 	public OrdenadorD() {
+		super("OrdenadorD");
 	}
 
 	/**
@@ -14,11 +15,6 @@ public class OrdenadorD implements Modo {
 	 */
 	public JSONObject jugar(int pColumna) {
 		// TODO - implement OrdenadorD.jugar
-		throw new UnsupportedOperationException();
-	}
-
-	public String getNombre() {
-		// TODO - implement OrdenadorD.getNombre
 		throw new UnsupportedOperationException();
 	}
 
