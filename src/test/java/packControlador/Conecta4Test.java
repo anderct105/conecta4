@@ -24,6 +24,12 @@ public class Conecta4Test extends TestCase {
     public void testSetModoJuego() {
         Conecta4.getmConecta4().setModoJuego("OrdenadorD");
         assertTrue(Conecta4.getmConecta4().getModoJuego().equals("OrdenadorD"));
+
+        Conecta4.getmConecta4().setModoJuego("OrdenadorF");
+        assertTrue(Conecta4.getmConecta4().getModoJuego().equals("OrdenadorF"));
+
+        Conecta4.getmConecta4().setModoJuego("Algo");
+        assertTrue(Conecta4.getmConecta4().getModoJuego().equals("OvO"));
     }
 
     public void testCargarRankingFacil() {

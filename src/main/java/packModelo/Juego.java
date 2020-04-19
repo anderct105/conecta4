@@ -31,7 +31,7 @@ public class Juego extends Observable {
      */
     public void setModoJuego(Modo pModo) {
         this.modo = pModo;
-        notify();
+        //notify();
     }
 
 
