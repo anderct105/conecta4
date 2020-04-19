@@ -27,8 +27,8 @@ public class OrdenadorD implements Modo {
         res.put("posicionesGanadoras", null);
         res.put("haGanadoA", false);
         res.put("haGanadoB", false);
-        JSONArray json2 = tablero.haGanado(Integer.parseInt((String) json1.get("x")),
-                Integer.parseInt((String) json1.get("y")), true);
+        JSONArray json2 = tablero.haGanado(Integer.parseInt(String.valueOf(json1.get("x"))),
+                Integer.parseInt(String.valueOf(json1.get("y"))), true);
         if (json2 == null) {
             if (!tablero.tableroLleno()) {
                 JSONObject posIn2;
@@ -44,8 +44,8 @@ public class OrdenadorD implements Modo {
                         else posIn2 = tablero.introducirFicha(optB.getKey(), false);
                     }
                 }
-                JSONArray json3 = tablero.haGanado(Integer.parseInt((String) posIn2.get("x")),
-                        Integer.parseInt((String) posIn2.get("y")), true);
+                JSONArray json3 = tablero.haGanado(Integer.parseInt(String.valueOf(posIn2.get("x"))),
+                        Integer.parseInt(String.valueOf(posIn2.get("y"))), true);
                 if (json3 == null) res.replace("lleno", true);
                 else {
                     res.put("haGanadoB", true);
