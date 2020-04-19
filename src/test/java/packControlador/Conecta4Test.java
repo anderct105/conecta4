@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 public class Conecta4Test extends TestCase {
 
     public void setUp() throws Exception {
-
+        Conecta4.getmConecta4().setModoJuego("OrdenadorF");
     }
 
     public void tearDown() throws Exception {
@@ -18,6 +18,7 @@ public class Conecta4Test extends TestCase {
     }
 
     public void testGetModoJuego() {
+        assertEquals(Conecta4.getmConecta4().getModoJuego(), "OrdenadorF");
     }
 
     public void testSetModoJuego() {
