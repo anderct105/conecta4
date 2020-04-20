@@ -1,6 +1,7 @@
 package packModelo;
 
 import javafx.scene.control.Tab;
+import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.After;
@@ -359,9 +360,9 @@ public class TableroTest {
         //Prueba 2: una ficha de color true en medio del tablero
         tablero.introducirFicha(4,true);
 
-        Collection<Integer> lista=tablero.getOptimo(true);
-        Iterator<Integer> itr=lista.iterator();
-        assertTrue(lista.contains(4) ||lista.contains(5)||lista.contains(3));
+        Pair<Integer,Integer> par=tablero.getOptimo(true);
+;
+        assertTrue(par.getKey().equals(4) ||par.getKey().equals(5)||par.getKey().equals(3));
 
 
 
@@ -372,11 +373,11 @@ public class TableroTest {
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
+        par=tablero.getOptimo(true);
 
 
 
-        assertTrue(lista.contains(2));
+        assertTrue(par.getValue().equals(2));
 
         //Prueba 4: 3 en raya vertical
         tablero.inicializarTablero();
@@ -386,9 +387,9 @@ public class TableroTest {
         tablero.introducirFicha(5,false);
         tablero.introducirFicha(5,false);
         tablero.imprimirTablero();
-        lista=tablero.getOptimo(false);
+        par=tablero.getOptimo(false);
 
-        assertTrue(lista.contains(5) && lista.contains(2));
+        assertTrue(par.getKey().equals(5));
 
         //Prueba 5: ganar frente a hacer 3 en raya
         tablero.inicializarTablero();
@@ -397,17 +398,17 @@ public class TableroTest {
         tablero.introducirFicha(4,true);
         tablero.introducirFicha(8,true);
         tablero.introducirFicha(8,true);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(3));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getValue().equals(3));
 
         //Prueba 6: hacer 2 en raya en vertical
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(5,false);
-        lista=tablero.getOptimo(false);
+        par=tablero.getOptimo(false);
 
-        assertTrue(lista.contains(5) || lista.contains(4) || lista.contains(6));
+        assertTrue(par.getKey().equals(5) || par.getKey().equals(4) || par.getKey().equals(6));
 
         //Prueba 7: hacer 3 en raya de dos formas
         tablero.inicializarTablero();
@@ -416,16 +417,16 @@ public class TableroTest {
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(5,false);
 
-        lista=tablero.getOptimo(true);
+        par=tablero.getOptimo(true);
 
-        assertTrue(lista.contains(0)||lista.contains(3));
+        assertTrue(par.getKey().equals(0)||par.getKey().equals(3));
 
         //Prueba 8: hacer 2 en raya de 3 formas
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(1)|| lista.contains(2)||lista.contains(0));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(1)|| par.getKey().equals(2)||par.getKey().equals(0));
 
         //Prueba 9: hacer 3 en raya
         tablero.inicializarTablero();
@@ -433,8 +434,8 @@ public class TableroTest {
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,false);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(1)|| lista.contains(2));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(1)|| par.getKey().equals(2));
 
         //Prueba 10: ganar en diagonal
         tablero.inicializarTablero();
@@ -448,8 +449,8 @@ public class TableroTest {
         tablero.introducirFicha(3,false);
         tablero.introducirFicha(3,false);
         tablero.imprimirTablero();
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(3));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(3));
 
     }
 
