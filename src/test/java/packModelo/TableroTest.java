@@ -808,12 +808,12 @@ public class TableroTest {
         // (si no mira las superiores)
         for (JSONObject lastPiece : reales) {
             JSONArray predicted = tablero.getCoordenadasGanadoras(
-                    Integer.parseInt(lastPiece.get("x").toString()),
-                    Integer.parseInt(lastPiece.get("y").toString()), true);
+                    Integer.parseInt(lastPiece.get("fila").toString()),
+                    Integer.parseInt(lastPiece.get("columna").toString()), true);
             for (JSONObject piece : reales) {
                 for (int i = 0; i < predicted.size(); i++) {
                     JSONObject checkIfExists = (JSONObject) predicted.get(i);
-                    if (piece.get("x") == checkIfExists.get("x") & piece.get("y") == checkIfExists.get("y")) {
+                    if (piece.get("fila") == checkIfExists.get("fila") & piece.get("columna") == checkIfExists.get("columna")) {
                         predicted.remove(i);
                         break;
                     }
