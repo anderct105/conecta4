@@ -5,14 +5,16 @@ import java.sql.*;
 public class ConnectionManager {
 
 	private static String bd="conecta4";
-	private static String driverName;
+	private static String driverName = "jdbc:mysql";
 	private static String username="adminConecta4";
 	private static String password="adminConecta4";
+	private static String server = "localhost";
+	private static String port = "3306";
 	private Connection connection;
 
 	public ConnectionManager() {
 		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bd,username,password);
+			Connection conexion = DriverManager.getConnection(driverName + "://" + server + ":" + port + bd,username,password);
 			this.connection = conexion;
 		} catch (SQLException e) {
 			e.printStackTrace();
