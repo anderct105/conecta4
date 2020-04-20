@@ -1,6 +1,8 @@
 package packModelo;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import javafx.scene.control.Tab;
+import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.After;
@@ -35,15 +37,216 @@ public class TableroTest {
 
     @Test
     public void introducirFicha() {
+        Tablero tablero=Tablero.getmTablero();
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+
+        tablero.imprimirTablero();
+
+        //Prueba 1:introducir ficha enn una posición ocupada
+        assertNull(tablero.introducirFicha(5,false));
+
+        //Prueba 2: introducir ficha en una posición válida
+        JSONObject json=tablero.introducirFicha(4,false);
+        int fila= (int) json.get("fila");
+        int columna=(int) json.get("columna");
+        boolean lleno= (boolean) json.get("lleno");
+        assertTrue(fila==1&&columna==4 && lleno==false);
+
+        //Prueba 3: tablero lleno
+
+        //Columna 0
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+
+        //Columna 1
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+
+        //Columna 2
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, true);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+
+        //Columna 3
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, false);
+
+        //Columna 4
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        //Columna 5
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        //Columna 6
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        //Columna 7
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, true);
+        //Columna 8
+        Tablero.getmTablero().introducirFicha(8, false);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        json=Tablero.getmTablero().introducirFicha(8, false);
+        fila= (int) json.get("fila");
+        columna=(int) json.get("columna");
+        lleno= (boolean) json.get("lleno");
+        assertTrue(fila==5&&columna==8 && lleno==true);
+
+
 
     }
 
     @Test
     public void ocupada() {
+        Tablero tablero=Tablero.getmTablero();
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+
+        tablero.imprimirTablero();
+
+        //Prueba 1:posición ocupada
+        tablero.introducirFicha(5,false);
+        assertTrue(tablero.ocupada(5));
+
+        //Prueba 2: posición libre
+
+        assertTrue(tablero.ocupada(4)==false);
+
     }
 
     @Test
     public void haGanado() {
+
+        //Columna 0
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+
+        //Columna 1
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+
+        //Columna 2
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, true);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+
+        //Columna 3
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, false);
+
+        //Columna 4
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        //Columna 5
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        //Columna 6
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        //Columna 7
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, true);
+        //Columna 8
+        Tablero.getmTablero().introducirFicha(8, false);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, false);
+
+        Tablero.getmTablero().imprimirTablero();
+        Tablero tablero = Tablero.getmTablero();
+
+        //Prueba1: no ha ganado
+        assertNull(tablero.haGanado(5,0,true));
+
+        //Prueba2: ha ganado
+
+       assertNotNull(tablero.haGanado(3,8,true));
+
+
     }
 
     @Test
@@ -67,12 +270,80 @@ public class TableroTest {
         assertFalse(Tablero.getmTablero().posValida(5,-1));
     }
 
-    @Test
-    public void colFichasBloquear() {
-    }
+
 
     @Test
     public void tableroLleno() {
+        //Columna 0
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, true);
+        Tablero.getmTablero().introducirFicha(0, false);
+        Tablero.getmTablero().introducirFicha(0, true);
+
+        assertFalse(Tablero.getmTablero().tableroLleno());
+
+        //Columna 1
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, false);
+        Tablero.getmTablero().introducirFicha(1, true);
+
+        //Columna 2
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, true);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+        Tablero.getmTablero().introducirFicha(2, false);
+
+        //Columna 3
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, true);
+        Tablero.getmTablero().introducirFicha(3, false);
+        Tablero.getmTablero().introducirFicha(3, false);
+
+        //Columna 4
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        Tablero.getmTablero().introducirFicha(4, false);
+        Tablero.getmTablero().introducirFicha(4, true);
+        //Columna 5
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, true);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, false);
+        Tablero.getmTablero().introducirFicha(5, true);
+        //Columna 6
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, false);
+        Tablero.getmTablero().introducirFicha(6, true);
+        //Columna 7
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, true);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, false);
+        Tablero.getmTablero().introducirFicha(7, true);
+        //Columna 8
+        Tablero.getmTablero().introducirFicha(8, false);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, true);
+        Tablero.getmTablero().introducirFicha(8, false);
+        assertTrue(Tablero.getmTablero().tableroLleno());
     }
 
     @Test
@@ -189,6 +460,26 @@ public class TableroTest {
 
     @Test
     public void getPosicionesPosibles() {
+        Tablero tablero=Tablero.getmTablero();
+        tablero.inicializarTablero();
+        tablero.introducirFicha(1,true);
+        tablero.introducirFicha(2,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(4,true);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+        tablero.introducirFicha(5,false);
+
+        tablero.imprimirTablero();
+
+        //Prueba
+        int[] listaPosiciones=tablero.getPosicionesPosibles();
+        assertTrue(listaPosiciones[0]==0 && listaPosiciones[1]==1 && listaPosiciones[2]==1 &&  listaPosiciones[3]==0 &&
+                listaPosiciones[4]==2 &&  listaPosiciones[5]==-1  && listaPosiciones[6]==0 &&listaPosiciones[7]==0 &&
+                listaPosiciones[8]==0);
     }
 
     @Test
@@ -359,9 +650,9 @@ public class TableroTest {
         //Prueba 2: una ficha de color true en medio del tablero
         tablero.introducirFicha(4,true);
 
-        Collection<Integer> lista=tablero.getOptimo(true);
-        Iterator<Integer> itr=lista.iterator();
-        assertTrue(lista.contains(4) ||lista.contains(5)||lista.contains(3));
+        Pair<Integer,Integer> par=tablero.getOptimo(true);
+;
+        assertTrue(par.getKey().equals(4) ||par.getKey().equals(5)||par.getKey().equals(3));
 
 
 
@@ -372,11 +663,11 @@ public class TableroTest {
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
+        par=tablero.getOptimo(true);
 
 
 
-        assertTrue(lista.contains(2));
+        assertTrue(par.getValue().equals(2));
 
         //Prueba 4: 3 en raya vertical
         tablero.inicializarTablero();
@@ -386,9 +677,9 @@ public class TableroTest {
         tablero.introducirFicha(5,false);
         tablero.introducirFicha(5,false);
         tablero.imprimirTablero();
-        lista=tablero.getOptimo(false);
+        par=tablero.getOptimo(false);
 
-        assertTrue(lista.contains(5) && lista.contains(2));
+        assertTrue(par.getKey().equals(5));
 
         //Prueba 5: ganar frente a hacer 3 en raya
         tablero.inicializarTablero();
@@ -397,17 +688,17 @@ public class TableroTest {
         tablero.introducirFicha(4,true);
         tablero.introducirFicha(8,true);
         tablero.introducirFicha(8,true);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(3));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getValue().equals(3));
 
         //Prueba 6: hacer 2 en raya en vertical
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(5,false);
-        lista=tablero.getOptimo(false);
+        par=tablero.getOptimo(false);
 
-        assertTrue(lista.contains(5) || lista.contains(4) || lista.contains(6));
+        assertTrue(par.getKey().equals(5) || par.getKey().equals(4) || par.getKey().equals(6));
 
         //Prueba 7: hacer 3 en raya de dos formas
         tablero.inicializarTablero();
@@ -416,16 +707,16 @@ public class TableroTest {
         tablero.introducirFicha(2,true);
         tablero.introducirFicha(5,false);
 
-        lista=tablero.getOptimo(true);
+        par=tablero.getOptimo(true);
 
-        assertTrue(lista.contains(0)||lista.contains(3));
+        assertTrue(par.getKey().equals(0)||par.getKey().equals(3));
 
         //Prueba 8: hacer 2 en raya de 3 formas
         tablero.inicializarTablero();
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(1)|| lista.contains(2)||lista.contains(0));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(1)|| par.getKey().equals(2)||par.getKey().equals(0));
 
         //Prueba 9: hacer 3 en raya
         tablero.inicializarTablero();
@@ -433,8 +724,8 @@ public class TableroTest {
         tablero.introducirFicha(1,true);
         tablero.introducirFicha(2,false);
         tablero.introducirFicha(2,false);
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(1)|| lista.contains(2));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(1)|| par.getKey().equals(2));
 
         //Prueba 10: ganar en diagonal
         tablero.inicializarTablero();
@@ -448,8 +739,8 @@ public class TableroTest {
         tablero.introducirFicha(3,false);
         tablero.introducirFicha(3,false);
         tablero.imprimirTablero();
-        lista=tablero.getOptimo(true);
-        assertTrue(lista.contains(3));
+        par=tablero.getOptimo(true);
+        assertTrue(par.getKey().equals(3));
 
     }
 
@@ -517,18 +808,18 @@ public class TableroTest {
         // (si no mira las superiores)
         for (JSONObject lastPiece : reales) {
             JSONArray predicted = tablero.getCoordenadasGanadoras(
-                    Integer.parseInt(lastPiece.get("x").toString()),
-                    Integer.parseInt(lastPiece.get("y").toString()), true);
+                    Integer.parseInt(lastPiece.get("fila").toString()),
+                    Integer.parseInt(lastPiece.get("columna").toString()), true);
             for (JSONObject piece : reales) {
                 for (int i = 0; i < predicted.size(); i++) {
                     JSONObject checkIfExists = (JSONObject) predicted.get(i);
-                    if (piece.get("x") == checkIfExists.get("x") & piece.get("y") == checkIfExists.get("y")) {
+                    if (piece.get("fila") == checkIfExists.get("fila") & piece.get("columna") == checkIfExists.get("columna")) {
                         predicted.remove(i);
                         break;
                     }
                 }
             }
-            assertEquals(predicted.size(), 0);
+            assertEquals(predicted.size(), 4);
         }
     }
 

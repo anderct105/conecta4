@@ -52,12 +52,12 @@ public class Tablero {
             ocupada = false;
         }
         boolean lleno = tableroLleno();
-
         if (ocupada) {
             return null;
         } else {
+            //SE NOTIFICARÁ A LA INTERFAZ LA X E Y EN LA QUE SE HA INTRODUCIDO
+            //notify
             json.put("lleno", lleno);
-
             return json;
         }
     }
@@ -80,15 +80,17 @@ public class Tablero {
         }
         matriz[i][pColumna] = pJugador;
         JSONObject json = new JSONObject();
-        json.put("x", i);
-        json.put("y", pColumna);
+        json.put("fila", i);
+        json.put("columna", pColumna);
         return json;
     }
 
-    /** Precondición: recibe como parámetro una columna
-     *Postcondición: devuelve un booleano indicando si la columna está llena o no
-     * @author Nuria Lebeña
+    /**
+     * Precondición: recibe como parámetro una columna
+     * Postcondición: devuelve un booleano indicando si la columna está llena o no
+     *
      * @param pColumna entero que hace referencia a la columna
+     * @author Nuria Lebeña
      */
     public boolean ocupada(int pColumna) {
         int i = 0;
@@ -162,7 +164,6 @@ public class Tablero {
      */
     public void inicializarTablero() {
         matriz = new Boolean[6][9];
-
         for (int x = 0; x < matriz.length; x++) {
             for (int y = 0; y < matriz[0].length; y++) {
                 matriz[x][y] = null;
@@ -170,6 +171,7 @@ public class Tablero {
         }
     }
 
+    //QUITAR AL FINALIZAR
     public void imprimirTablero() {
         System.out.println("\n");
         for (int x = matriz.length - 1; x >= 0; x--) {
@@ -180,8 +182,6 @@ public class Tablero {
                 } else {
                     System.out.print(contenido + "  ");
                 }
-
-
             }
             System.out.println("\n");
         }
@@ -190,9 +190,9 @@ public class Tablero {
     /**
      * Devuelve el numero de fichas del color introducido tiene una determinada casilla, mirando hacia todas las direcciones (horizontal, vertical y las dos diagonales)
      *
-     * @param pFila La fila de la casilla a mirar
+     * @param pFila    La fila de la casilla a mirar
      * @param pColumna La columna de la casilla a mirar
-     * @param pColor El color del que se quiere saber el número de colindantes en esa casilla
+     * @param pColor   El color del que se quiere saber el número de colindantes en esa casilla
      * @return El número de colindantes de esa casilla
      * @author Igor García
      */
@@ -210,23 +210,13 @@ public class Tablero {
                 max = colindantes;
             }
         }
-        if(max>3){
+        if (max > 3) {
             max = 3;
         }
         return max;
     }
-    /**
-     * @param pFila
-     * @param pColumna
-     * @param combinacion
-     * @param pCuantos
-     * @param pIteracion
-     * @param pCol
-     */
-    public int colFichasBloquear(int pFila, int pColumna, int[] combinacion, int pCuantos, int pIteracion, int pCol) {
-        // TODO - implement Tablero.colFichasBloquear
-        throw new UnsupportedOperationException();
-    }
+
+
 
     /**
      * Devuelve una lista en la que cada posición indica una columna y el valor en dicha posición, la fila en la que se introducirá la ficha en esa columna
@@ -236,10 +226,10 @@ public class Tablero {
      */
     public int[] getPosicionesPosibles() {
         int[] posiciones = new int[matriz[0].length];
-        for(int col = 0;col<matriz[0].length;col++){
+        for (int col = 0; col < matriz[0].length; col++) {
             posiciones[col] = -1;
-            for(int fila = 0; fila<matriz.length;fila++){
-                if (matriz[fila][col] == null){
+            for (int fila = 0; fila < matriz.length; fila++) {
+                if (matriz[fila][col] == null) {
                     posiciones[col] = fila;
                     break;
                 }
@@ -247,6 +237,7 @@ public class Tablero {
         }
         return posiciones;
     }
+
     public boolean tableroLleno() {
         boolean lleno = true;
         for (int i = 0; i < matriz[1].length; i++) {
@@ -262,27 +253,25 @@ public class Tablero {
     /**
      * Indica el numero de fichas seguidas de un color que hay desde una determinada casilla en la dirección indicada
      *
-     * @param pFila La fila de la casilla que se quiere comprobar
+     * @param pFila    La fila de la casilla que se quiere comprobar
      * @param pColumna La columna de la casilla que se quiere comprobar
-     * @param pC La dirección en la que se mirará la cantidad de fichas seguidas
-     * @param pColor El color de la ficha a mirar
+     * @param pC       La dirección en la que se mirará la cantidad de fichas seguidas
+     * @param pColor   El color de la ficha a mirar
      * @author Igor garcía
      */
     public int numSeguidas(int pFila, int pColumna, int[] pC, boolean pColor) {
         int seguidas = 0;
         bucleSeguidas:
-        while(true){
+        while (true) {
             pFila = pFila + pC[0];
             pColumna = pColumna + pC[1];
-            if(posValida(pFila,pColumna)){
-                if(esColor(pFila,pColumna,pColor)){
+            if (posValida(pFila, pColumna)) {
+                if (esColor(pFila, pColumna, pColor)) {
                     seguidas++;
-                }
-                else{
+                } else {
                     break bucleSeguidas;
                 }
-            }
-            else{
+            } else {
                 break bucleSeguidas;
             }
         }
@@ -296,26 +285,26 @@ public class Tablero {
      * @return Array de dos posiciones: 1-La columna en la que se debe meter 2-La cantidad de fichas colindantes de ese color que hay
      * @author Igor García
      */
-    public Pair<Integer,Integer> getOptimo(boolean pColor) {
+    public Pair<Integer, Integer> getOptimo(boolean pColor) {
         int[] posiciones = getPosicionesPosibles();
         int colindantesMax = 0;
-        Pair<Integer,Integer> optimo = null;
-        for(int i = 0;i<posiciones.length;i++){
-            if(posiciones[i] != -1){
+        Pair<Integer, Integer> optimo = null;
+        for (int i = 0; i < posiciones.length; i++) {
+            if (posiciones[i] != -1) {
                 int colindantes = getColindantes(posiciones[i], i, pColor);
                 //SI LA ACTUAL ES MEJOR QUE LA MAXIMA, SE PONE LA ACTUAL COMO MAXIMA
-                if(colindantes > colindantesMax){
+                if (colindantes > colindantesMax) {
                     colindantesMax = colindantes;
-                    optimo = new Pair<>(i,colindantes);
+                    optimo = new Pair<>(i, colindantes);
                 }
                 //SI LA ACTUAL ES IGUAL QUE LA MAXIMA, HAY UN 33% DE POSIBILIDADES DE QUE SE PONGA COMO MAXIMA LA ACTUAL Y UN 66% DE QUE SE MANTENGA LA QUE YA ESTABA
-                if(colindantes == colindantesMax){
-                    if(optimo == null){
-                        optimo = new Pair<>(i,colindantes);
+                if (colindantes == colindantesMax) {
+                    if (optimo == null) {
+                        optimo = new Pair<>(i, colindantes);
                     }
                     int random = ThreadLocalRandom.current().nextInt(0, 101);
-                    if(random < 33){
-                        optimo = new Pair<>(i,colindantes);
+                    if (random < 33) {
+                        optimo = new Pair<>(i, colindantes);
                     }
                 }
             }

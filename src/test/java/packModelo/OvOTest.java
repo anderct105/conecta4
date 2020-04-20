@@ -44,15 +44,17 @@ public class OvOTest {
 
         JSONObject json = ovo.jugar(1);
         ArrayList pos = (ArrayList) json.get("posicionesGanadoras");
-        assertEquals(pos.size(), 0);
+        assertNull(pos);
 
         //Prueba columna con espacio y partida ganada
         Tablero.getmTablero().introducirFicha(2,true);
         Tablero.getmTablero().introducirFicha(3,false);
         Tablero.getmTablero().introducirFicha(2,false);
 
+        ovo.jugar(4);
         JSONObject json1 = ovo.jugar(3);
         ArrayList pos1 = (ArrayList) json1.get("posicionesGanadoras");
+        Tablero.getmTablero().imprimirTablero();
         assertEquals(pos1.size(), 4);
 
         Tablero.getmTablero().imprimirTablero();
@@ -60,9 +62,8 @@ public class OvOTest {
 
     @Test
     public void getNombre() {
+        assertNotNull(ovo.getNombre());
     }
 
-    @Test
-    public void cambiarTurno() {
-    }
+
 }
