@@ -1,0 +1,13 @@
+.pane {
+    -fx-background-image: url("../imagenes/fondo.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.menubar {
+    -fx-background-color: rgba(255,255,255,0.2);
+}
+
+.title {
+    -fx-font-style: bold;
+}
