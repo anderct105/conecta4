@@ -9,7 +9,7 @@ import java.util.Random;
 public class OrdenadorD extends Modo {
 
     public OrdenadorD() {
-        super("OrdenadorD");
+        super("Ordenador modo Dificil");
     }
 
     /**
