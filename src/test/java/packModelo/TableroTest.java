@@ -819,7 +819,7 @@ public class TableroTest {
                     }
                 }
             }
-            assertEquals(predicted.size(), 0);
+            assertEquals(predicted.size(), 4);
         }
     }
 
