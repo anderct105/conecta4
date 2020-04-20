@@ -14,10 +14,11 @@ public class OrdenadorD extends Modo {
 
     /**
      * Simula un turno a partir de la posición introducida por el jugador.
-     * @author Alvaro Dueñas
+     *
      * @param pColumna la columna en la que se va a introducir la ficha en la jugada
      * @return JSON {haGanadoA:boolean, haGanadoB:boolean,
      * posicionesGanadoras {x1,y1;x2,y2:;...},lleno: boolean} / null
+     * @author Alvaro Dueñas
      */
     public JSONObject jugar(int pColumna) {
         Tablero tablero = Tablero.getmTablero();
