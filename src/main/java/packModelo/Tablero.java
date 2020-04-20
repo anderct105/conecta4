@@ -80,8 +80,8 @@ public class Tablero {
         }
         matriz[i][pColumna] = pJugador;
         JSONObject json = new JSONObject();
-        json.put("x", i);
-        json.put("y", pColumna);
+        json.put("fila", i);
+        json.put("columna", pColumna);
         return json;
     }
 
@@ -164,7 +164,6 @@ public class Tablero {
      */
     public void inicializarTablero() {
         matriz = new Boolean[6][9];
-
         for (int x = 0; x < matriz.length; x++) {
             for (int y = 0; y < matriz[0].length; y++) {
                 matriz[x][y] = null;
@@ -172,6 +171,7 @@ public class Tablero {
         }
     }
 
+    //QUITAR AL FINALIZAR
     public void imprimirTablero() {
         System.out.println("\n");
         for (int x = matriz.length - 1; x >= 0; x--) {
@@ -182,8 +182,6 @@ public class Tablero {
                 } else {
                     System.out.print(contenido + "  ");
                 }
-
-
             }
             System.out.println("\n");
         }

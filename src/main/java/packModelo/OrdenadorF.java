@@ -24,9 +24,9 @@ public class OrdenadorF extends Modo {
         boolean turno = false;
         JSONObject json = Tablero.getmTablero().introducirFicha(pColumna, turno);
         if (json != null) {
-            Integer xA = (Integer) json.get("x");
-            Integer yA = (Integer) json.get("y");
-            JSONArray ganadoA = Tablero.getmTablero().haGanado(xA, yA, turno);
+            Integer filaA = (Integer) json.get("fila");
+            Integer columnaA = (Integer) json.get("columna");
+            JSONArray ganadoA = Tablero.getmTablero().haGanado(filaA, columnaA, turno);
             boolean lleno = (boolean) json.get("lleno");
             if (ganadoA == null && !lleno) {
                 turno = !turno;
@@ -38,9 +38,9 @@ public class OrdenadorF extends Modo {
                     if (!ocupada) {
                         json = Tablero.getmTablero().introducirFicha(col, turno);
                         enc = true;
-                        Integer xB = (Integer) json.get("x");
-                        Integer yB = (Integer) json.get("y");
-                        JSONArray ganadoB = Tablero.getmTablero().haGanado(xB, yB, turno);
+                        Integer filaB = (Integer) json.get("fila");
+                        Integer columnaB = (Integer) json.get("columna");
+                        JSONArray ganadoB = Tablero.getmTablero().haGanado(filaB, columnaB, turno);
                         if (ganadoB != null) {
                             json.put("posicionesGanadoras", ganadoB);
                             json.put("haGanadoA", false);
@@ -56,6 +56,8 @@ public class OrdenadorF extends Modo {
                 json.put("haGanadoA", true);
                 json.put("haGanadoB", false);
             }
+            json.remove("fila");
+            json.remove("columna");
             return json;
         } else {
             return null;

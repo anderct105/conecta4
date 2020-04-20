@@ -16,19 +16,27 @@ public class OvO extends Modo {
      * Post:devuelve un json que contiene la información de lo sucedido durante la partida
      *
      * @param pColumna la columna en la que se va a introducir la ficha en la jugada
-     * @return Json de la forma {x:int, y:int, lleno: boolean, posicionesGanadoras {x1:,y1:,x2:,y2:...}} que contiene la
+     * @return Json de la forma {haGanadoA : boolean, haGanadoB : boolean, lleno: boolean, posicionesGanadoras {x1:,y1:,x2:,y2:...}} que contiene la
      * información de lo sucedido durante la partida y nulo en caso de que no se haya podido introducir la ficha
      * @author Nuria Lebeña
      */
     public JSONObject jugar(int pColumna) {
         JSONObject json = Tablero.getmTablero().introducirFicha(pColumna, turno);
         if (json != null) {
-            Integer x = (Integer) json.get("x");
-            Integer y = (Integer) json.get("y");
-            JSONArray ganado = Tablero.getmTablero().haGanado(x, y, turno);
+            Integer fila = (Integer) json.get("fila");
+            Integer columna = (Integer) json.get("columna");
+            JSONArray ganado = Tablero.getmTablero().haGanado(fila, columna, turno);
+            json.put("haGanadoA",false);
+            json.put("haGanadoB",false);
             if (ganado == null) {
                 cambiarTurno();
             } else {
+                if (turno) {
+                    json.put("haGanadoA", true);
+                }
+                else {
+                    json.put("haGanadoB", true);
+                }
                 json.put("posicionesGanadoras", ganado);
             }
             return json;
