@@ -1,10 +1,15 @@
 package packMain;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Main extends Application {
 
@@ -19,4 +24,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.show();
     }
+
+
 }
