@@ -65,10 +65,10 @@ public class GestorPartidas {
 
 	public void guardarPartida(String pNombre, int pPuntuacion) {
 		String modo = juego.getModoJuego();
-		if (modo.equals("OrdenadorF")){
+		if (modo.equals("Ordenador modo Facil")){
 			OrdenadorFDAOImpl of = new OrdenadorFDAOImpl();
 			of.create(pNombre, pPuntuacion);
-		} else if (modo.equals("OrdenadorD")) {
+		} else if (modo.equals("Ordenador modo Dificil")) {
 			OrdenadorDDAOImpl od = new OrdenadorDDAOImpl();
 			od.create(pNombre, pPuntuacion);
 		}

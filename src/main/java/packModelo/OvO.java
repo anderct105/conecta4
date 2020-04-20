@@ -9,7 +9,7 @@ public class OvO extends Modo {
 	private boolean turno;
 
 	public OvO() {
-		super("OvO");
+		super("1vs1");
 	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
@@ -39,11 +39,6 @@ public class OvO extends Modo {
 			return null;
 		}
 	}
-	/*Devuelve un String que contiene el nombre del modo de juego
-	 * @author Nuria Lebeña
-	 * @return String que contiene el nombre del modo de juego
-	 */
-
 
 	/*Cambia el turno al contrario
 	 * @author Nuria Lebeña

@@ -23,8 +23,8 @@ public class ModoFactory {
 	 * @param pModo el modo de juego especificado
 	 */
 	public Modo createModo(String pModo) {
-		if("OrdenadorD".equals(pModo)) return new OrdenadorD();
-		else if("OrdenadorF".equals(pModo)) return new OrdenadorF();
+		if("Ordenador modo Dificil".equals(pModo)) return new OrdenadorD();
+		else if("Ordenador modo Facil".equals(pModo)) return new OrdenadorF();
 		return new OvO();
 	}
 

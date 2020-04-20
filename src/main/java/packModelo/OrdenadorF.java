@@ -8,7 +8,7 @@ import java.util.Random;
 public class OrdenadorF extends Modo {
 
 	public OrdenadorF() {
-		super("OrdenadorF");
+		super("Ordenador modo Facil");
 	}
 
 	/**Pre: recibe como parámetro la columna introducida por el jugador
