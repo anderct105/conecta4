@@ -14,7 +14,7 @@ public class ConnectionManager {
 
 	public ConnectionManager() {
 		try {
-			Connection conexion = DriverManager.getConnection(driverName + "://" + server + ":" + port + "/ " + bd,username,password);
+			Connection conexion = DriverManager.getConnection(driverName + "://" + server + ":" + port + "/ " + bd+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",username,password);
 			this.connection = conexion;
 		} catch (SQLException e) {
 			e.printStackTrace();
