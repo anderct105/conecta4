@@ -216,18 +216,7 @@ public class Tablero {
         return max;
     }
 
-    /**
-     * @param pFila
-     * @param pColumna
-     * @param combinacion
-     * @param pCuantos
-     * @param pIteracion
-     * @param pCol
-     */
-    public int colFichasBloquear(int pFila, int pColumna, int[] combinacion, int pCuantos, int pIteracion, int pCol) {
-        // TODO - implement Tablero.colFichasBloquear
-        throw new UnsupportedOperationException();
-    }
+
 
     /**
      * Devuelve una lista en la que cada posición indica una columna y el valor en dicha posición, la fila en la que se introducirá la ficha en esa columna

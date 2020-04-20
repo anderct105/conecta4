@@ -60,9 +60,8 @@ public class OvOTest {
 
     @Test
     public void getNombre() {
+        assertNotNull(ovo.getNombre());
     }
 
-    @Test
-    public void cambiarTurno() {
-    }
+
 }
