@@ -1,9 +1,9 @@
 Conecta4
 
-#Cerrar ventana JavaFX
+#Cerrar ventana JavaFX - Añadir el import {javafx.scene.control."El tipo del elemento pane"}
         (pane es cualquie elemento de la ventana)
-        Window w = pane.getScene().getWindow();
-        ((Stage) w).close();
+        Stage stage = (Stage) pane.getScene().getWindow();
+        stage.close();
         
 #Abrir cualquier ventana JavaFX
 
