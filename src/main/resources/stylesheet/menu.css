@@ -1,7 +1,7 @@
 .pane {
-    -fx-background-image: url("../imagenes/fondo.jpg");
-    -fx-background-position: center;
     -fx-background-size: cover;
+    -fx-background-image: url("../imagenes/colors.jpg");
+    -fx-background-position: center;
 }
 
 .menubar {
@@ -22,4 +22,15 @@
     -fx-border-style: outset;
     -fx-border-image-width: 2px;
     -fx-border-color: linear-gradient(to left, #743ad5, #d53a9d);;
+    -fx-border-color: linear-gradient(to left, #e1eec3, #f05053);
+
+}
+
+.ranking {
+    -fx-opacity: 1;
+}
+
+.tab {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
 }

@@ -9,21 +9,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
    <children>
       <AnchorPane layoutY="-1.0" prefHeight="104.0" prefWidth="1100.0" styleClass="menubar" stylesheets="@../stylesheet/menu.css" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label layoutX="406.0" prefHeight="104.0" prefWidth="289.0" styleClass="title" stylesheets="@../stylesheet/menu.css" text="CONECTA 4" textAlignment="CENTER" textFill="#0d0d0d" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="405.0">
+            <Label fx:id="title" layoutX="406.0" prefHeight="104.0" prefWidth="289.0" styleClass="title" stylesheets="@../stylesheet/menu.css" text="CONECTA 4" textAlignment="CENTER" textFill="#0d0d0d" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="405.0">
                <font>
                   <Font name="System Bold" size="45.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <TabPane layoutX="56.0" layoutY="147.0" prefHeight="403.0" prefWidth="380.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="56.0" layoutY="147.0" prefHeight="403.0" prefWidth="380.0" styleClass="ranking" stylesheets="@../stylesheet/menu.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab closable="false" text="Facil">
             <content>
@@ -60,14 +59,17 @@
             <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Label>
-      <Pane layoutX="586.0" layoutY="253.0" prefHeight="191.0" prefWidth="360.0" styleClass="opciones" stylesheets="@../stylesheet/menu.css">
+      <AnchorPane fx:id="botones" layoutX="625.0" layoutY="251.0" onMouseEntered="#rotateBorder" prefHeight="152.0" prefWidth="299.0" styleClass="opciones">
          <children>
-            <ImageView fx:id="play" fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" styleClass="boton">
+            <ImageView fx:id="play" fitHeight="150.0" fitWidth="367.0" layoutX="14.0" layoutY="20.0" onMouseEntered="#hoverPlay" onMouseExited="#quitHoverPlay" pickOnBounds="true" preserveRatio="true" styleClass="boton">
                <image>
                   <Image url="@../imagenes/play.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
-            <ImageView fx:id="config" fitHeight="104.0" fitWidth="92.0" layoutX="202.0" layoutY="50.0" onMouseClicked="#config" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="config" fitHeight="104.0" fitWidth="92.0" layoutX="164.0" layoutY="49.0" onMouseClicked="#config" onMouseEntered="#hoverConfig" onMouseExited="#quitHoverConfig" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/settings-icon.png" />
                </image>
@@ -75,6 +77,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-         </children></Pane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
