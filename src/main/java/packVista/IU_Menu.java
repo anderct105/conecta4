@@ -33,11 +33,18 @@ public class IU_Menu extends Stage {
     private Label title;
     @FXML
     private AnchorPane pane;
-
+    @FXML
+    private Label modo;
 
     @FXML
     public void initialize() {
         shakeStage();
+        Conecta4.getmConecta4().setModoJuego("Ordenador modo Facil");
+        Conecta4.getmConecta4().guardarPartida("ggf",32);
+        Conecta4.getmConecta4().guardarPartida("aaa",364);
+        Conecta4.getmConecta4().guardarPartida("tg",26);
+        Conecta4.getmConecta4().guardarPartida("htg",36);
+        modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
         table_facil.setItems(obtenerModelo(true));

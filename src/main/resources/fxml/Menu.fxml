@@ -30,8 +30,8 @@
                      <children>
                         <TableView fx:id="table_facil" layoutX="-43.0" layoutY="-18.0" prefHeight="370.0" prefWidth="380.0" styleClass="table" stylesheets="@../stylesheet/menu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn prefWidth="190.0" text="Nombre" />
-                            <TableColumn prefWidth="189.0" text="Tiempo" />
+                            <TableColumn prefWidth="178.0" text="Nombre" />
+                            <TableColumn prefWidth="201.0" text="Tiempo" />
                           </columns>
                         </TableView>
                      </children>
@@ -44,8 +44,8 @@
                      <children>
                         <TableView fx:id="table_dificil" layoutX="46.0" layoutY="14.0" prefHeight="367.0" prefWidth="380.0" styleClass="table" stylesheets="@../stylesheet/menu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn prefWidth="190.0" text="Nombre" />
-                            <TableColumn minWidth="0.0" prefWidth="189.0" text="Tiempo" />
+                            <TableColumn prefWidth="178.0" text="Nombre" />
+                            <TableColumn minWidth="0.0" prefWidth="201.0" text="Tiempo" />
                           </columns>
                         </TableView>
                      </children>
@@ -54,7 +54,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label alignment="CENTER" layoutX="681.0" layoutY="251.0" prefHeight="33.0" prefWidth="268.0" styleClass="modo" stylesheets="@../stylesheet/menu.css" text="Modo de juego: 1vs1" textFill="WHITE" wrapText="true" AnchorPane.rightAnchor="151.0">
+      <Label fx:id="modo" alignment="CENTER" layoutX="689.0" layoutY="251.0" prefHeight="33.0" prefWidth="252.0" styleClass="modo" stylesheets="@../stylesheet/menu.css" text="Modo: 1vs1" textFill="WHITE" wrapText="true" AnchorPane.rightAnchor="159.0">
          <font>
             <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
