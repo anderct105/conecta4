@@ -3,29 +3,19 @@ package packVista;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class IU_Menu extends Stage {
 
@@ -44,23 +34,40 @@ public class IU_Menu extends Stage {
     @FXML
     private AnchorPane pane;
 
+
     @FXML
     public void initialize() {
         shakeStage();
-        cargarRankingFacil();
+        table_facil.setSelectionModel(null);
+        table_dificil.setSelectionModel(null);
+        table_facil.setItems(obtenerModelo(true));
+        table_dificil.setItems(obtenerModelo(false));
+        table_facil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table_dificil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    public void cargarRankingFacil() {
-        JSONArray ja = Conecta4.getmConecta4().cargarRankingFacil();
-        /*ObservableList<String> nombres = FXCollections.observableArrayList();
-        ObservableList<String> puntuaciones = FXCollections.observableArrayList();
+    public ObservableList obtenerModelo(boolean facil) {
+        TableColumn primero;
+        TableColumn segundo;
+        JSONArray ja;
+        if (facil) {
+            primero = (TableColumn) table_facil.getColumns().get(0);
+            segundo = (TableColumn) table_facil.getColumns().get(1);
+            ja = Conecta4.getmConecta4().cargarRankingFacil();
+        } else {
+            primero = (TableColumn) table_dificil.getColumns().get(0);
+            segundo = (TableColumn) table_dificil.getColumns().get(1);
+            ja = Conecta4.getmConecta4().cargarRankingDificil();
+        }
+        primero.setCellValueFactory(new PropertyValueFactory<Partida,String>("nombre"));
+        segundo.setCellValueFactory(new PropertyValueFactory<Partida,String>("puntuacion"));
+        ObservableList data = FXCollections.observableArrayList();
         for (Object o : ja) {
-            JSONObject j = (JSONObject) o;
-            Partida p = new Partida((String)j.get("nombre"),(int)j.get("puntuacion"));
-            table_facil.getItems().add(p);
-        }*/
-        ObservableList<String> nombres = FXCollections.observableArrayList("ander");
-        table_facil.getItems().add("ander");
+            JSONObject jo = (JSONObject) o;
+            Partida p = new Partida((String)jo.get("nombre"),"" + jo.get("puntuacion"));
+            data.add(p);
+        }
+        return data;
     }
 
     @FXML
