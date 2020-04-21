@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
    <children>
-      <AnchorPane layoutY="-1.0" prefHeight="104.0" prefWidth="1100.0" styleClass="menubar" stylesheets="@../stylesheet/menu.css" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutY="-1.0" prefHeight="104.0" prefWidth="1100.0" styleClass="menubar" stylesheets="@../stylesheet/menu.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label fx:id="title" layoutX="406.0" prefHeight="104.0" prefWidth="289.0" styleClass="title" stylesheets="@../stylesheet/menu.css" text="CONECTA 4" textAlignment="CENTER" textFill="#0d0d0d" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="405.0">
                <font>
@@ -22,7 +22,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <TabPane fx:id="tabpane" layoutX="100.0" layoutY="148.0" prefHeight="403.0" prefWidth="380.0" styleClass="ranking" stylesheets="@../stylesheet/menu.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane" layoutX="100.0" layoutY="148.0" prefHeight="403.0" prefWidth="380.0" styleClass="ranking" stylesheets="@../stylesheet/menu.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="620.0">
         <tabs>
           <Tab closable="false" styleClass="mitab" text="Facil">
             <content>
@@ -54,12 +54,12 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label alignment="CENTER" layoutX="681.0" layoutY="251.0" prefHeight="33.0" prefWidth="268.0" styleClass="modo" stylesheets="@../stylesheet/menu.css" text="Modo de juego: 1vs1" textFill="WHITE" wrapText="true">
+      <Label alignment="CENTER" layoutX="681.0" layoutY="251.0" prefHeight="33.0" prefWidth="268.0" styleClass="modo" stylesheets="@../stylesheet/menu.css" text="Modo de juego: 1vs1" textFill="WHITE" wrapText="true" AnchorPane.rightAnchor="151.0">
          <font>
             <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="botones" layoutX="665.0" layoutY="293.0" onMouseEntered="#rotateBorder" prefHeight="152.0" prefWidth="299.0" styleClass="opciones">
+      <AnchorPane fx:id="botones" layoutX="665.0" layoutY="293.0" onMouseEntered="#rotateBorder" prefHeight="152.0" prefWidth="299.0" styleClass="opciones" AnchorPane.rightAnchor="136.0">
          <children>
             <ImageView fx:id="play" fitHeight="150.0" fitWidth="367.0" layoutX="14.0" layoutY="20.0" onMouseEntered="#hoverPlay" onMouseExited="#quitHoverPlay" pickOnBounds="true" preserveRatio="true" styleClass="boton">
                <image>
