@@ -23,7 +23,7 @@
 .opciones {
     -fx-border-width: 5px;
     -fx-border-insets: 5;
-    -fx-border-style: outset;
+    -fx-border-style: solid;
     -fx-border-image-width: 2px;
     -fx-border-color: linear-gradient(to left, #e1eec3, #f05053);
     -fx-border-color: linear-gradient(to left, #743ad5, #d53a9d);
@@ -142,5 +142,27 @@
 }
 
 .tab-header-background {
-    -fx-background-color: tranparent;
+    -fx-opacity: 0;
 }
+
+.entryAnimation {
+    -fx-background-color:linear-gradient(to right, #ff0099, #493240);
+    -fx-background-image: url("../imagenes/sun.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.progress-bar > .bar {
+    -fx-padding:0;
+    -fx-background-radius:20px;
+    -fx-background-insets: 0;
+    -fx-background-color: cornflowerblue;
+}
+
+.progress-bar > .track {
+    -fx-background-color: linear-gradient(to left, #abbaab, #ffffff);;
+    -fx-background-radius:20px;
+    -fx-background-insets: 0, 1;
+
+}
+

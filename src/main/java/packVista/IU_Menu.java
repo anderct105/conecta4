@@ -3,14 +3,17 @@ package packVista;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
@@ -19,6 +22,8 @@ import packControlador.Conecta4;
 
 public class IU_Menu extends Stage {
 
+    @FXML
+    public AnchorPane entryAnimation;
     @FXML
     private TableView table_facil;
     @FXML
@@ -35,15 +40,23 @@ public class IU_Menu extends Stage {
     private AnchorPane pane;
     @FXML
     private Label modo;
+    @FXML
+    private ProgressBar pb;
 
     @FXML
     public void initialize() {
+        Task<Void> t = new Task<Void>() {
+            @Override
+            protected Void call() {
+                return null;
+            }
+        };
+        pb.progressProperty().unbind();
+        pb.progressProperty().bind(t.progressProperty());
+        Thread th = new Thread(t);
+        th.setDaemon(true);
+        th.run();
         shakeStage();
-        Conecta4.getmConecta4().setModoJuego("Ordenador modo Facil");
-        Conecta4.getmConecta4().guardarPartida("ggf",32);
-        Conecta4.getmConecta4().guardarPartida("aaa",364);
-        Conecta4.getmConecta4().guardarPartida("tg",26);
-        Conecta4.getmConecta4().guardarPartida("htg",36);
         modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
@@ -51,6 +64,40 @@ public class IU_Menu extends Stage {
         table_dificil.setItems(obtenerModelo(false));
         table_facil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table_dificil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        animacionInicial();
+    }
+
+
+    public void animacionInicial() {
+        Thread t2 = new Thread() {
+            public void run() {
+                try {
+                    while (!entryAnimation.getScene().getWindow().isShowing()) {
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException | NullPointerException e) {
+                }
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Timeline timeline = new Timeline();
+                KeyFrame key = new KeyFrame(Duration.millis(2000),
+                        new KeyValue(entryAnimation.translateYProperty(), -2000,Interpolator.EASE_IN));
+                timeline.getKeyFrames().add(key);
+                timeline.setOnFinished(event -> {entryAnimation.setVisible(false);});
+                timeline.play();
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //entryAnimation.setVisible(false);
+            }
+        };
+
+        t2.start();
     }
 
     public ObservableList obtenerModelo(boolean facil) {
@@ -66,12 +113,12 @@ public class IU_Menu extends Stage {
             segundo = (TableColumn) table_dificil.getColumns().get(1);
             ja = Conecta4.getmConecta4().cargarRankingDificil();
         }
-        primero.setCellValueFactory(new PropertyValueFactory<Partida,String>("nombre"));
-        segundo.setCellValueFactory(new PropertyValueFactory<Partida,String>("puntuacion"));
+        primero.setCellValueFactory(new PropertyValueFactory<Partida, String>("nombre"));
+        segundo.setCellValueFactory(new PropertyValueFactory<Partida, String>("puntuacion"));
         ObservableList data = FXCollections.observableArrayList();
         for (Object o : ja) {
             JSONObject jo = (JSONObject) o;
-            Partida p = new Partida((String)jo.get("nombre"),"" + jo.get("puntuacion"));
+            Partida p = new Partida((String) jo.get("nombre"), "" + jo.get("puntuacion"));
             data.add(p);
         }
         return data;
@@ -79,7 +126,7 @@ public class IU_Menu extends Stage {
 
     @FXML
     public void config() {
-        RotateTransition rt = new RotateTransition(Duration.millis(1000),config);
+        RotateTransition rt = new RotateTransition(Duration.millis(1000), config);
         rt.setByAngle(180);
         rt.setCycleCount(1);
         rt.setInterpolator(Interpolator.LINEAR);
@@ -120,7 +167,7 @@ public class IU_Menu extends Stage {
     }
 
     public void shakeStage() {
-       ShakeTransition st = new ShakeTransition(title);
-       st.play();
+        ShakeTransition st = new ShakeTransition(title);
+        st.play();
     }
 }
