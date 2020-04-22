@@ -1,0 +1,8 @@
+.root {
+    -fx-background-color: white;
+}
+
+.text-field {
+    -fx-border: none;
+    -fx-border-bottom: 2px solid green;
+}
