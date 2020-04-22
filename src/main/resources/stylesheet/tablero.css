@@ -1,0 +1,17 @@
+.panelSuperior{
+    -fx-background-color:#743ad5;
+    -fx-opacity:0.5;
+}
+
+.turnoTiempo {
+    -fx-border-width: 8px;
+    -fx-border-insets: 5;
+    -fx-border-style: outset;
+    -fx-border-image-width: 2px;
+    -fx-opacity:1;
+    -fx-background-color: linear-gradient(to left, #e1eec3, #f05053);
+    -fx-background-color: linear-gradient(to left, #743ad5, #d53a9d);; ;
+
+
+}
+
