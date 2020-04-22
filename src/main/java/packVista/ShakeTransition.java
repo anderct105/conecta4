@@ -44,7 +44,7 @@ import javafx.util.Duration;
             );
             setCycleDuration(Duration.seconds(1.2));
             setCycleCount(1);
-            setDelay(Duration.seconds(4));
+            setDelay(Duration.seconds(10));
         }
     }
 
