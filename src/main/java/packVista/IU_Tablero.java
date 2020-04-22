@@ -1,5 +1,7 @@
 package packVista;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -14,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import packControlador.Conecta4;
 
 import java.awt.event.ActionListener;
@@ -50,11 +53,52 @@ public class IU_Tablero {
     @FXML
     private Label LabelTurno;
 
-    private Thread thrd;
+    private Thread thrd=new Thread();
 
+    private int secs=0;
+    private int mins=0;
+    private int hours=0;
+
+    Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+          // int secs=Integer.parseInt(TimeSeconds.getText());
+           secs=secs+1;
+           if(secs<10){
+               TimeSeconds.setText("0"+(secs));
+           }
+           else if(secs==60){
+               TimeSeconds.setText("00");
+               secs=0;
+               mins=mins+1;
+               if(mins<10){
+                   TimeMinutes.setText("0"+(mins));
+               }
+               else if(mins==60){
+                   TimeMinutes.setText("00");
+                   mins=0;
+                   hours=hours+1;
+                   if(hours<10){
+                       TimeHours.setText("0"+(hours));
+                   }
+                   else {
+                       TimeHours.setText(String.valueOf(hours));
+                   }
+               }
+               else{
+                   TimeHours.setText(String.valueOf(mins));
+               }
+           }
+           else {
+               TimeSeconds.setText(String.valueOf(secs));
+           }
+
+        }
+    }));
 
     @FXML
-    public void initialize() {
+    public void initialize() throws InterruptedException {
        String modoJuego =obtenerModoJuego();
        if (modoJuego.equals("1vs1")){
            PaneTiempo.setVisible(false);
@@ -63,10 +107,9 @@ public class IU_Tablero {
         }
        else {
          PaneTurno.setVisible(false);
-
-
-
-       }
+           fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+           fiveSecondsWonder.play();
+              }
     }
 
 
@@ -77,29 +120,6 @@ public class IU_Tablero {
     }
 
 
-    public void iniciarTemporizador(ActionEvent mouseEvent) {
-        thrd=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int secs=0;
-                try {
-                    while (true){
-                        TimeSeconds.setText(String.valueOf(secs));
-                        BTerminarPartida.setText("T: "+secs);
-                        thrd.sleep(1000);
-
-                        secs++;
-                    }
-                }
-                catch (Exception e){
-
-                }
-            }
-
-        });
-
-        thrd.run();
-    }
 }
 
 
