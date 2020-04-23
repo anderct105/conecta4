@@ -17,6 +17,7 @@ public class IU_ColumnaLlena {
         s.setFill(Color.TRANSPARENT);
         primaryStage.setScene(s);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        Tamaño ventana: 291, 100
      */
 
     @FXML
