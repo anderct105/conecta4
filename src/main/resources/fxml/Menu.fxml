@@ -87,7 +87,7 @@
       </Label>
       <AnchorPane fx:id="entryAnimation" prefHeight="600.0" prefWidth="1100.0" styleClass="entryAnimation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="129.0" layoutY="128.0" prefHeight="301.0" prefWidth="843.0" text="CONECTA 4" textFill="WHITE">
+            <Label contentDisplay="CENTER" layoutX="129.0" layoutY="123.0" prefHeight="301.0" prefWidth="1058.0" text="CONECTA 4" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Uroob" size="222.0" />
                </font>
