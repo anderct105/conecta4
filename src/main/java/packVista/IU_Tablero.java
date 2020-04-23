@@ -30,6 +30,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packModelo.Tablero;
 
 import java.awt.event.ActionListener;
 
@@ -216,10 +217,10 @@ public class IU_Tablero {
 
     private int jugar(int columna, boolean turno) {
         int fila=0;
-       //Implementar jugar
-
+        Circle ficha = getFicha(turno);
+        int numFilas = panelTablero.getRowConstraints().size();
+        int numColumnas = panelTablero.getColumnConstraints().size();
         return fila;
-
     }
 
     private void listenerTerminarPartida() {
