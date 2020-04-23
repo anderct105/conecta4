@@ -43,8 +43,8 @@ public class OrdenadorFTest {
         }
         t.imprimirTablero();
         ja = o.jugar(0);
-        //System.out.println(ja.toJSONString());
-        assertEquals(false,ja.get("haGanadoA"));
+        System.out.println(ja.toJSONString());
+        assertEquals(false,ja.get("haGanadoB"));
         assertEquals(false,ja.get("lleno"));
         //INTRODUCIENDO CON LA PRIMERA COLUMNA LLENA
         ja = o.jugar(0);
