@@ -87,7 +87,7 @@ public class IU_Tablero {
                    }
                }
                else{
-                   TimeHours.setText(String.valueOf(mins));
+                   TimeMinutes.setText(String.valueOf(mins));
                }
            }
            else {
