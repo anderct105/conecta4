@@ -87,12 +87,12 @@
       </Label>
       <AnchorPane fx:id="entryAnimation" prefHeight="600.0" prefWidth="1100.0" styleClass="entryAnimation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label contentDisplay="CENTER" layoutX="129.0" layoutY="123.0" prefHeight="301.0" prefWidth="1058.0" text="CONECTA 4" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" layoutY="126.0" prefHeight="301.0" prefWidth="1058.0" style="-fx-text-alignment: center;" text="CONECTA 4" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Uroob" size="222.0" />
+                  <Font name="Uroob" size="200.0" />
                </font>
             </Label>
-            <ProgressBar fx:id="pb" layoutX="139.0" layoutY="363.0" prefHeight="20.0" prefWidth="766.0" progress="0.0" stylesheets="@../stylesheet/menu.css" />
+            <ProgressBar fx:id="pb" layoutX="221.0" layoutY="363.0" prefHeight="20.0" prefWidth="684.0" progress="0.0" stylesheets="@../stylesheet/menu.css" />
          </children>
       </AnchorPane>
    </children>
