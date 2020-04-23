@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import packControlador.Conecta4;
@@ -54,6 +55,10 @@ public class IU_RegistrarPartida {
         primaryStage.setTitle("Conecta 4");
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.show();
+    }
+
+    public void setPuntuacionU(int punt){
+        this.puntuacionU.setText(""+punt+"");
     }
 
 }

@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -14,9 +16,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/RegistrarPartida.fxml"));
+        Scene s = new Scene(root, 520, 300);
+        primaryStage.setScene(s);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        s.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(s);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
+
+
+
+
 }
