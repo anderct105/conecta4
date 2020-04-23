@@ -1,26 +1,21 @@
 .root {
-    -fx-background-color: rgba(22,22,22,0.3);
+    -fx-background-color: rgba(0,0,0,0.5);
 }
 
-.text-area  {
-    -fx-background-insets: 0;
-    -fx-background-color: transparent;
+.pane {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-border-color: white;
+    -fx-border-width: 2px;
 }
 
-.text-area .content {
-    -fx-background-color: transparent;
+.aceptar {
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
 }
 
-.text-area:focused .content {
-    -fx-background-color: transparent;
-}
-
-.text-area:focused {
-    -fx-highlight-fill: #7ecfff;
-}
-
-.text-area .content {
-    -fx-padding: 10px;
-    -fx-text-fill: gray;
-    -fx-highlight-fill: #7ecfff;
+.aceptar:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
 }
