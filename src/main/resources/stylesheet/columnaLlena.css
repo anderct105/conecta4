@@ -1,8 +1,26 @@
 .root {
-    -fx-background-color: white;
+    -fx-background-color: rgba(22,22,22,0.3);
 }
 
-.text-field {
-    -fx-border: none;
-    -fx-border-bottom: 2px solid green;
+.text-area  {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-area .content {
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
 }
