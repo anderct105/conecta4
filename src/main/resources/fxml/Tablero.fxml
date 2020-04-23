@@ -65,11 +65,6 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField fx:id="TimeHours" editable="false" prefHeight="25.0" prefWidth="51.0" text="00">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </TextField>
                               <TextField fx:id="TimeMinutes" editable="false" prefHeight="25.0" prefWidth="40.0" text="00" GridPane.columnIndex="2">
                                  <font>
                                     <Font size="20.0" />
@@ -92,6 +87,11 @@
                               </Label>
                            </children>
                         </GridPane>
+                        <TextField fx:id="TimeHours" editable="false" layoutX="20.0" layoutY="25.0" prefHeight="25.0" prefWidth="51.0" text="00">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </AnchorPane>
                   <Button fx:id="BTerminarPartida" layoutX="167.0" layoutY="18.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="140.0" text="Terminar Partida" />
