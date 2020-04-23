@@ -1,6 +1,6 @@
 .panelSuperior{
-    -fx-background-color:#743ad5;
-    -fx-opacity:0.6;
+    -fx-background-color:rgba(116, 58, 213, 0.5);
+
 }
 
 .turnoTiempo {
