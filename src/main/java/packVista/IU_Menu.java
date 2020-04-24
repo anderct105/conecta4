@@ -9,16 +9,19 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -144,7 +147,38 @@ public class IU_Menu extends Stage {
         rt.setByAngle(180);
         rt.setCycleCount(1);
         rt.setInterpolator(Interpolator.LINEAR);
+        rt.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                oscurecerFondo();
+            }
+        });
         rt.play();
+    }
+
+    public void oscurecerFondo() {
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
+        Stage primaryStage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/Configurar.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setTitle("Conecta 4");
+        primaryStage.setScene(new Scene(root, 400, 200));
+        primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ColorAdjust ca = new ColorAdjust();
+                ca.setBrightness(0);
+                pane.getScene().getRoot().setEffect(ca);
+            }
+        });
+
     }
 
     @FXML
