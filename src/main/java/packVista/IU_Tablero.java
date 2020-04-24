@@ -2,6 +2,7 @@ package packVista;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyValue;
+import javafx.collections.ObservableList;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
@@ -146,7 +147,6 @@ public class IU_Tablero {
         o4.put("y",3);
         ja.add(o1); ja.add(o2); ja.add(o3); ja.add(o4);
         jo.put("posicionesGanadoras", ja);
-        System.out.println(jo.toString());
 
         marcarGanadoras(jo);
 
@@ -160,7 +160,6 @@ public class IU_Tablero {
             PaneTiempo.setVisible(false);
             LabelTiempo.setVisible(false);
             setTurno();
-
         }
         else {
             PaneTurno.setVisible(false);
@@ -168,7 +167,6 @@ public class IU_Tablero {
             fiveSecondsWonder.play();
         }
     }
-
 
     //devuelve la ficha correspondiente al turno
     private Circle getFicha(boolean color){
@@ -179,6 +177,7 @@ public class IU_Tablero {
             return getFichaAzul();
         }
     }
+
     private Circle getFichaRoja(){
         Circle ficha=new Circle();
         Stop[] stops = new Stop[] { new Stop(0, Color.rgb(255,105,153)), new Stop(1, Color.RED)};
@@ -205,11 +204,11 @@ public class IU_Tablero {
       int columnas=panelTablero.getColumnConstraints().size();
       for(int i=0;i<filas;i++){
           for(int j=0;j<columnas;j++){
-                 Circle ficha=new Circle();
-                ficha.setRadius(31);
-                ficha.setFill(javafx.scene.paint.Color.RED);
-                ficha.setOpacity(0);
-                panelTablero.add(ficha,j,i );
+              Circle ficha = new Circle();
+              ficha.setRadius(31);
+              ficha.setFill(javafx.scene.paint.Color.RED);
+              ficha.setOpacity(0);
+              panelTablero.add(ficha,j,i);
 
           }
       }
@@ -293,10 +292,10 @@ public class IU_Tablero {
             JSONObject objeto = (JSONObject) ja.get(i);
             Integer x = (Integer) objeto.get("x");
             Integer y = (Integer) objeto.get("y");
-            Circle ficha = new Circle();
-            ficha.setRadius(31); ficha.setOpacity(1); ficha.setStrokeWidth(2.5);
+            Circle ficha = (Circle) getNodeByRowColumnIndex(5 - x, y, panelTablero);
+            ficha.setStrokeWidth(2.5);
             Stop[] stops = null; Stop[] borde;
-            LinearGradient lg1 = null;
+            LinearGradient lg1;
             if (ganadoA){
                 stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
                 borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
@@ -314,16 +313,68 @@ public class IU_Tablero {
 
             fichaG = ficha; stopsG = stops; xG = x; yG = y;
 
-            Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.seconds(2),
-                    new KeyValue(fichaG.styleProperty(), ""+lg1+"", Interpolator.EASE_OUT));
-            timeline.getKeyFrames().add(key);
-            timeline.setOnFinished(event -> {
+            Timeline timeline0 = new Timeline();
+            KeyFrame key = new KeyFrame(Duration.seconds(2));
+            timeline0.getKeyFrames().add(key);
+            timeline0.setOnFinished(event -> {
                 fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                panelTablero.add(fichaG, xG, yG);
+                //panelTablero.add(fichaG, xG, yG);
             });
-            timeline.play();
+            timeline0.play();
+
+            /*
+            if (i == 0){
+                Timeline timeline0 = new Timeline();
+                KeyFrame key0 = new KeyFrame(Duration.seconds(2));
+                timeline0.getKeyFrames().add(key0);
+                timeline0.setOnFinished(event -> {
+                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
+                    panelTablero.add(fichaG, xG, yG);
+                });
+                timeline0.play();
+            } else if (i == 1){
+                Timeline timeline1 = new Timeline();
+                KeyFrame key1 = new KeyFrame(Duration.seconds(2));
+                timeline1.getKeyFrames().add(key1);
+                timeline1.setOnFinished(event -> {
+                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
+                    panelTablero.add(fichaG, xG, yG);
+                });
+                timeline1.play();
+            } else if (i == 2){
+                Timeline timeline2 = new Timeline();
+                KeyFrame key2 = new KeyFrame(Duration.seconds(2));
+                timeline2.getKeyFrames().add(key2);
+                timeline2.setOnFinished(event -> {
+                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
+                    panelTablero.add(fichaG, xG, yG);
+                });
+                timeline2.play();
+            } else {
+                Timeline timeline3 = new Timeline();
+                KeyFrame key3 = new KeyFrame(Duration.seconds(2));
+                timeline3.getKeyFrames().add(key3);
+                timeline3.setOnFinished(event -> {
+                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
+                    panelTablero.add(fichaG, xG, yG);
+                });
+                timeline3.play();
+            }*/
         }
+    }
+
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+            if(gridPane.getRo.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
     }
 }
 
