@@ -1,5 +1,6 @@
 package packVista;
 
+import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -126,8 +127,8 @@ public class IU_Tablero {
         setModoJuego();
        listenerTerminarPartida();
        listenerTablero();
-        /*panelTablero.add(getFichaRoja(),1,1);
-        panelTablero.add(getFichaAzul(),2,2);*/
+        //panelTablero.add(getFichaRoja(),1,1);
+        //panelTablero.add(getFichaAzul(),2,2);
     }
 
     private void setModoJuego() {
@@ -261,9 +262,36 @@ public class IU_Tablero {
         // return "modo Vs ordenador";
     }
 
-
-
-
+    private void marcarGanadoras(JSONObject jo){
+        JSONArray ja = (JSONArray) jo.get("PosicionesGanadoras");
+        boolean ganadoA = (boolean) jo.get("haGanadoA");
+        boolean ganadoB = (boolean) jo.get("haGanadoB");
+        for (int i = 0; i < ja.size(); i++){
+            JSONObject objeto = (JSONObject) ja.get(i);
+            Integer x = (Integer) objeto.get("x");
+            Integer y = (Integer) objeto.get("y");
+            Circle ficha = new Circle();
+            ficha.setRadius(31);
+            ficha.setOpacity(1);
+            ficha.setStrokeWidth(2.5);
+            Stop[] stops = null;
+            Stop[] borde;
+            LinearGradient lg1;
+            if (ganadoA){
+                stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
+                borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
+                lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+                ficha.setStroke(lg1);
+            } else if (ganadoB) {
+                stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
+                borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
+                lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+                ficha.setStroke(lg1);
+            }
+            ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
+            panelTablero.add(ficha, x, y);
+        }
+    }
 }
 
 
