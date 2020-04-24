@@ -4,7 +4,11 @@ import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
@@ -20,6 +24,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
 import packMain.Main;
+
+import java.io.IOException;
 
 public class IU_Menu extends Stage {
 
@@ -178,4 +184,29 @@ public class IU_Menu extends Stage {
         ShakeTransition st = new ShakeTransition(title);
         st.play();
     }
+
+    @FXML
+    public void jugar(){
+        FadeTransition ft = new FadeTransition(Duration.millis(2500), pane);
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                cambiarATablero();
+            }
+        });
+        ft.play();
+
+    }
+
+    public void cambiarATablero() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Tablero.fxml"));
+            pane.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

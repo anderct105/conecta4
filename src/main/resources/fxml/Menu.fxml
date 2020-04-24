@@ -62,7 +62,7 @@
       </Label>
       <AnchorPane fx:id="botones" layoutX="665.0" layoutY="293.0" onMouseEntered="#rotateBorder" prefHeight="152.0" prefWidth="299.0" styleClass="opciones" AnchorPane.rightAnchor="136.0">
          <children>
-            <ImageView fx:id="play" fitHeight="150.0" fitWidth="367.0" layoutX="14.0" layoutY="20.0" onMouseEntered="#hoverPlay" onMouseExited="#quitHoverPlay" pickOnBounds="true" preserveRatio="true" styleClass="boton">
+            <ImageView fx:id="play" fitHeight="150.0" fitWidth="367.0" layoutX="14.0" layoutY="20.0" onMouseClicked="#jugar" onMouseEntered="#hoverPlay" onMouseExited="#quitHoverPlay" pickOnBounds="true" preserveRatio="true" styleClass="boton">
                <image>
                   <Image url="@../imagenes/play.png" />
                </image>
