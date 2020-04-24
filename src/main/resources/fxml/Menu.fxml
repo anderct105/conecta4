@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="packVista.IU_Menu"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
+   <children>
+      <AnchorPane layoutY="-1.0" prefHeight="104.0" prefWidth="1100.0" styleClass="menubar" stylesheets="@../stylesheet/menu.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="title" layoutX="406.0" prefHeight="104.0" prefWidth="289.0" styleClass="title" stylesheets="@../stylesheet/menu.css" text="CONECTA 4" textAlignment="CENTER" textFill="#0d0d0d" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="405.0">
+               <font>
+                  <Font name="System Bold" size="45.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TabPane fx:id="tabpane" layoutX="100.0" layoutY="148.0" prefHeight="403.0" prefWidth="380.0" styleClass="ranking" stylesheets="@../stylesheet/menu.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="620.0">
+        <tabs>
+          <Tab closable="false" styleClass="mitab" text="Facil">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="table_facil" layoutX="-43.0" layoutY="-18.0" prefHeight="370.0" prefWidth="380.0" styleClass="table" stylesheets="@../stylesheet/menu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn prefWidth="178.0" text="Nombre" />
+                            <TableColumn prefWidth="201.0" text="Tiempo" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab styleClass="mitab" text="Dificil">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="table_dificil" layoutX="46.0" layoutY="14.0" prefHeight="367.0" prefWidth="380.0" styleClass="table" stylesheets="@../stylesheet/menu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn prefWidth="178.0" text="Nombre" />
+                            <TableColumn minWidth="0.0" prefWidth="201.0" text="Tiempo" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="modo" alignment="CENTER" layoutX="689.0" layoutY="251.0" prefHeight="33.0" prefWidth="252.0" styleClass="modo" stylesheets="@../stylesheet/menu.css" text="Modo: 1vs1" textFill="WHITE" wrapText="true" AnchorPane.rightAnchor="159.0">
+         <font>
+            <Font name="DejaVu Sans Bold" size="13.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="botones" layoutX="665.0" layoutY="293.0" onMouseEntered="#rotateBorder" prefHeight="152.0" prefWidth="299.0" styleClass="opciones" AnchorPane.rightAnchor="136.0">
+         <children>
+            <ImageView fx:id="play" fitHeight="150.0" fitWidth="367.0" layoutX="14.0" layoutY="20.0" onMouseClicked="#jugar" onMouseEntered="#hoverPlay" onMouseExited="#quitHoverPlay" pickOnBounds="true" preserveRatio="true" styleClass="boton">
+               <image>
+                  <Image url="@../imagenes/play.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="config" fitHeight="104.0" fitWidth="92.0" layoutX="164.0" layoutY="49.0" onMouseClicked="#config" onMouseEntered="#hoverConfig" onMouseExited="#quitHoverConfig" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/settings-icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="356.0" layoutY="140.0" text="Ranking" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="entryAnimation" prefHeight="600.0" prefWidth="1100.0" styleClass="entryAnimation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" layoutY="126.0" prefHeight="301.0" prefWidth="1058.0" style="-fx-text-alignment: center;" text="CONECTA 4" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Uroob" size="200.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="pb" layoutX="221.0" layoutY="363.0" prefHeight="20.0" prefWidth="684.0" progress="0.0" stylesheets="@../stylesheet/menu.css" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
