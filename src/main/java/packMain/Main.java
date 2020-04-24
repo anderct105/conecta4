@@ -15,6 +15,8 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+    public static boolean animacionInicio = true;
+
     public static void main(String[] args) {
         launch(args);
     }

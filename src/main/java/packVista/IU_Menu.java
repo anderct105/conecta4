@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packMain.Main;
 
 public class IU_Menu extends Stage {
 
@@ -45,17 +46,21 @@ public class IU_Menu extends Stage {
 
     @FXML
     public void initialize() {
-        Task<Void> t = new Task<Void>() {
-            @Override
-            protected Void call() {
-                return null;
-            }
-        };
-        pb.progressProperty().unbind();
-        pb.progressProperty().bind(t.progressProperty());
-        Thread th = new Thread(t);
-        th.setDaemon(true);
-        th.run();
+        if (!Main.animacionInicio){
+            entryAnimation.setVisible(false);
+        }else {
+            Task<Void> t = new Task<Void>() {
+                @Override
+                protected Void call() {
+                    return null;
+                }
+            };
+            pb.progressProperty().unbind();
+            pb.progressProperty().bind(t.progressProperty());
+            Thread th = new Thread(t);
+            th.setDaemon(true);
+            th.run();
+        }
         shakeStage();
         modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
         table_facil.setSelectionModel(null);
@@ -64,7 +69,10 @@ public class IU_Menu extends Stage {
         table_dificil.setItems(obtenerModelo(false));
         table_facil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table_dificil.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        animacionInicial();
+        if (Main.animacionInicio) {
+            animacionInicial();
+            Main.animacionInicio = false;
+        }
     }
 
 
