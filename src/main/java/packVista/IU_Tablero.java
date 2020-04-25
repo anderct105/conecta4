@@ -1,5 +1,7 @@
 package packVista;
 
+import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,7 +41,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class IU_Tablero {
+public class IU_Tablero{
 
     @FXML
     private AnchorPane pane;
@@ -72,7 +74,6 @@ public class IU_Tablero {
     private AnchorPane PaneTurno;
     @FXML
     private Label LabelTurno;
-
 
 
     private int secs=0;
@@ -126,6 +127,8 @@ public class IU_Tablero {
         setModoJuego();
        listenerTerminarPartida();
        listenerTablero();
+       Conecta4.getmConecta4().inicializarTablero();
+       Tablero.getmTablero().registrarObservador(this);
         /*panelTablero.add(getFichaRoja(),1,1);
         panelTablero.add(getFichaAzul(),2,2);*/
     }
@@ -181,7 +184,7 @@ public class IU_Tablero {
       int columnas=panelTablero.getColumnConstraints().size();
       for(int i=0;i<filas;i++){
           for(int j=0;j<columnas;j++){
-                 Circle ficha=new Circle();
+                Circle ficha=new Circle();
                 ficha.setRadius(31);
                 ficha.setFill(javafx.scene.paint.Color.RED);
                 ficha.setOpacity(0);
@@ -197,8 +200,8 @@ public class IU_Tablero {
                        int columna=GridPane.getColumnIndex(item);
 
                        //llamada al método jugar
-                        int fila=jugar(columna,turno);
-                        colocarFicha(fila,columna);
+                        /*int fila=*/jugar(columna,turno);
+                        //colocarFicha(fila,columna);
                        // panelTablero.add(getFicha(turno),columna,5-0);
                     }
                    /* if (event.isPrimaryButtonDown()) {
@@ -215,13 +218,28 @@ public class IU_Tablero {
         panelTablero.add(getFicha(turno),columna,fila);
     }
 
-    private int jugar(int columna, boolean turno) {
+    private int jugar(int pColumna, boolean turno) {
         int fila=0;
         Circle ficha = getFicha(turno);
+        JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
+        if (json == null){
+            //IU_COLUMNA LLENA
+        }
+        else{
+            //fila = (int)json.get("fila");
+            //panelTablero.add(ficha,pColumna,5-fila);
+        }
+
+
+
         int numFilas = panelTablero.getRowConstraints().size();
         int numColumnas = panelTablero.getColumnConstraints().size();
+
+
         return fila;
     }
+
+
 
     private void listenerTerminarPartida() {
         BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
@@ -259,6 +277,20 @@ public class IU_Tablero {
 
         return Conecta4.getmConecta4().getModoJuego();
         // return "modo Vs ordenador";
+    }
+
+    public void update(int pFila, int pColumna, boolean pColor){
+        Circle ficha = getFicha(pColor);
+        //System.out.println(ficha.getCenterX());
+        panelTablero.add(ficha,pColumna,pFila);
+        /*System.out.println(ficha.getCenterX());
+        ficha.setOpacity(0);
+        Circle fichaAnim = getFicha(pColor);
+        fichaAnim.setCenterY(100);
+        this.pane.getChildren().add(fichaAnim);
+        fichaAnim.setCenterY(100);
+        Bounds boundsInScene = ficha.localToScene(ficha.getBoundsInLocal());
+        System.out.println(boundsInScene.getMinX());*/
     }
 
 

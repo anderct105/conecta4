@@ -3,6 +3,7 @@ package packModelo;
 import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import packVista.IU_Tablero;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +23,8 @@ public class Tablero {
      * La matriz representa el tablero, es de tipo booleano de modo que true será rojo, false azul y null que la posición está vacía
      */
     private Boolean[][] matriz;
+
+    private IU_Tablero interfaz;
 
     private Tablero() {
 
@@ -56,10 +59,14 @@ public class Tablero {
             return null;
         } else {
             //SE NOTIFICARÁ A LA INTERFAZ LA X E Y EN LA QUE SE HA INTRODUCIDO
-            //notify
+            notificar(5-(int)json.get("fila"),  pColumna, pJugador);
             json.put("lleno", lleno);
             return json;
         }
+    }
+
+    public void notificar(int pFila, int pColumna, boolean pColor){
+        interfaz.update( pFila, pColumna, pColor);
     }
 
     /**
@@ -394,6 +401,10 @@ public class Tablero {
         combinaciones.add(i3);
         combinaciones.add(i4);
         return combinaciones;
+    }
+
+    public void registrarObservador(IU_Tablero tablero){
+        interfaz = tablero;
     }
 
 }
