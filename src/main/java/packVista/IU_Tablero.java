@@ -28,6 +28,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
+import packModelo.Tablero;
+
 import java.io.IOException;
 
 public class IU_Tablero{
@@ -120,12 +122,14 @@ public class IU_Tablero{
         setModoJuego();
         listenerTerminarPartida();
         listenerTablero();
+        Conecta4.getmConecta4().inicializarTablero();
+        Tablero.getmTablero().registrarObservador(this);
 
-       Conecta4.getmConecta4().inicializarTablero();
-       Tablero.getmTablero().registrarObservador(this);
         /*panelTablero.add(getFichaRoja(),1,1);
         panelTablero.add(getFichaAzul(),2,2);*/
-       //Prueba marcarCasillas ganadoras
+
+        /*
+        //Prueba marcarCasillas ganadoras
         panelTablero.add(getFichaRoja(),0,0);
         panelTablero.add(getFichaRoja(),0,1);
         panelTablero.add(getFichaRoja(),0,2);
@@ -154,7 +158,7 @@ public class IU_Tablero{
         marcarGanadoras(jo);
 
         panelTablero.add(getFichaRoja(),1,1);
-        panelTablero.add(getFichaAzul(),2,2);
+        panelTablero.add(getFichaAzul(),2,2);*/
     }
 
     private void setModoJuego() {
@@ -325,19 +329,6 @@ public class IU_Tablero{
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
                 ficha.setStroke(lg1);
             }
-    public void update(int pFila, int pColumna, boolean pColor){
-        Circle ficha = getFicha(pColor);
-        //System.out.println(ficha.getCenterX());
-        panelTablero.add(ficha,pColumna,pFila);
-        /*System.out.println(ficha.getCenterX());
-        ficha.setOpacity(0);
-        Circle fichaAnim = getFicha(pColor);
-        fichaAnim.setCenterY(100);
-        this.pane.getChildren().add(fichaAnim);
-        fichaAnim.setCenterY(100);
-        Bounds boundsInScene = ficha.localToScene(ficha.getBoundsInLocal());
-        System.out.println(boundsInScene.getMinX());*/
-    }
 
             //ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
             //panelTablero.add(ficha, x, y);
@@ -399,7 +390,7 @@ public class IU_Tablero{
         ObservableList<Node> childrens = gridPane.getChildren();
 
         for (Node node : childrens) {
-            if(gridPane.getRo.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
                 result = node;
                 break;
             }
@@ -407,6 +398,21 @@ public class IU_Tablero{
 
         return result;
     }
+
+    public void update(int pFila, int pColumna, boolean pColor){
+        Circle ficha = getFicha(pColor);
+        //System.out.println(ficha.getCenterX());
+        panelTablero.add(ficha,pColumna,pFila);
+        /*System.out.println(ficha.getCenterX());
+        ficha.setOpacity(0);
+        Circle fichaAnim = getFicha(pColor);
+        fichaAnim.setCenterY(100);
+        this.pane.getChildren().add(fichaAnim);
+        fichaAnim.setCenterY(100);
+        Bounds boundsInScene = ficha.localToScene(ficha.getBoundsInLocal());
+        System.out.println(boundsInScene.getMinX());*/
+    }
+
 }
 
 
