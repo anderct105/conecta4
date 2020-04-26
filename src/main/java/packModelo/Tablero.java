@@ -66,7 +66,7 @@ public class Tablero {
     }
 
     public void notificar(int pFila, int pColumna, boolean pColor){
-        interfaz.update( pFila, pColumna, pColor);
+        interfaz.update(pFila, pColumna, pColor);
     }
 
     /**

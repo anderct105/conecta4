@@ -67,10 +67,8 @@ public class IU_Tablero{
     private Label LabelTurno;
 
     //Para marcar las fichas ganadoras
-    private Circle fichaG;
-    private Stop[] stopsG;
-    private int xG;
-    private int yG;
+    private Circle[][] tableroRojo;
+    private Circle[][] tableroAzul;
 
     private int secs=0;
     private int mins=0;
@@ -125,44 +123,12 @@ public class IU_Tablero{
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().registrarObservador(this);
 
-        /*panelTablero.add(getFichaRoja(),1,1);
-        panelTablero.add(getFichaAzul(),2,2);*/
-
-        /*
-        //Prueba marcarCasillas ganadoras
-        panelTablero.add(getFichaRoja(),0,0);
-        panelTablero.add(getFichaRoja(),0,1);
-        panelTablero.add(getFichaRoja(),0,2);
-        panelTablero.add(getFichaRoja(),0,3);
-
-        JSONObject jo = new JSONObject();
-        jo.put("lleno", false);
-        jo.put("haGanadoA", true);
-        jo.put("haGanadoB", false);
-        JSONArray ja = new JSONArray();
-        JSONObject o1 = new JSONObject();
-        o1.put("x",0);
-        o1.put("y",0);
-        JSONObject o2 = new JSONObject();
-        o2.put("x",0);
-        o2.put("y",1);
-        JSONObject o3 = new JSONObject();
-        o3.put("x",0);
-        o3.put("y",2);
-        JSONObject o4 = new JSONObject();
-        o4.put("x",0);
-        o4.put("y",3);
-        ja.add(o1); ja.add(o2); ja.add(o3); ja.add(o4);
-        jo.put("posicionesGanadoras", ja);
-
-        marcarGanadoras(jo);
-
-        panelTablero.add(getFichaRoja(),1,1);
-        panelTablero.add(getFichaAzul(),2,2);*/
+        tableroRojo = new Circle[6][9];
+        tableroAzul = new Circle[6][9];
     }
 
     private void setModoJuego() {
-        String modoJuego =obtenerModoJuego();
+        String modoJuego = obtenerModoJuego();
         if (modoJuego.equals("1vs1")){
             PaneTiempo.setVisible(false);
             LabelTiempo.setVisible(false);
@@ -216,7 +182,6 @@ public class IU_Tablero{
               ficha.setFill(javafx.scene.paint.Color.RED);
               ficha.setOpacity(0);
               panelTablero.add(ficha,j,i);
-
           }
       }
         panelTablero.getChildren().forEach(item -> {
@@ -224,46 +189,32 @@ public class IU_Tablero{
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getClickCount() == 2) {
-                       int columna=GridPane.getColumnIndex(item);
-
-                       //llamada al método jugar
-                        /*int fila=*/jugar(columna,turno);
-                        //colocarFicha(fila,columna);
-                       // panelTablero.add(getFicha(turno),columna,5-0);
+                       int columna = GridPane.getColumnIndex(item);
+                        JSONObject json = jugar(columna,turno);
+                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
+                        if (ja != null) {
+                            marcarGanadoras(json);
+                        }
                     }
-                   /* if (event.isPrimaryButtonDown()) {
-                        System.out.println("PrimaryKey event");
-                    }*/
-
                 }
             });
-
         });
     }
+
     private void colocarFicha(int fila,int columna){
         fila=5-fila;
         panelTablero.add(getFicha(turno),columna,fila);
     }
 
-    private int jugar(int pColumna, boolean turno) {
-        int fila=0;
-        Circle ficha = getFicha(turno);
+    private JSONObject jugar(int pColumna, boolean turno) {
         JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
         if (json == null){
             //IU_COLUMNA LLENA
-        }
-        else{
+        } else{
             //fila = (int)json.get("fila");
             //panelTablero.add(ficha,pColumna,5-fila);
         }
-
-
-
-        int numFilas = panelTablero.getRowConstraints().size();
-        int numColumnas = panelTablero.getColumnConstraints().size();
-
-
-        return fila;
+        return json;
     }
 
 
@@ -281,7 +232,6 @@ public class IU_Tablero{
                     primaryStage.setTitle("Conecta 4");
                     primaryStage.setScene(new Scene(root, 1100, 730));
                     primaryStage.show();
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -291,7 +241,7 @@ public class IU_Tablero{
     }
 
     private void setTurno() {
-        if (turno==true){
+        if (turno){
             NombreTurno.setText("Jugador rojo");
         }
         else{
@@ -301,7 +251,6 @@ public class IU_Tablero{
 
 
     private String obtenerModoJuego() {
-
         return Conecta4.getmConecta4().getModoJuego();
         // return "modo Vs ordenador";
     }
@@ -314,105 +263,37 @@ public class IU_Tablero{
             JSONObject objeto = (JSONObject) ja.get(i);
             Integer x = (Integer) objeto.get("x");
             Integer y = (Integer) objeto.get("y");
-            Circle ficha = (Circle) getNodeByRowColumnIndex(5 - x, y, panelTablero);
-            ficha.setStrokeWidth(2.5);
             Stop[] stops = null; Stop[] borde;
             LinearGradient lg1;
+            Circle ficha = null;
             if (ganadoA){
+                ficha = tableroRojo[5-x][y];
+                ficha.setStrokeWidth(2.5);
                 stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
                 borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
                 ficha.setStroke(lg1);
             } else if (ganadoB) {
+                ficha = tableroAzul[5-x][y];
+                ficha.setStrokeWidth(2.5);
                 stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
                 borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
                 ficha.setStroke(lg1);
             }
-
-            //ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
-            //panelTablero.add(ficha, x, y);
-
-            fichaG = ficha; stopsG = stops; xG = x; yG = y;
-
-            Timeline timeline0 = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.seconds(2));
-            timeline0.getKeyFrames().add(key);
-            timeline0.setOnFinished(event -> {
-                fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                //panelTablero.add(fichaG, xG, yG);
-            });
-            timeline0.play();
-
-            /*
-            if (i == 0){
-                Timeline timeline0 = new Timeline();
-                KeyFrame key0 = new KeyFrame(Duration.seconds(2));
-                timeline0.getKeyFrames().add(key0);
-                timeline0.setOnFinished(event -> {
-                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                    panelTablero.add(fichaG, xG, yG);
-                });
-                timeline0.play();
-            } else if (i == 1){
-                Timeline timeline1 = new Timeline();
-                KeyFrame key1 = new KeyFrame(Duration.seconds(2));
-                timeline1.getKeyFrames().add(key1);
-                timeline1.setOnFinished(event -> {
-                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                    panelTablero.add(fichaG, xG, yG);
-                });
-                timeline1.play();
-            } else if (i == 2){
-                Timeline timeline2 = new Timeline();
-                KeyFrame key2 = new KeyFrame(Duration.seconds(2));
-                timeline2.getKeyFrames().add(key2);
-                timeline2.setOnFinished(event -> {
-                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                    panelTablero.add(fichaG, xG, yG);
-                });
-                timeline2.play();
-            } else {
-                Timeline timeline3 = new Timeline();
-                KeyFrame key3 = new KeyFrame(Duration.seconds(2));
-                timeline3.getKeyFrames().add(key3);
-                timeline3.setOnFinished(event -> {
-                    fichaG.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsG));
-                    panelTablero.add(fichaG, xG, yG);
-                });
-                timeline3.play();
-            }*/
+            ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
         }
-    }
-
-    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-
-        for (Node node : childrens) {
-            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-                result = node;
-                break;
-            }
-        }
-
-        return result;
     }
 
     public void update(int pFila, int pColumna, boolean pColor){
         Circle ficha = getFicha(pColor);
-        //System.out.println(ficha.getCenterX());
         panelTablero.add(ficha,pColumna,pFila);
-        /*System.out.println(ficha.getCenterX());
-        ficha.setOpacity(0);
-        Circle fichaAnim = getFicha(pColor);
-        fichaAnim.setCenterY(100);
-        this.pane.getChildren().add(fichaAnim);
-        fichaAnim.setCenterY(100);
-        Bounds boundsInScene = ficha.localToScene(ficha.getBoundsInLocal());
-        System.out.println(boundsInScene.getMinX());*/
+        if (pColor) {
+            tableroRojo[pFila][pColumna] = ficha;
+        } else {
+            tableroAzul[pFila][pColumna] = ficha;
+        }
     }
-
 }
 
 
