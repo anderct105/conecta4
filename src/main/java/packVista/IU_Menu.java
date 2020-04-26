@@ -215,8 +215,7 @@ public class IU_Menu extends Stage {
     }
 
     public void shakeStage() {
-        ShakeTransition st = new ShakeTransition(title);
-        st.play();
+
     }
 
     @FXML
