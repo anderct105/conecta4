@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
@@ -145,6 +146,17 @@ public class IU_Menu extends Stage {
         rt.setCycleCount(1);
         rt.setInterpolator(Interpolator.LINEAR);
         rt.play();
+
+        Stage primaryStage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/Configuracion.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setTitle("Conecta 4");
+        primaryStage.setScene(new Scene(root, 291, 100));
+        primaryStage.show();
     }
 
     @FXML

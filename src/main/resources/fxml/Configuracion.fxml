@@ -8,12 +8,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="291.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Configuracion">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="291.0" styleClass="pane" stylesheets="@../stylesheet/configuracion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Configuracion">
    <children>
-      <Text layoutX="20.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modo de Juego:" />
-      <ComboBox id="modoJuego" fx:id="modoJuego" layoutX="139.0" layoutY="9.0" prefWidth="150.0" />
-      <Button fx:id="cerrar" layoutX="146.0" layoutY="61.0" mnemonicParsing="false" onAction="#cerrar" text="Cerrar" />
-      <Button id="guardar" fx:id="guardar" layoutX="49.0" layoutY="61.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+      <Text layoutX="20.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Modo de Juego:" />
+      <ComboBox id="modoJuego" fx:id="modoJuego" layoutX="139.0" layoutY="9.0" prefWidth="150.0" stylesheets="@../stylesheet/configuracion.css" />
+      <Button fx:id="cerrar" layoutX="146.0" layoutY="61.0" mnemonicParsing="false" onAction="#cerrar" styleClass="boton" stylesheets="@../stylesheet/configuracion.css" text="Cerrar" />
+      <Button fx:id="guardar" layoutX="49.0" layoutY="61.0" mnemonicParsing="false" onAction="#guardar" styleClass="boton" stylesheets="@../stylesheet/configuracion.css" text="Guardar" />
    </children>
    <opaqueInsets>
       <Insets />

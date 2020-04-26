@@ -27,7 +27,7 @@ public class IU_Configuracion {
                         "Ordenador modo Facil",
                         "Ordenador modo Dificil"
                 );
-        modoJuego = new ComboBox(options);
+        modoJuego.setItems(options);
     }
 
     @FXML
