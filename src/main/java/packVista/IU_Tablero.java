@@ -3,6 +3,7 @@ package packVista;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyValue;
 import javafx.collections.ObservableList;
+import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
@@ -212,7 +213,18 @@ public class IU_Tablero{
     private JSONObject jugar(int pColumna, boolean turno) {
         JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
         if (json == null){
-            //IU_COLUMNA LLENA
+            Stage primaryStage = new Stage();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene s = new Scene(root,291,100);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+            s.setFill(Color.TRANSPARENT);
+            primaryStage.setScene(s);
+            primaryStage.show();
         } else{
             //fila = (int)json.get("fila");
             //panelTablero.add(ficha,pColumna,5-fila);
