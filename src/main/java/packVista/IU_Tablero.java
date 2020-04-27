@@ -32,8 +32,10 @@ import org.json.simple.JSONObject;
 import packModelo.Tablero;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class IU_Tablero{
+public class IU_Tablero implements Observer {
 
     @FXML
     private AnchorPane pane;
@@ -124,7 +126,8 @@ public class IU_Tablero{
         listenerTerminarPartida();
         listenerTablero();
         Conecta4.getmConecta4().inicializarTablero();
-        Tablero.getmTablero().registrarObservador(this);
+        Tablero.getmTablero().addObserver(this);
+        Tablero.getmTablero().setInterfaz(this);
 
         tablero = new Circle[6][9];
         fin = false;
@@ -203,11 +206,6 @@ public class IU_Tablero{
                 }
             });
         });
-    }
-
-    private void colocarFicha(int fila,int columna){
-        fila=5-fila;
-        panelTablero.add(getFicha(turno),columna,fila);
     }
 
     private JSONObject jugar(int pColumna, boolean turno) {
@@ -297,11 +295,16 @@ public class IU_Tablero{
         }
     }
 
-    public void update(int pFila, int pColumna, boolean pColor){
+    @Override
+    public void update(Observable o, Object arg) {
         if (!fin){
-            Circle ficha = getFicha(pColor);
-            panelTablero.add(ficha,pColumna,pFila);
-            tablero[pFila][pColumna] = ficha;
+            JSONObject json = (JSONObject)arg;
+            int fila = 5-(int)json.get("fila");
+            int columna = (int)json.get("columna");
+            Circle ficha = getFicha(turno);
+            panelTablero.add(ficha,columna,fila);
+            tablero[fila][columna] = ficha;
+            turno = !turno;
         }
     }
 }

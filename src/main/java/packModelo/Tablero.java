@@ -7,13 +7,14 @@ import packVista.IU_Tablero;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Se encarga de toda la lógica del juego, almacena una matriz con todas las posiciones del tablero y en cada posición una ficha.
  */
 
-public class Tablero {
+public class Tablero extends Observable {
 
     /**
      * Atributo estático para el patrón singleton.
@@ -59,14 +60,11 @@ public class Tablero {
             return null;
         } else {
             //SE NOTIFICARÁ A LA INTERFAZ LA X E Y EN LA QUE SE HA INTRODUCIDO
-            notificar(5-(int)json.get("fila"),  pColumna, pJugador);
+            this.setChanged();
+            notifyObservers(json);
             json.put("lleno", lleno);
             return json;
         }
-    }
-
-    public void notificar(int pFila, int pColumna, boolean pColor){
-        interfaz.update(pFila, pColumna, pColor);
     }
 
     /**
@@ -403,7 +401,7 @@ public class Tablero {
         return combinaciones;
     }
 
-    public void registrarObservador(IU_Tablero tablero){
+    public void setInterfaz(IU_Tablero tablero){
         interfaz = tablero;
     }
 
