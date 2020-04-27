@@ -67,8 +67,10 @@ public class IU_Tablero{
     private Label LabelTurno;
 
     //Para marcar las fichas ganadoras
-    private Circle[][] tableroRojo;
-    private Circle[][] tableroAzul;
+    private Circle[][] tablero;
+
+    //Para fin de juego
+    private boolean fin;
 
     private int secs=0;
     private int mins=0;
@@ -123,8 +125,8 @@ public class IU_Tablero{
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().registrarObservador(this);
 
-        tableroRojo = new Circle[6][9];
-        tableroAzul = new Circle[6][9];
+        tablero = new Circle[6][9];
+        fin = false;
     }
 
     private void setModoJuego() {
@@ -193,6 +195,7 @@ public class IU_Tablero{
                         JSONObject json = jugar(columna,turno);
                         JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
                         if (ja != null) {
+                            fin = true;
                             marcarGanadoras(json);
                         }
                     }
@@ -265,33 +268,28 @@ public class IU_Tablero{
             Integer y = (Integer) objeto.get("y");
             Stop[] stops = null; Stop[] borde;
             LinearGradient lg1;
-            Circle ficha = null;
+            Circle ficha = tablero[5-x][y];
             if (ganadoA){
-                ficha = tableroRojo[5-x][y];
-                ficha.setStrokeWidth(2.5);
                 stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
                 borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
                 ficha.setStroke(lg1);
             } else if (ganadoB) {
-                ficha = tableroAzul[5-x][y];
-                ficha.setStrokeWidth(2.5);
                 stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
                 borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
                 ficha.setStroke(lg1);
             }
+            ficha.setStrokeWidth(2.5);
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
         }
     }
 
     public void update(int pFila, int pColumna, boolean pColor){
-        Circle ficha = getFicha(pColor);
-        panelTablero.add(ficha,pColumna,pFila);
-        if (pColor) {
-            tableroRojo[pFila][pColumna] = ficha;
-        } else {
-            tableroAzul[pFila][pColumna] = ficha;
+        if (!fin){
+            Circle ficha = getFicha(pColor);
+            panelTablero.add(ficha,pColumna,pFila);
+            tablero[pFila][pColumna] = ficha;
         }
     }
 }
