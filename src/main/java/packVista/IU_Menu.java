@@ -84,6 +84,21 @@ public class IU_Menu extends Stage {
         }
     }
 
+    public void animacionTitulo() {
+            ScaleTransition sc = new ScaleTransition();
+            sc.setFromX(title.getScaleX());
+            sc.setToX(title.getScaleX() + 0.4);
+            sc.setFromY(title.getScaleY());
+            sc.setToY(title.getScaleY() + 0.4);
+            sc.setFromZ(title.getScaleZ());
+            sc.setToZ(title.getScaleZ() + 0.2);
+            sc.setNode(title);
+            sc.setDuration(new Duration(1500));
+            sc.setAutoReverse(true);
+            sc.setCycleCount(Animation.INDEFINITE);
+            sc.play();
+    }
+
 
     public void animacionInicial() {
         Thread t2 = new Thread() {
@@ -103,7 +118,9 @@ public class IU_Menu extends Stage {
                 KeyFrame key = new KeyFrame(Duration.millis(2000),
                         new KeyValue(entryAnimation.translateYProperty(), -2000,Interpolator.EASE_IN));
                 timeline.getKeyFrames().add(key);
-                timeline.setOnFinished(event -> {entryAnimation.setVisible(false);});
+                timeline.setOnFinished(event -> {entryAnimation.setVisible(false);
+                    animacionTitulo();
+                });
                 timeline.play();
                 try {
                     Thread.sleep(6000);
@@ -236,7 +253,13 @@ public class IU_Menu extends Stage {
     public void cambiarATablero() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Tablero.fxml"));
+            ColorAdjust c = new ColorAdjust();
+            c.setBrightness(0);
             pane.getScene().setRoot(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
+            ft.setFromValue(0);
+            ft.setToValue(1);
+            ft.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
