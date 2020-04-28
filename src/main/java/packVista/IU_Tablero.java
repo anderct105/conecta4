@@ -298,13 +298,23 @@ public class IU_Tablero implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (!fin){
-            JSONObject json = (JSONObject)arg;
-            int fila = 5-(int)json.get("fila");
-            int columna = (int)json.get("columna");
-            Circle ficha = getFicha(turno);
-            panelTablero.add(ficha,columna,fila);
-            tablero[fila][columna] = ficha;
-            turno = !turno;
+            Circle ficha = getFicha(pColor);
+            ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2) {
+                        int columna = GridPane.getColumnIndex(ficha);
+                        JSONObject json = jugar(columna,turno);
+                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
+                        if (ja != null) {
+                            fin = true;
+                            marcarGanadoras(json);
+                        }
+                    }
+                }
+            });
+            panelTablero.add(ficha,pColumna,pFila);
+            tablero[pFila][pColumna] = ficha;
         }
     }
 }
