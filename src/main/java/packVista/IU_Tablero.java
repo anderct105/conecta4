@@ -180,7 +180,7 @@ public class IU_Tablero implements Observer {
         return ficha;
     }
 
-    public void oscurecerFondo() {
+    public void oscurecerFondo(int columna) {
         //EFECTO PARA OSCURECER
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(-0.5);
@@ -206,9 +206,7 @@ public class IU_Tablero implements Observer {
         //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
         primaryStage.setOnShown(ev -> {
             double centerXPosition = sAct.getX() + sAct.getWidth()/2;
-            System.out.println(centerXPosition);
             double centerYPosition = sAct.getY() + sAct.getHeight()/2;
-            System.out.println(centerXPosition - primaryStage.getWidth()/2);
             primaryStage.setX(centerXPosition - primaryStage.getWidth()/2);
             primaryStage.setY(centerYPosition - primaryStage.getHeight()/2);
             fiveSecondsWonder.stop();
