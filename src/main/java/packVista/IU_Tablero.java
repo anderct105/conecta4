@@ -1,6 +1,10 @@
 package packVista;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.effect.ColorAdjust;
+import javafx.stage.Screen;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
@@ -174,6 +178,33 @@ public class IU_Tablero implements Observer {
         return ficha;
     }
 
+    public void oscurecerFondo() {
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
+        Stage primaryStage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/ColumnaLlena.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene s = new Scene(root,291,100);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        s.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(s);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        panelTablero.getScene().getRoot().setDisable(true);
+        primaryStage.show();
+        primaryStage.setOnHiding(event -> {
+            ColorAdjust ca1 = new ColorAdjust();
+            ca1.setBrightness(0);
+            pane.getScene().getRoot().setEffect(ca1);
+            panelTablero.getScene().getRoot().setDisable(false);
+        });
+
+    }
+
     private void listenerTablero() {
         //se rellenan todas las posiciones con fichas transparentes para detectar el clic
       int filas = panelTablero.getRowConstraints().size();
@@ -209,19 +240,7 @@ public class IU_Tablero implements Observer {
     private JSONObject jugar(int pColumna, boolean turno) {
         JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
         if (json == null){
-            Stage primaryStage = new Stage();
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/fxml/ColumnaLlena.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Scene s = new Scene(root,291,100);
-            primaryStage.initStyle(StageStyle.UNDECORATED);
-            s.setFill(Color.TRANSPARENT);
-            primaryStage.setScene(s);
-            primaryStage.initStyle(StageStyle.TRANSPARENT);
-            primaryStage.show();
+            oscurecerFondo();
         } else{
             //fila = (int)json.get("fila");
             //panelTablero.add(ficha,pColumna,5-fila);
