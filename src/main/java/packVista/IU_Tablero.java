@@ -212,7 +212,7 @@ public class IU_Tablero implements Observer {
             Stage primaryStage = new Stage();
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml/ColumnaLlena.fxml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -220,6 +220,7 @@ public class IU_Tablero implements Observer {
             primaryStage.initStyle(StageStyle.UNDECORATED);
             s.setFill(Color.TRANSPARENT);
             primaryStage.setScene(s);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
             primaryStage.show();
         } else{
             //fila = (int)json.get("fila");
