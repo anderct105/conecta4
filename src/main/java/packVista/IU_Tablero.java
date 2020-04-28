@@ -1,7 +1,6 @@
 package packVista;
 
 import javafx.scene.effect.ColorAdjust;
-import javafx.collections.ObservableList;
 import javafx.animation.KeyValue;
 import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
@@ -32,8 +31,7 @@ import org.json.simple.JSONObject;
 import packModelo.Tablero;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class IU_Tablero implements Observer {
 
@@ -118,7 +116,6 @@ public class IU_Tablero implements Observer {
            else {
                TimeSeconds.setText(String.valueOf(secs));
            }
-
         }
     }));
 
@@ -223,7 +220,6 @@ public class IU_Tablero implements Observer {
             marcarDesmarcarColumnaLlena(columna);
             fiveSecondsWonder.play();
         });
-
     }
 
     private void listenerTablero() {
@@ -313,28 +309,113 @@ public class IU_Tablero implements Observer {
             Integer x = (Integer) objeto.get("x");
             Integer y = (Integer) objeto.get("y");
             Stop[] stops = null; Stop[] borde;
-            LinearGradient lg1;
+            LinearGradient lg1 = null;
             Circle ficha = tablero[5-x][y];
             if (ganadoA){
                 stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
                 borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                ficha.setStroke(lg1);
             } else if (ganadoB) {
                 stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
                 borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                ficha.setStroke(lg1);
             }
-            ficha.setStrokeWidth(2.5);
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
-
-            Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(2000),
-                    new KeyValue(ficha.scaleXProperty(), 1.1), new KeyValue(ficha.scaleYProperty(), 1.1));
-            timeline.getKeyFrames().add(key);
-            timeline.play();
+            ficha.setStrokeWidth(2.5);
+            ficha.setStroke(lg1);
         }
+
+        //Ordenamos las fichas
+        HashMap<Integer, JSONObject> fichas = new HashMap<>();
+        boolean igual = false;
+        JSONObject objeto = (JSONObject) ja.get(0); JSONObject objetoB = (JSONObject) ja.get(1);
+        Integer x = (Integer) objeto.get("x"); Integer xB = (Integer) objetoB.get("x");
+        Integer y = (Integer) objeto.get("y"); Integer yB = (Integer) objetoB.get("y");
+        if (x+y == xB+yB){
+            igual = true;
+        }
+
+        for (int i = 0; i < ja.size(); i++){
+            objeto = (JSONObject) ja.get(i);
+            x = (Integer) objeto.get("x");
+            y = (Integer) objeto.get("y");
+            if (!igual){
+                fichas.put(x+y, objeto);
+            } else {
+                fichas.put(y, objeto);
+            }
+        }
+        List<Integer> empleados = new ArrayList<>(fichas.keySet());
+        Collections.sort(empleados);
+
+        //FICHA 1
+        JSONObject objeto1 = fichas.get(empleados.get(0));
+        Integer x1 = (Integer) objeto1.get("x"); Integer y1 = (Integer) objeto1.get("y");
+        Circle ficha1 = tablero[5-x1][y1];
+
+        Timeline timeline11 = new Timeline();
+        KeyFrame key11 = new KeyFrame(Duration.millis(500),
+                new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
+        timeline11.getKeyFrames().add(key11);
+        timeline11.play();
+
+        Timeline timeline1 = new Timeline();
+        KeyFrame key1 = new KeyFrame(Duration.millis(1000),
+                new KeyValue(ficha1.scaleXProperty(), 1.1), new KeyValue(ficha1.scaleYProperty(), 1.1));
+        timeline1.getKeyFrames().add(key1);
+
+        //FICHA 2
+        JSONObject objeto2 = fichas.get(empleados.get(1));
+        Integer x2 = (Integer) objeto2.get("x"); Integer y2 = (Integer) objeto2.get("y");
+        Circle ficha2 = tablero[5-x2][y2];
+
+        Timeline timeline21 = new Timeline();
+        KeyFrame key21 = new KeyFrame(Duration.millis(500),
+                new KeyValue(ficha2.scaleXProperty(), 0.7), new KeyValue(ficha2.scaleYProperty(), 0.7));
+        timeline21.getKeyFrames().add(key21);
+
+        Timeline timeline2 = new Timeline();
+        KeyFrame key2 = new KeyFrame(Duration.millis(1000),
+                new KeyValue(ficha2.scaleXProperty(), 1.1), new KeyValue(ficha2.scaleYProperty(), 1.1));
+        timeline2.getKeyFrames().add(key2);
+
+        //FICHA 3
+        JSONObject objeto3 = fichas.get(empleados.get(2));
+        Integer x3 = (Integer) objeto3.get("x"); Integer y3 = (Integer) objeto3.get("y");
+        Circle ficha3 = tablero[5-x3][y3];
+
+        Timeline timeline31 = new Timeline();
+        KeyFrame key31 = new KeyFrame(Duration.millis(500),
+                new KeyValue(ficha3.scaleXProperty(), 0.7), new KeyValue(ficha3.scaleYProperty(), 0.7));
+        timeline31.getKeyFrames().add(key31);
+
+        Timeline timeline3 = new Timeline();
+        KeyFrame key3 = new KeyFrame(Duration.millis(1000),
+                new KeyValue(ficha3.scaleXProperty(), 1.1), new KeyValue(ficha3.scaleYProperty(), 1.1));
+        timeline3.getKeyFrames().add(key3);
+
+        //FICHA 4
+        JSONObject objeto4 = fichas.get(empleados.get(3));
+        Integer x4 = (Integer) objeto4.get("x");Integer y4 = (Integer) objeto4.get("y");
+        Circle ficha4 = tablero[5-x4][y4];
+
+        Timeline timeline41 = new Timeline();
+        KeyFrame key41 = new KeyFrame(Duration.millis(500),
+                new KeyValue(ficha4.scaleXProperty(), 0.7), new KeyValue(ficha4.scaleYProperty(), 0.7));
+        timeline41.getKeyFrames().add(key41);
+
+        Timeline timeline4 = new Timeline();
+        KeyFrame key4 = new KeyFrame(Duration.millis(1000),
+                new KeyValue(ficha4.scaleXProperty(), 1.1), new KeyValue(ficha4.scaleYProperty(), 1.1));
+        timeline4.getKeyFrames().add(key4);
+
+        timeline11.setOnFinished(event -> {timeline1.play();});
+        timeline1.setOnFinished(event -> {timeline21.play();});
+        timeline21.setOnFinished(event -> {timeline2.play();});
+        timeline2.setOnFinished(event -> {timeline31.play();});
+        timeline31.setOnFinished(event -> {timeline3.play();});
+        timeline3.setOnFinished(event -> {timeline41.play();});
+        timeline41.setOnFinished(event -> {timeline4.play();});
     }
 
     @Override
