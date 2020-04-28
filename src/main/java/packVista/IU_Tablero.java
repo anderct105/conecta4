@@ -1,8 +1,5 @@
 package packVista;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyValue;
-import javafx.collections.ObservableList;
 import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
@@ -179,8 +176,8 @@ public class IU_Tablero implements Observer {
 
     private void listenerTablero() {
         //se rellenan todas las posiciones con fichas transparentes para detectar el clic
-      int filas=panelTablero.getRowConstraints().size();
-      int columnas=panelTablero.getColumnConstraints().size();
+      int filas = panelTablero.getRowConstraints().size();
+      int columnas = panelTablero.getColumnConstraints().size();
       for(int i=0;i<filas;i++){
           for(int j=0;j<columnas;j++){
               Circle ficha = new Circle();
@@ -201,6 +198,7 @@ public class IU_Tablero implements Observer {
                         if (ja != null) {
                             fin = true;
                             marcarGanadoras(json);
+                            fiveSecondsWonder.stop();
                         }
                     }
                 }
@@ -298,23 +296,24 @@ public class IU_Tablero implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (!fin){
-            Circle ficha = getFicha(pColor);
+            JSONObject json = (JSONObject)arg;
+            int fila = 5-(int)json.get("fila");
+            int columna = (int)json.get("columna");
+            Circle ficha = getFicha(turno);
+
             ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getClickCount() == 2) {
                         int columna = GridPane.getColumnIndex(ficha);
-                        JSONObject json = jugar(columna,turno);
-                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
-                        if (ja != null) {
-                            fin = true;
-                            marcarGanadoras(json);
-                        }
+                        jugar(columna,turno);
                     }
                 }
             });
-            panelTablero.add(ficha,pColumna,pFila);
-            tablero[pFila][pColumna] = ficha;
+
+            panelTablero.add(ficha,columna,fila);
+            tablero[fila][columna] = ficha;
+            turno = !turno;
         }
     }
 }
