@@ -179,9 +179,11 @@ public class IU_Tablero implements Observer {
     }
 
     public void oscurecerFondo() {
+        //EFECTO PARA OSCURECER
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(-0.5);
         pane.getScene().getRoot().setEffect(ca);
+        //CREAR LA VENTANA DE COLUMNA LLENA
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
@@ -190,17 +192,35 @@ public class IU_Tablero implements Observer {
             e.printStackTrace();
         }
         Scene s = new Scene(root,291,100);
+        //FONDO TRANSPARENTE
         primaryStage.initStyle(StageStyle.UNDECORATED);
         s.setFill(Color.TRANSPARENT);
         primaryStage.setScene(s);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //CENTRAR EN TABLERO
+        Stage sAct = (Stage) panelTablero.getScene().getWindow();
+        //OCULTAR VENTANA CUANDO APAREZCA, PARA ASI PODE OBTENER SU POSICIÓN Y REAJUSTARLA
+        primaryStage.setOnShowing(ev -> primaryStage.hide());
+        //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
+        primaryStage.setOnShown(ev -> {
+            double centerXPosition = sAct.getX() + sAct.getWidth()/2;
+            System.out.println(centerXPosition);
+            double centerYPosition = sAct.getY() + sAct.getHeight()/2;
+            System.out.println(centerXPosition - primaryStage.getWidth()/2);
+            primaryStage.setX(centerXPosition - primaryStage.getWidth()/2);
+            primaryStage.setY(centerYPosition - primaryStage.getHeight()/2);
+            fiveSecondsWonder.stop();
+            primaryStage.show();
+        });
         panelTablero.getScene().getRoot().setDisable(true);
         primaryStage.show();
+        //CUANDO SE OCULTE SE QUITARÁ EL EFECTO OSCURO
         primaryStage.setOnHiding(event -> {
             ColorAdjust ca1 = new ColorAdjust();
             ca1.setBrightness(0);
             pane.getScene().getRoot().setEffect(ca1);
             panelTablero.getScene().getRoot().setDisable(false);
+            fiveSecondsWonder.play();
         });
 
     }
