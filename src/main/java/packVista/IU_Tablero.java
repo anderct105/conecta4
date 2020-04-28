@@ -261,7 +261,7 @@ public class IU_Tablero implements Observer {
                     root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
                     Stage primaryStage=new Stage();
                     primaryStage.setTitle("Conecta 4");
-                    primaryStage.setScene(new Scene(root, 1100, 730));
+                    primaryStage.setScene(new Scene(root, 1100, 600));
                     primaryStage.show();
                 } catch (IOException ex) {
                     ex.printStackTrace();
