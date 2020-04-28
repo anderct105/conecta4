@@ -15,11 +15,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -55,9 +53,9 @@ public class IU_Menu extends Stage {
 
     @FXML
     public void initialize() {
-        if (!Main.animacionInicio){
+        if (!Main.animacionInicio) {
             entryAnimation.setVisible(false);
-        }else {
+        } else {
             Task<Void> t = new Task<Void>() {
                 @Override
                 protected Void call() {
@@ -85,18 +83,20 @@ public class IU_Menu extends Stage {
     }
 
     public void animacionTitulo() {
-            ScaleTransition sc = new ScaleTransition();
-            sc.setFromX(title.getScaleX());
-            sc.setToX(title.getScaleX() + 0.4);
-            sc.setFromY(title.getScaleY());
-            sc.setToY(title.getScaleY() + 0.4);
-            sc.setFromZ(title.getScaleZ());
-            sc.setToZ(title.getScaleZ() + 0.2);
-            sc.setNode(title);
-            sc.setDuration(new Duration(1500));
-            sc.setAutoReverse(true);
-            sc.setCycleCount(Animation.INDEFINITE);
-            sc.play();
+        ScaleTransition sc = new ScaleTransition();
+        sc.setFromX(title.getScaleX());
+        sc.setToX(title.getScaleX() + 0.3);
+        sc.setFromY(title.getScaleY());
+        sc.setToY(title.getScaleY() + 0.3);
+        sc.setFromZ(title.getScaleZ());
+        sc.setToZ(title.getScaleZ() + 0.2);
+        sc.setNode(title);
+        sc.setDuration(new Duration(1200));
+        sc.setAutoReverse(true);
+        sc.setCycleCount(6);
+        sc.play();
+
+
     }
 
 
@@ -116,9 +116,10 @@ public class IU_Menu extends Stage {
                 }
                 Timeline timeline = new Timeline();
                 KeyFrame key = new KeyFrame(Duration.millis(2000),
-                        new KeyValue(entryAnimation.translateYProperty(), -2000,Interpolator.EASE_IN));
+                        new KeyValue(entryAnimation.translateYProperty(), -2000, Interpolator.EASE_IN));
                 timeline.getKeyFrames().add(key);
-                timeline.setOnFinished(event -> {entryAnimation.setVisible(false);
+                timeline.setOnFinished(event -> {
+                    entryAnimation.setVisible(false);
                     animacionTitulo();
                 });
                 timeline.play();
@@ -236,7 +237,7 @@ public class IU_Menu extends Stage {
     }
 
     @FXML
-    public void jugar(){
+    public void jugar() {
         FadeTransition ft = new FadeTransition(Duration.millis(2500), pane);
         ft.setFromValue(1.0);
         ft.setToValue(0);
