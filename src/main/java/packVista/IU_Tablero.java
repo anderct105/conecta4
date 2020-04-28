@@ -1,10 +1,9 @@
 package packVista;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.effect.ColorAdjust;
-import javafx.stage.Screen;
+import javafx.collections.ObservableList;
+import javafx.animation.KeyValue;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
@@ -76,6 +75,9 @@ public class IU_Tablero implements Observer {
     //Para fin de juego
     private boolean fin;
 
+    // Para marcar/desmarcar la columna llena
+    private boolean llena;
+
     private int secs=0;
     private int mins=0;
     private int hours=0;
@@ -128,10 +130,10 @@ public class IU_Tablero implements Observer {
         listenerTablero();
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().addObserver(this);
-        Tablero.getmTablero().setInterfaz(this);
 
         tablero = new Circle[6][9];
         fin = false;
+        llena = false;
     }
 
     private void setModoJuego() {
@@ -220,6 +222,7 @@ public class IU_Tablero implements Observer {
             ca1.setBrightness(0);
             pane.getScene().getRoot().setEffect(ca1);
             panelTablero.getScene().getRoot().setDisable(false);
+            marcarDesmarcarColumnaLlena(columna);
             fiveSecondsWonder.play();
         });
 
@@ -229,8 +232,8 @@ public class IU_Tablero implements Observer {
         //se rellenan todas las posiciones con fichas transparentes para detectar el clic
       int filas = panelTablero.getRowConstraints().size();
       int columnas = panelTablero.getColumnConstraints().size();
-      for(int i=0;i<filas;i++){
-          for(int j=0;j<columnas;j++){
+      for(int i=0; i<filas; i++){
+          for(int j=0; j<columnas; j++){
               Circle ficha = new Circle();
               ficha.setRadius(31);
               ficha.setFill(javafx.scene.paint.Color.RED);
@@ -260,15 +263,14 @@ public class IU_Tablero implements Observer {
     private JSONObject jugar(int pColumna, boolean turno) {
         JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
         if (json == null){
-            oscurecerFondo();
+            oscurecerFondo(pColumna);
+            marcarDesmarcarColumnaLlena(pColumna);
         } else{
             //fila = (int)json.get("fila");
             //panelTablero.add(ficha,pColumna,5-fila);
         }
         return json;
     }
-
-
 
     private void listenerTerminarPartida() {
         BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
@@ -279,14 +281,13 @@ public class IU_Tablero implements Observer {
                     Stage stage = (Stage) source.getScene().getWindow();
                     stage.close();
                     root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-                    Stage primaryStage=new Stage();
+                    Stage primaryStage = new Stage();
                     primaryStage.setTitle("Conecta 4");
                     primaryStage.setScene(new Scene(root, 1100, 600));
                     primaryStage.show();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
             }
         });
     }
@@ -299,7 +300,6 @@ public class IU_Tablero implements Observer {
             NombreTurno.setText("Jugador azul");
         }
     }
-
 
     private String obtenerModoJuego() {
         return Conecta4.getmConecta4().getModoJuego();
@@ -330,6 +330,12 @@ public class IU_Tablero implements Observer {
             }
             ficha.setStrokeWidth(2.5);
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
+
+            Timeline timeline = new Timeline();
+            KeyFrame key = new KeyFrame(Duration.millis(2000),
+                    new KeyValue(ficha.scaleXProperty(), 1.1), new KeyValue(ficha.scaleYProperty(), 1.1));
+            timeline.getKeyFrames().add(key);
+            timeline.play();
         }
     }
 
@@ -354,6 +360,21 @@ public class IU_Tablero implements Observer {
             panelTablero.add(ficha,columna,fila);
             tablero[fila][columna] = ficha;
             turno = !turno;
+        }
+    }
+
+    private void marcarDesmarcarColumnaLlena(int col){
+        ColorAdjust ca = new ColorAdjust();
+        if (!llena){
+            ca.setBrightness(5);
+            llena = true;
+        } else {
+            ca.setBrightness(0);
+            llena = false;
+        }
+        for (int i = 0; i < 6; i++){
+            Circle ficha = tablero[i][col];
+            ficha.setEffect(ca);
         }
     }
 }
