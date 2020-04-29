@@ -1,7 +1,11 @@
 package packVista;
 
+import javafx.animation.PathTransition;
+import javafx.geometry.Bounds;
 import javafx.scene.effect.ColorAdjust;
 import javafx.animation.KeyValue;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
@@ -437,6 +441,95 @@ public class IU_Tablero implements Observer {
             });
 
             panelTablero.add(ficha,columna,fila);
+            ficha.setOpacity(0);
+
+
+            HashMap<Integer, Double> cFila = new HashMap<>();
+            cFila.put(0,540.0);
+            cFila.put(1,471.0);
+            cFila.put(2,401.0);
+            cFila.put(3,331.0);
+            cFila.put(4,261.0);
+            cFila.put(5,191.0);
+            cFila.put(-1,121.0);
+
+            HashMap<Integer, Double> cColumna = new HashMap<>();
+            cColumna.put(0,245.0);
+            cColumna.put(1,320.0);
+            cColumna.put(2,395.0);
+            cColumna.put(3,470.0);
+            cColumna.put(4,545.0);
+            cColumna.put(5,621.0);
+            cColumna.put(6,697.0);
+            cColumna.put(7,773.0);
+            cColumna.put(8,849.0);
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Circle a = getFicha(turno);
+            a.setCenterX(cColumna.get(columna));
+            a.setCenterY(cFila.get(-1));
+            pane.getChildren().add(a);
+
+            Timeline timelineA = new Timeline();
+            KeyFrame keyA = new KeyFrame(Duration.millis(500),
+                    new KeyValue(a.centerYProperty(), cFila.get(5-fila)));
+            timelineA.getKeyFrames().add(keyA);
+
+            Timeline timelineB = new Timeline();
+            KeyFrame keyB = new KeyFrame(Duration.millis(1),
+                    new KeyValue(a.opacityProperty(), 0));
+            timelineB.getKeyFrames().add(keyB);
+
+            Timeline timelineC = new Timeline();
+            KeyFrame keyC = new KeyFrame(Duration.millis(1),
+                    new KeyValue(ficha.opacityProperty(), 100));
+            timelineC.getKeyFrames().add(keyC);
+
+            timelineA.play();
+            timelineA.setOnFinished(event -> timelineB.play());
+            timelineB.setOnFinished(event -> timelineC.play());
+
+
+
+
+
+
+            //COLUMNA 0: X=245
+            //COLUMNA 1: X=320
+            //COLUMNA 2: X=395
+            //COLUMNA 3: X=470
+            //COLUMNA 4: X=545
+            //COLUMNA 5: X=621
+            //COLUMNA 6: X=697
+            //COLUMNA 7: X=773
+            //COLUMNA 8: X=849
+
+            //FILA 0: Y=540
+            //FILA 1: Y=471
+            //FILA 2: Y=401
+            //FILA 3: Y=331
+            //FILA 4: Y=261
+            //FILA 5: Y=191
+
+            //ENCIMA DEL TABLERO: Y=610
+
+
+            Bounds lims = ficha.localToScene(ficha.getBoundsInParent());
+            System.out.println(lims.getMinX());
+            System.out.println(lims.getMaxX());
+            System.out.println(lims.getMinY());
+            System.out.println(lims.getMaxY());
+            System.out.println(lims.getMinZ());
+            System.out.println(lims.getMaxZ());
+            System.out.println(lims.getHeight());
+            System.out.println(lims.getWidth());
+            System.out.println(lims.getDepth());
+            System.out.println("---------------------------");
+
             tablero[fila][columna] = ficha;
             turno = !turno;
         }
