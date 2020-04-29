@@ -1,12 +1,11 @@
 package packVista;
 
-import javafx.animation.PathTransition;
+import com.sun.imageio.plugins.wbmp.WBMPImageReader;
 import javafx.geometry.Bounds;
 import javafx.scene.effect.ColorAdjust;
 import javafx.animation.KeyValue;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.StageStyle;
+import jdk.nashorn.internal.runtime.ECMAException;
 import org.json.simple.JSONArray;
 import packControlador.Conecta4;
 import javafx.animation.KeyFrame;
@@ -463,11 +462,6 @@ public class IU_Tablero implements Observer {
             cColumna.put(6,697.0);
             cColumna.put(7,773.0);
             cColumna.put(8,849.0);
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             Circle a = getFicha(turno);
             a.setCenterX(cColumna.get(columna));
@@ -489,15 +483,10 @@ public class IU_Tablero implements Observer {
                     new KeyValue(ficha.opacityProperty(), 100));
             timelineC.getKeyFrames().add(keyC);
 
-            timelineA.play();
             timelineA.setOnFinished(event -> timelineB.play());
             timelineB.setOnFinished(event -> timelineC.play());
-
-
-
-
-
-
+            timelineA.play();
+            
             //COLUMNA 0: X=245
             //COLUMNA 1: X=320
             //COLUMNA 2: X=395
@@ -516,19 +505,6 @@ public class IU_Tablero implements Observer {
             //FILA 5: Y=191
 
             //ENCIMA DEL TABLERO: Y=610
-
-
-            Bounds lims = ficha.localToScene(ficha.getBoundsInParent());
-            System.out.println(lims.getMinX());
-            System.out.println(lims.getMaxX());
-            System.out.println(lims.getMinY());
-            System.out.println(lims.getMaxY());
-            System.out.println(lims.getMinZ());
-            System.out.println(lims.getMaxZ());
-            System.out.println(lims.getHeight());
-            System.out.println(lims.getWidth());
-            System.out.println(lims.getDepth());
-            System.out.println("---------------------------");
 
             tablero[fila][columna] = ficha;
             turno = !turno;
