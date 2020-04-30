@@ -1,4 +1,62 @@
 package packVista;
 
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import packControlador.Conecta4;
+import packModelo.Tablero;
+import sun.plugin.javascript.navig.Anchor;
+
+import java.io.IOException;
+
 public class IU_TerminarPartida {
+    @FXML
+    private Button guardar;
+    @FXML
+    private Button salir;
+    @FXML
+    private Pane imagen;
+    @FXML
+    private Label puntuacion;
+
+    private int tiempo;
+    private int resultado;
+
+
+    @FXML
+    public void initialize(){
+        puntuacion.setText("La puntuacion obtenida es:"+tiempo);
+        Image image;
+        switch (resultado) {
+            case 0: image = new Image("imagenes/perdido.gif"); break;
+            case 1: image = new Image("imagenes/ganado.gif"); break;
+            default: image = new Image("imagenes/empate.png"); break;
+        }
+        imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        guardar.setDisable(Conecta4.getmConecta4().getModoJuego().equals("1vs1"));
+    }
+
+    @FXML
+    public void guardar(){
+        // llamada a guardar partida
+    }
+    @FXML
+    public void cerrar(){
+        Stage stage = (Stage) salir.getScene().getWindow();
+        stage.close();
+    }
+    public void inicializar(int tiempo, int resultado){
+        this.tiempo = tiempo;
+        this.resultado = resultado;
+    }
+
+
 }

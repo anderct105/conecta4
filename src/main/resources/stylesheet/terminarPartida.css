@@ -1,0 +1,29 @@
+.pane {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.boton {
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.boton:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-text-color: black;
+}
+
+.label {
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-text-alignment: center;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
