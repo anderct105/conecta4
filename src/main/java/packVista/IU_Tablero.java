@@ -1,9 +1,14 @@
 package packVista;
 
 import com.sun.imageio.plugins.wbmp.WBMPImageReader;
+import javafx.concurrent.Task;
 import javafx.geometry.Bounds;
 import javafx.scene.effect.ColorAdjust;
 import javafx.animation.KeyValue;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.*;
 import javafx.stage.StageStyle;
 import jdk.nashorn.internal.runtime.ECMAException;
 import org.json.simple.JSONArray;
@@ -23,18 +28,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 import packModelo.Tablero;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
+import static javafx.scene.media.AudioClip.INDEFINITE;
 
 public class IU_Tablero implements Observer {
 
@@ -90,6 +94,8 @@ public class IU_Tablero implements Observer {
     private boolean turnoSav;
     private boolean contGestion=true;
 
+    private Thread musica;
+
     Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
         @Override
@@ -139,6 +145,21 @@ public class IU_Tablero implements Observer {
         tablero = new Circle[6][9];
         fin = false;
         llena = false;
+
+        musicaFondo();
+    }
+
+    private void musicaFondo(){
+        Thread thread = new Thread(){
+            public void run(){
+                Media sound = new Media(new File("background.mp3").toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            }
+        };
+        thread.start();
+        musica = thread;
     }
 
     private void setModoJuego() {
@@ -247,7 +268,7 @@ public class IU_Tablero implements Observer {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2) {
+                    if (event.getClickCount() == 2 && !bloqueo) {
                        int columna = GridPane.getColumnIndex(item);
                         JSONObject json = jugar(columna,turno);
                         JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
@@ -437,7 +458,7 @@ public class IU_Tablero implements Observer {
             ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2) {
+                    if (event.getClickCount() == 2 && !bloqueo) {
                         int columna = GridPane.getColumnIndex(ficha);
                         jugar(columna,turno);
                     }
@@ -461,6 +482,7 @@ public class IU_Tablero implements Observer {
         panelTablero.add(ficha,pColumna,pFila);
         ficha.setOpacity(0);
         Circle a;
+        Color color;
         if (bloq){
             a = getFicha(turnoSav);
         }else{
@@ -471,28 +493,36 @@ public class IU_Tablero implements Observer {
         pane.getChildren().add(a);
 
         Timeline timelineA = new Timeline();
-        KeyFrame keyA = new KeyFrame(Duration.millis(500),
+        KeyFrame keyA = new KeyFrame(Duration.millis(100+ 150*(pFila)),
                 new KeyValue(a.centerYProperty(), getCoordenadaFila(5-pFila)));
         timelineA.getKeyFrames().add(keyA);
 
+
         Timeline timelineB = new Timeline();
         KeyFrame keyB = new KeyFrame(Duration.millis(1),
-                new KeyValue(a.opacityProperty(), 0));
+                new KeyValue(ficha.opacityProperty(), 100));
         timelineB.getKeyFrames().add(keyB);
 
         Timeline timelineC = new Timeline();
-        KeyFrame keyC = new KeyFrame(Duration.millis(1),
-                new KeyValue(ficha.opacityProperty(), 100));
+        KeyFrame keyC = new KeyFrame(Duration.millis(250),
+                new KeyValue(a.opacityProperty(), 0), new KeyValue(a.radiusProperty(), 75));
         timelineC.getKeyFrames().add(keyC);
 
-        timelineA.setOnFinished(event -> timelineB.play());
+        timelineA.setOnFinished(event -> sonido(timelineB));
         timelineB.setOnFinished(event -> timelineC.play());
-        timelineC.setOnFinished(event -> gestionarAnimacion());
+        timelineC.setOnFinished(event -> gestionarAnimacion(a));
         timelineA.play();
-
     }
 
-    private void gestionarAnimacion(){
+    private void sonido(Timeline timelineB){
+        Media sound = new Media(new File("clack.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        timelineB.play();
+    }
+
+    private void gestionarAnimacion(Circle a){
+        pane.getChildren().remove(a);
         if(obtenerModoJuego() != "1vs1"){
             if (!contGestion){
                 bloqueo = false;
