@@ -427,16 +427,45 @@ public class IU_Tablero implements Observer {
     }
 
     public void terminarPartida() {
+        //EFECTO PARA OSCURECER
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
         Stage primaryStage = new Stage();
         try {
             //PARA PODER PASAR UN PARÁMETRO A LA VENTANA
             FXMLLoader root_controller = new FXMLLoader(getClass().getResource("/fxml/TerminarPartida.fxml"));
             //DEL LOADER SE COGE EL ROOT Y SE LE PONE A LA ESCENA
-            primaryStage.setScene(new Scene((Parent)root_controller.load(), 500,600));
+            primaryStage.setScene(new Scene((Parent)root_controller.load()));
             //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
             IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
             //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
             iu.inicializar(3,1);
+            //FONDO TRANSPARENTE
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.getScene().setFill(Color.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
+            //CENTRAR EN TABLERO
+            Stage sAct = (Stage) panelTablero.getScene().getWindow();
+            //OCULTAR VENTANA CUANDO APAREZCA, PARA ASI PODE OBTENER SU POSICIÓN Y REAJUSTARLA
+            primaryStage.setOnShowing(ev -> primaryStage.hide());
+            //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
+            primaryStage.setOnShown(ev -> {
+                double centerXPosition = sAct.getX() + sAct.getWidth()/2;
+                double centerYPosition = sAct.getY() + sAct.getHeight()/2;
+                primaryStage.setX(centerXPosition - primaryStage.getWidth()/2);
+                primaryStage.setY(centerYPosition - primaryStage.getHeight()/2);
+                fiveSecondsWonder.stop();
+                primaryStage.show();
+            });
+            panelTablero.getScene().getRoot().setDisable(true);
+            primaryStage.show();
+            //CUANDO SE OCULTE SE QUITARÁ EL EFECTO OSCURO
+            primaryStage.setOnHiding(event -> {
+                ColorAdjust ca1 = new ColorAdjust();
+                ca1.setBrightness(0);
+                pane.getScene().getRoot().setEffect(ca1);
+            });
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
