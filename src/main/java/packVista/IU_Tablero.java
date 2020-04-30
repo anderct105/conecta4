@@ -93,8 +93,7 @@ public class IU_Tablero implements Observer {
     private int columnaSav;
     private boolean turnoSav;
     private boolean contGestion=true;
-
-    private Thread musica;
+    private MediaPlayer musicaFondo;
 
     Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
@@ -146,20 +145,18 @@ public class IU_Tablero implements Observer {
         fin = false;
         llena = false;
 
-        musicaFondo();
+        musicaFondoOn();
     }
 
-    private void musicaFondo(){
-        Thread thread = new Thread(){
-            public void run(){
-                Media sound = new Media(new File("background.mp3").toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            }
-        };
-        thread.start();
-        musica = thread;
+    private void musicaFondoOn(){
+        Media sound = new Media(new File("background.mp3").toURI().toString());
+        musicaFondo = new MediaPlayer(sound);
+        musicaFondo.play();
+        musicaFondo.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    private void musicaFondoOff(){
+        musicaFondo.stop();
     }
 
     private void setModoJuego() {
