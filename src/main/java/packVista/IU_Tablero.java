@@ -267,9 +267,8 @@ public class IU_Tablero implements Observer {
         if (json == null){
             oscurecerFondo(pColumna);
             marcarDesmarcarColumnaLlena(pColumna);
-        } else{
-            //fila = (int)json.get("fila");
-            //panelTablero.add(ficha,pColumna,5-fila);
+        } else if((boolean)json.get("lleno")){
+            terminarPartida();
         }
         return json;
     }
@@ -424,6 +423,24 @@ public class IU_Tablero implements Observer {
         timeline31.setOnFinished(event -> {timeline3.play();});
         timeline3.setOnFinished(event -> {timeline41.play();});
         timeline41.setOnFinished(event -> {timeline4.play();});
+        timeline4.setOnFinished(event -> {terminarPartida();});
+    }
+
+    public void terminarPartida() {
+        Stage primaryStage = new Stage();
+        try {
+            //PARA PODER PASAR UN PARÁMETRO A LA VENTANA
+            FXMLLoader root_controller = new FXMLLoader(getClass().getResource("/fxml/TerminarPartida.fxml"));
+            //DEL LOADER SE COGE EL ROOT Y SE LE PONE A LA ESCENA
+            primaryStage.setScene(new Scene((Parent)root_controller.load(), 500,600));
+            //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
+            IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
+            //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
+            iu.inicializar(3,1);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

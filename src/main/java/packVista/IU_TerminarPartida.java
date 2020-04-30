@@ -11,10 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import packControlador.Conecta4;
-import packModelo.Tablero;
-import sun.plugin.javascript.navig.Anchor;
-
-import java.io.IOException;
 
 public class IU_TerminarPartida {
     @FXML
@@ -29,19 +25,13 @@ public class IU_TerminarPartida {
     private int tiempo;
     private int resultado;
 
+    public IU_TerminarPartida() {
+    }
+
 
     @FXML
     public void initialize(){
-        puntuacion.setText("La puntuacion obtenida es:"+tiempo);
-        Image image;
-        switch (resultado) {
-            case 0: image = new Image("imagenes/perdido.gif"); break;
-            case 1: image = new Image("imagenes/ganado.gif"); break;
-            default: image = new Image("imagenes/empate.png"); break;
-        }
-        imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        guardar.setDisable(Conecta4.getmConecta4().getModoJuego().equals("1vs1"));
+
     }
 
     @FXML
@@ -53,10 +43,27 @@ public class IU_TerminarPartida {
         Stage stage = (Stage) salir.getScene().getWindow();
         stage.close();
     }
+
     public void inicializar(int tiempo, int resultado){
         this.tiempo = tiempo;
         this.resultado = resultado;
+        ponerPuntuacion();
+        ponerImagen();
     }
 
+    public void ponerPuntuacion() {
+        puntuacion.setText("La puntuacion obtenida es:"+tiempo);
+    }
 
+    public void ponerImagen() {
+        Image image;
+        switch (resultado) {
+            case 0: image = new Image("/imagenes/perdido.gif"); break;
+            case 1: image = new Image("/imagenes/ganado.gif"); break;
+            default: image = new Image("/imagenes/empate.png"); break;
+        }
+        imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        guardar.setDisable(Conecta4.getmConecta4().getModoJuego().equals("1vs1"));
+    }
 }
