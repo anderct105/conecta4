@@ -254,18 +254,13 @@ public class IU_Tablero implements Observer {
         s.setFill(Color.TRANSPARENT);
         primaryStage.setScene(s);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        //CENTRAR EN TABLERO
         Stage sAct = (Stage) panelTablero.getScene().getWindow();
-        //OCULTAR VENTANA CUANDO APAREZCA, PARA ASI PODE OBTENER SU POSICIÓN Y REAJUSTARLA
-        primaryStage.setOnShowing(ev -> primaryStage.hide());
-        //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
+        double centerXPosition = sAct.getX() + sAct.getWidth() / 2;
+        double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
+        primaryStage.setX(centerXPosition - 291 / 2);
+        primaryStage.setY(centerYPosition - 100 / 2);
         primaryStage.setOnShown(ev -> {
-            double centerXPosition = sAct.getX() + sAct.getWidth() / 2;
-            double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
-            primaryStage.setX(centerXPosition - primaryStage.getWidth() / 2);
-            primaryStage.setY(centerYPosition - primaryStage.getHeight() / 2);
             fiveSecondsWonder.stop();
-            primaryStage.show();
         });
         panelTablero.getScene().getRoot().setDisable(true);
         primaryStage.show();
