@@ -5,21 +5,20 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -38,6 +37,7 @@ import packModelo.Tablero;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class IU_Tablero implements Observer {
 
@@ -72,6 +72,13 @@ public class IU_Tablero implements Observer {
     private AnchorPane PaneTurno;
     @FXML
     private Label LabelTurno;
+    @FXML
+    private Slider volumen;
+    @FXML
+    private Button sonido;
+
+    //para indicar sonido ON/OFF
+    private boolean sonidoBool = true;
 
     //Para marcar las fichas ganadoras
     private Circle[][] tablero;
@@ -136,6 +143,9 @@ public class IU_Tablero implements Observer {
         setModoJuego();
         listenerTerminarPartida();
         listenerTablero();
+        volumen.setValue(100);
+        listenerVolumen();
+        listenerSonido();
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
@@ -143,11 +153,41 @@ public class IU_Tablero implements Observer {
         musicaFondoOn();
     }
 
+    private void listenerVolumen(){
+        volumen.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                musicaFondo.setVolume(new_val.doubleValue()/100);
+            }
+        });
+    }
+
+    private void listenerSonido(){
+        sonido.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(sonido.getText().equals("ON")){
+                    sonidoBool = false;
+                    sonido.setText("OFF");
+                    sonido.setStyle("-fx-background-color: red; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
+                }
+                else{
+                    sonidoBool = true;
+                    sonido.setText("ON");
+                    sonido.setStyle("-fx-background-color: lime; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
+                }
+            }
+        });
+    }
+
+
     private void musicaFondoOn() {
-        Media sound = new Media(new File("background.mp3").toURI().toString());
+
+        int random = ThreadLocalRandom.current().nextInt(1, 9);
+        Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
         musicaFondo = new MediaPlayer(sound);
         musicaFondo.play();
-        musicaFondo.setCycleCount(MediaPlayer.INDEFINITE);
+        musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
     }
 
     private void musicaFondoOff() {
@@ -631,9 +671,11 @@ public class IU_Tablero implements Observer {
     }
 
     private void sonido(Timeline timelineB) {
-        Media sound = new Media(new File("clack.mp3").toURI().toString());
+        Media sound = new Media(new File("src/main/resources/musica/clack.mp3").toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        if(sonidoBool){
+            mediaPlayer.play();
+        }
         timelineB.play();
     }
 

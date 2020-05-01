@@ -5,18 +5,21 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="600.0" prefWidth="1100.0" stylesheets="@../stylesheet/tablero.css">
          <center>
@@ -311,5 +314,38 @@
             </GridPane>
          </bottom>
       </BorderPane>
+      <Pane layoutX="892.0" layoutY="407.0" prefHeight="219.0" prefWidth="203.0">
+         <children>
+            <Line endX="46.0" layoutX="119.0" layoutY="84.0" startX="-80.0" strokeLineCap="ROUND" strokeWidth="3.0">
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#00ff11" />
+                        <Stop color="#5aff00" offset="0.2646048109965636" />
+                        <Stop color="#e2ff00" offset="0.495872338744717" />
+                        <Stop color="#ff7c00" offset="0.7462179563139391" />
+                        <Stop color="RED" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </stroke>
+            </Line>
+            <Label layoutX="58.0" layoutY="21.0" text="Música:" textFill="WHITE">
+               <font>
+                  <Font name="MoolBoran" size="39.0" />
+               </font>
+            </Label>
+            <Slider fx:id="volumen" layoutX="32.0" layoutY="77.0" style="-fx-control-inner-background: NULL;" />
+            <Button fx:id="sonido" layoutX="120.0" layoutY="104.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="66.0" style="-fx-background-color: LIME; -fx-border-color: WHITE; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1;" text="ON">
+               <font>
+                  <Font name="MoolBoran" size="22.0" />
+               </font>
+            </Button>
+            <Label layoutX="25.0" layoutY="96.0" text="Sonido:" textFill="WHITE">
+               <font>
+                  <Font name="MoolBoran" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
