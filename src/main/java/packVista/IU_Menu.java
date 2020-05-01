@@ -24,11 +24,14 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packControlador.GestorPartidas;
 import packMain.Main;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class IU_Menu extends Stage {
+public class IU_Menu extends Stage implements Observer {
 
     @FXML
     public AnchorPane entryAnimation;
@@ -69,7 +72,8 @@ public class IU_Menu extends Stage {
             th.run();
         }
         shakeStage();
-        modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
+        GestorPartidas.getmGestorPartidas().addObserver(this);
+        setModoJuego();
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
         table_facil.setItems(obtenerModelo(true));
@@ -266,4 +270,12 @@ public class IU_Menu extends Stage {
         }
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        setModoJuego();
+    }
+
+    public void setModoJuego() {
+        modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
+    }
 }

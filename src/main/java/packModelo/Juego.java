@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 import java.util.Observable;
 
-public class Juego extends Observable {
+public class Juego  {
 
     private Modo modo;
 
@@ -31,7 +31,6 @@ public class Juego extends Observable {
      */
     public void setModoJuego(Modo pModo) {
         this.modo = pModo;
-        //notify();
     }
 
 

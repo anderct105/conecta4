@@ -8,8 +8,10 @@ import packModelo.Juego;
 import packModelo.Modo;
 
 import java.sql.SQLException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GestorPartidas {
+public class GestorPartidas extends Observable {
 
     private static GestorPartidas mGestorPartidas;
     private Juego juego;
@@ -94,5 +96,6 @@ public class GestorPartidas {
      */
     public void setModoJuego(Modo pModo) {
         juego.setModoJuego(pModo);
+        notifyObservers();
     }
 }
