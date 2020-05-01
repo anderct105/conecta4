@@ -303,7 +303,7 @@ public class IU_Tablero implements Observer {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo) {
+                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado) {
                         //int columna = GridPane.getColumnIndex(item);
                         //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
                         JSONObject json = jugar(columnaJugador, turno);
@@ -630,7 +630,7 @@ public class IU_Tablero implements Observer {
             ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo) {
+                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado) {
                         //int columna = GridPane.getColumnIndex(item);
                         //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
                         JSONObject json = jugar(columnaJugador, turno);
