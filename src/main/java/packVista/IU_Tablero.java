@@ -322,7 +322,9 @@ public class IU_Tablero implements Observer {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 Circle c = tablero[i][j];
-                c.setStrokeWidth(0);
+                if (!fin) {
+                    c.setStrokeWidth(0);
+                }
                 ColorAdjust ca = new ColorAdjust();
                 ca.setBrightness(0);
                 c.setEffect(ca);
@@ -472,7 +474,7 @@ public class IU_Tablero implements Observer {
         KeyFrame key11 = new KeyFrame(Duration.millis(500),
                 new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
         timeline11.getKeyFrames().add(key11);
-        timeline11.play();
+        //timeline11.play();
 
         Timeline timeline1 = new Timeline();
         KeyFrame key1 = new KeyFrame(Duration.millis(1000),
@@ -530,6 +532,7 @@ public class IU_Tablero implements Observer {
         timeline11.setOnFinished(event -> {
             timeline1.play();
         });
+        timeline11.play();
         timeline1.setOnFinished(event -> {
             timeline21.play();
         });
