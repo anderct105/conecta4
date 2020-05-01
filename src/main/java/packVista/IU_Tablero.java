@@ -4,7 +4,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -277,10 +275,11 @@ public class IU_Tablero implements Observer {
                 }
             });
             listenerSeleccionCol(item);
-    });}
+        });
+    }
 
     public int columna(Node c) {
-        for (int i = 0;i < tablero.length; i++) {
+        for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 if (tablero[i][j] == c) {
                     return j;
@@ -309,17 +308,13 @@ public class IU_Tablero implements Observer {
     }
 
     @FXML
-    public void salirTableroSel(){
+    public void salirTableroSel() {
         quitarSeleccionColumna();
         this.columnaJugador = -1;
     }
 
-    @FXML
-    public void clickTablero() {
 
-    }
-
-    public void quitarSeleccionColumna(){
+    public void quitarSeleccionColumna() {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 Circle c = tablero[i][j];
@@ -333,7 +328,7 @@ public class IU_Tablero implements Observer {
         }
     }
 
-    private void ponerSeleccionColumna(int columna){
+    private void ponerSeleccionColumna(int columna) {
         Timeline[] tm = new Timeline[tablero.length];
         if (columna != -1 && colAnimTerminado) {
             if (!bloqueo) {
@@ -343,28 +338,27 @@ public class IU_Tablero implements Observer {
                 for (int i = 0; i < tablero.length; i++) {
                     Timeline tl = new Timeline();
                     Circle c = tablero[i][columna];
-                    KeyFrame kf = new KeyFrame(Duration.millis(20), new KeyValue(c.strokeWidthProperty(),2,Interpolator.EASE_IN), new KeyValue(c.strokeProperty(),Color.BLACK,Interpolator.EASE_IN), new KeyValue(c.effectProperty(),ca,Interpolator.EASE_IN));
+                    KeyFrame kf = new KeyFrame(Duration.millis(20), new KeyValue(c.strokeWidthProperty(), 2, Interpolator.EASE_IN), new KeyValue(c.strokeProperty(), Color.BLACK, Interpolator.EASE_IN), new KeyValue(c.effectProperty(), ca, Interpolator.EASE_IN));
                     tl.getKeyFrames().addAll(kf);
                     tm[i] = tl;
                 }
                 int actual = columna;
-                for (int i = tm.length-1;i > 0; i--){
-                    Timeline t = tm[i-1];
+                for (int i = tm.length - 1; i > 0; i--) {
+                    Timeline t = tm[i - 1];
                     tm[i].setOnFinished(event -> t.play());
                 }
                 tm[0].setOnFinished(event -> {
                     colAnimTerminado = true;
-                    if (columnaJugador == -1){
+                    if (columnaJugador == -1) {
                         quitarSeleccionColumna();
-                    }
-                    else if (actual != columnaJugador) {
+                    } else if (actual != columnaJugador) {
                         ponerSeleccionColumna(columnaJugador);
                     }
                 });
                 colAnimTerminado = false;
-                tm[tm.length-1].play();
+                tm[tm.length - 1].play();
             }
-            }
+        }
     }
 
     private JSONObject jugar(int pColumna, boolean turno) {
@@ -425,20 +419,20 @@ public class IU_Tablero implements Observer {
             Stop[] stops = null;
             Stop[] borde;
             LinearGradient lg1 = null;
-            Circle ficha = tablero[5-x][y];
-            if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")){
-                stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
-                borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
+            Circle ficha = tablero[5 - x][y];
+            if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")) {
+                stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
+                borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
             } else if (ganadoB && !obtenerModoJuego().equals("1vs1") || !ganadoB && obtenerModoJuego().equals("1vs1")) {
-                stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
-                borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
+                stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
+                borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
             }
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
             ficha.setStrokeWidth(2.5);
             ficha.setStroke(lg1);
-            if (ganadoA && !obtenerModoJuego().equals("1vs1")){
+            if (ganadoA && !obtenerModoJuego().equals("1vs1")) {
                 finJugador = true;
             }
         }
@@ -561,20 +555,11 @@ public class IU_Tablero implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (!fin) {
+            quitarSeleccionColumna();
             JSONObject json = (JSONObject) arg;
             int fila = 5 - (int) json.get("fila");
             int columna = (int) json.get("columna");
             Circle ficha = getFicha(turno);
-
-            ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo) {
-                        int columna = GridPane.getColumnIndex(ficha);
-                        jugar(columna, turno);
-                    }
-                }
-            });
             if (!bloqueo) {
                 bloqueo = true;
                 animacionCaer(fila, columna, ficha, false);
@@ -585,13 +570,33 @@ public class IU_Tablero implements Observer {
             }
             turno = !turno;
             setTurno();
-            tablero[fila][columna] = ficha;
         }
     }
 
     private void animacionCaer(int pFila, int pColumna, Circle ficha, boolean bloq) {
-        if (!finJugador){
+        if (!finJugador) {
+            //SE AÑADE A LA LÓGICA Y AL TABLERO
             panelTablero.add(ficha, pColumna, pFila);
+            tablero[pFila][pColumna] = ficha;
+            //SE LE PONE LOS LISTENERS A LA FICHA
+            listenerSeleccionCol(ficha);
+            ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 1 && !bloqueo) {
+                        //int columna = GridPane.getColumnIndex(item);
+                        //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
+                        JSONObject json = jugar(columnaJugador, turno);
+                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
+                        if (ja != null) {
+                            fin = true;
+                            marcarGanadoras(json);
+                            fiveSecondsWonder.stop();
+                        }
+                    }
+                }
+            });
+            //SE HACE INVISIBLE EN LA POSICIÓN Y SE CREA A, QUE VA A SER LA QUE CAIGA
             ficha.setOpacity(0);
             Circle a;
             if (bloq) {
@@ -599,11 +604,11 @@ public class IU_Tablero implements Observer {
             } else {
                 a = getFicha(turno);
             }
-            listenerSeleccionCol(ficha);
+            //SE COLOCA A EN EL TABLERO ARRIBA
             a.setCenterX(getCoordenadaColumna(pColumna));
             a.setCenterY(getCoordenadaFila(-1));
             pane.getChildren().add(a);
-
+            //SE CREA LA ANIMACIÓN
             Timeline timelineA = new Timeline();
             KeyFrame keyA = new KeyFrame(Duration.millis(100 + 150 * (pFila)),
                     new KeyValue(a.centerYProperty(), getCoordenadaFila(5 - pFila)));
@@ -623,10 +628,9 @@ public class IU_Tablero implements Observer {
             timelineA.setOnFinished(event -> sonido(timelineB));
             timelineB.setOnFinished(event -> timelineC.play());
             timelineC.setOnFinished(event -> {
-                gestionarAnimacion(a,pColumna);
+                gestionarAnimacion(a, pColumna);
                 ponerSeleccionColumna(this.columnaJugador);
             });
-            quitarSeleccionColumna();
             timelineA.play();
         }
     }
@@ -638,10 +642,10 @@ public class IU_Tablero implements Observer {
         timelineB.play();
     }
 
-    private void gestionarAnimacion(Circle a,int columna) {
+    private void gestionarAnimacion(Circle a, int columna) {
         pane.getChildren().remove(a);
-        if(!obtenerModoJuego().equals("1vs1")){
-            if (!contGestion){
+        if (!obtenerModoJuego().equals("1vs1")) {
+            if (!contGestion) {
                 bloqueo = false;
                 contGestion = true;
             } else {
