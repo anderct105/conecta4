@@ -78,6 +78,7 @@ public class IU_Tablero implements Observer {
 
     //Para fin de juego
     private boolean fin;
+    private boolean finJugador;
 
     // Para marcar/desmarcar la columna llena
     private boolean llena;
@@ -246,6 +247,7 @@ public class IU_Tablero implements Observer {
         fin = false;
         llena = false;
         bloqueo = false;
+        finJugador = false;
         int filas = panelTablero.getRowConstraints().size();
         int columnas = panelTablero.getColumnConstraints().size();
         for (int i = 0; i < filas; i++) {
@@ -436,6 +438,9 @@ public class IU_Tablero implements Observer {
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
             ficha.setStrokeWidth(2.5);
             ficha.setStroke(lg1);
+            if (ganadoA && !obtenerModoJuego().equals("1vs1")){
+                finJugador = true;
+            }
         }
 
         //Ordenamos las fichas
@@ -584,44 +589,45 @@ public class IU_Tablero implements Observer {
     }
 
     private void animacionCaer(int pFila, int pColumna, Circle ficha, boolean bloq) {
-        panelTablero.add(ficha, pColumna, pFila);
-        ficha.setOpacity(0);
-        Circle a;
-        Color color;
-        if (bloq) {
-            a = getFicha(turnoSav);
-        } else {
-            a = getFicha(turno);
+        if (!finJugador){
+            panelTablero.add(ficha, pColumna, pFila);
+            ficha.setOpacity(0);
+            Circle a;
+            if (bloq) {
+                a = getFicha(turnoSav);
+            } else {
+                a = getFicha(turno);
+            }
+            listenerSeleccionCol(ficha);
+            a.setCenterX(getCoordenadaColumna(pColumna));
+            a.setCenterY(getCoordenadaFila(-1));
+            pane.getChildren().add(a);
+
+            Timeline timelineA = new Timeline();
+            KeyFrame keyA = new KeyFrame(Duration.millis(100 + 150 * (pFila)),
+                    new KeyValue(a.centerYProperty(), getCoordenadaFila(5 - pFila)));
+            timelineA.getKeyFrames().add(keyA);
+
+
+            Timeline timelineB = new Timeline();
+            KeyFrame keyB = new KeyFrame(Duration.millis(1),
+                    new KeyValue(ficha.opacityProperty(), 100));
+            timelineB.getKeyFrames().add(keyB);
+
+            Timeline timelineC = new Timeline();
+            KeyFrame keyC = new KeyFrame(Duration.millis(250),
+                    new KeyValue(a.opacityProperty(), 0), new KeyValue(a.radiusProperty(), 75));
+            timelineC.getKeyFrames().add(keyC);
+
+            timelineA.setOnFinished(event -> sonido(timelineB));
+            timelineB.setOnFinished(event -> timelineC.play());
+            timelineC.setOnFinished(event -> {
+                gestionarAnimacion(a,pColumna);
+                ponerSeleccionColumna(this.columnaJugador);
+            });
+            quitarSeleccionColumna();
+            timelineA.play();
         }
-        listenerSeleccionCol(ficha);
-        a.setCenterX(getCoordenadaColumna(pColumna));
-        a.setCenterY(getCoordenadaFila(-1));
-        pane.getChildren().add(a);
-
-        Timeline timelineA = new Timeline();
-        KeyFrame keyA = new KeyFrame(Duration.millis(100 + 150 * (pFila)),
-                new KeyValue(a.centerYProperty(), getCoordenadaFila(5 - pFila)));
-        timelineA.getKeyFrames().add(keyA);
-
-
-        Timeline timelineB = new Timeline();
-        KeyFrame keyB = new KeyFrame(Duration.millis(1),
-                new KeyValue(ficha.opacityProperty(), 100));
-        timelineB.getKeyFrames().add(keyB);
-
-        Timeline timelineC = new Timeline();
-        KeyFrame keyC = new KeyFrame(Duration.millis(250),
-                new KeyValue(a.opacityProperty(), 0), new KeyValue(a.radiusProperty(), 75));
-        timelineC.getKeyFrames().add(keyC);
-
-        timelineA.setOnFinished(event -> sonido(timelineB));
-        timelineB.setOnFinished(event -> timelineC.play());
-        timelineC.setOnFinished(event -> {
-            gestionarAnimacion(a,pColumna);
-            ponerSeleccionColumna(this.columnaJugador);
-        });
-        quitarSeleccionColumna();
-        timelineA.play();
     }
 
     private void sonido(Timeline timelineB) {
