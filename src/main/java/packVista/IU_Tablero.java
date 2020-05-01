@@ -48,8 +48,7 @@ public class IU_Tablero implements Observer {
     private Button BTerminarPartida;
     @FXML
     private AnchorPane PaneTiempo;
-    @FXML
-    private Label LabelTiempo;
+
     @FXML
     private Label NombreTurno;
     @FXML
@@ -156,7 +155,7 @@ public class IU_Tablero implements Observer {
         String modoJuego = obtenerModoJuego();
         if (modoJuego.equals("1vs1")) {
             PaneTiempo.setVisible(false);
-            LabelTiempo.setVisible(false);
+
             setTurno();
         } else {
             PaneTurno.setVisible(false);
@@ -373,6 +372,7 @@ public class IU_Tablero implements Observer {
         } else {
             //fila = (int)json.get("fila");
             //panelTablero.add(ficha,pColumna,5-fila);
+
         }
         return json;
     }
@@ -572,6 +572,7 @@ public class IU_Tablero implements Observer {
                 turnoSav = turno;
             }
             turno = !turno;
+            setTurno();
         }
     }
 
