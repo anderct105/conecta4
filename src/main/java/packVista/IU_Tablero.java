@@ -381,14 +381,14 @@ public class IU_Tablero implements Observer {
             Stop[] stops = null;
             Stop[] borde;
             LinearGradient lg1 = null;
-            Circle ficha = tablero[5 - x][y];
-            if (ganadoA && obtenerModoJuego() != "1vs1" || !ganadoA && obtenerModoJuego() == "1vs1") {
-                stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
-                borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
+            Circle ficha = tablero[5-x][y];
+            if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")){
+                stops = new Stop[] { new Stop(0, Color.rgb(255,0,77)), new Stop(1, Color.RED)};
+                borde = new Stop[] { new Stop(0, Color.rgb(252,234,187)), new Stop(1, Color.rgb(248,181,0))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-            } else if (ganadoB && obtenerModoJuego() != "1vs1" || !ganadoB && obtenerModoJuego() == "1vs1") {
-                stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
-                borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
+            } else if (ganadoB && !obtenerModoJuego().equals("1vs1") || !ganadoB && obtenerModoJuego().equals("1vs1")) {
+                stops = new Stop[] { new Stop(0, Color.rgb(96,192,228)), new Stop(1, Color.rgb(53,63,196))};
+                borde = new Stop[] { new Stop(0, Color.rgb(255,255,255)), new Stop(1, Color.rgb(192,192,192))};
                 lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
             }
             ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
@@ -538,7 +538,6 @@ public class IU_Tablero implements Observer {
             }
             turno = !turno;
             tablero[fila][columna] = ficha;
-
         }
     }
 
@@ -588,8 +587,8 @@ public class IU_Tablero implements Observer {
 
     private void gestionarAnimacion(Circle a) {
         pane.getChildren().remove(a);
-        if (obtenerModoJuego() != "1vs1") {
-            if (!contGestion) {
+        if(!obtenerModoJuego().equals("1vs1")){
+            if (!contGestion){
                 bloqueo = false;
                 contGestion = true;
             } else {
