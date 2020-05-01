@@ -266,7 +266,10 @@ public class IU_Tablero implements Observer {
                         //int columna = GridPane.getColumnIndex(item);
                         //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
                         JSONObject json = jugar(columnaJugador, turno);
-                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
+                        JSONArray ja = null;
+                        if (json != null) {
+                            ja = (JSONArray) json.get("posicionesGanadoras");
+                        }
                         if (ja != null) {
                             fin = true;
                             marcarGanadoras(json);
@@ -586,7 +589,10 @@ public class IU_Tablero implements Observer {
                         //int columna = GridPane.getColumnIndex(item);
                         //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
                         JSONObject json = jugar(columnaJugador, turno);
-                        JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
+                        JSONArray ja = null;
+                        if (json != null) {
+                            ja = (JSONArray) json.get("posicionesGanadoras");
+                        }
                         if (ja != null) {
                             fin = true;
                             marcarGanadoras(json);
@@ -720,6 +726,7 @@ public class IU_Tablero implements Observer {
     }
 
     private void marcarDesmarcarColumnaLlena(int col) {
+        quitarSeleccionColumna();
         ColorAdjust ca = new ColorAdjust();
         if (!llena) {
             ca.setBrightness(5);
