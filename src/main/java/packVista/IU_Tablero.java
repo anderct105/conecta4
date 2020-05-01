@@ -268,6 +268,8 @@ public class IU_Tablero implements Observer {
                         JSONArray ja = null;
                         if (json != null) {
                             ja = (JSONArray) json.get("posicionesGanadoras");
+                        } else {
+                            marcarDesmarcarColumnaLlena(columnaJugador);
                         }
                         if (ja != null) {
                             fin = true;
@@ -727,7 +729,6 @@ public class IU_Tablero implements Observer {
     }
 
     private void marcarDesmarcarColumnaLlena(int col) {
-        quitarSeleccionColumna();
         ColorAdjust ca = new ColorAdjust();
         if (!llena) {
             ca.setBrightness(5);
@@ -738,7 +739,10 @@ public class IU_Tablero implements Observer {
         }
         for (int i = 0; i < 6; i++) {
             Circle ficha = tablero[i][col];
-            ficha.setEffect(ca);
+            Timeline t = new Timeline();
+            KeyFrame kf = new KeyFrame(Duration.millis(5), new KeyValue(ficha.effectProperty(), ca, Interpolator.EASE_IN));
+            t.getKeyFrames().add(kf);
+            t.play();
         }
     }
 }
