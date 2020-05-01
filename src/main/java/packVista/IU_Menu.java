@@ -71,7 +71,6 @@ public class IU_Menu extends Stage implements Observer {
             th.setDaemon(true);
             th.run();
         }
-        shakeStage();
         GestorPartidas.getmGestorPartidas().addObserver(this);
         setModoJuego();
         table_facil.setSelectionModel(null);
@@ -204,11 +203,6 @@ public class IU_Menu extends Stage implements Observer {
     }
 
     @FXML
-    public void rotateBorder() {
-
-    }
-
-    @FXML
     public void hoverPlay() {
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(0.5);
@@ -234,10 +228,6 @@ public class IU_Menu extends Stage implements Observer {
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(0);
         config.setEffect(ca);
-    }
-
-    public void shakeStage() {
-
     }
 
     @FXML
