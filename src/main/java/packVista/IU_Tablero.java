@@ -1,8 +1,10 @@
 package packVista;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -79,6 +82,9 @@ public class IU_Tablero implements Observer {
     // Para marcar/desmarcar la columna llena
     private boolean llena;
 
+    //para que no queden animaciones de columnas pendiente
+    private boolean colAnimTerminado;
+
     private int secs = 0;
     private int mins = 0;
     private int hours = 0;
@@ -131,7 +137,7 @@ public class IU_Tablero implements Observer {
         listenerTablero();
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().addObserver(this);
-
+        colAnimTerminado = true;
 
         musicaFondoOn();
     }
@@ -256,9 +262,10 @@ public class IU_Tablero implements Observer {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2 && !bloqueo) {
-                        int columna = GridPane.getColumnIndex(item);
-                        JSONObject json = jugar(columna, turno);
+                    if (event.getClickCount() == 1 && !bloqueo) {
+                        //int columna = GridPane.getColumnIndex(item);
+                        //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
+                        JSONObject json = jugar(columnaJugador, turno);
                         JSONArray ja = (JSONArray) json.get("posicionesGanadoras");
                         if (ja != null) {
                             fin = true;
@@ -282,6 +289,10 @@ public class IU_Tablero implements Observer {
         return -1;
     }
 
+    public void clickJuego() {
+
+    }
+
     public void listenerSeleccionCol(Node item) {
         item.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -293,19 +304,21 @@ public class IU_Tablero implements Observer {
                 }
             }
         });
-        item.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                int columna = columna(item);
-                if (columna != -1 && !fin) {
-                    quitarSeleccionColumna();
-                    columnaJugador = -1;
-                }
-            }
-        });
+
     }
 
-    private void quitarSeleccionColumna(){
+    @FXML
+    public void salirTableroSel(){
+        quitarSeleccionColumna();
+        this.columnaJugador = -1;
+    }
+
+    @FXML
+    public void clickTablero() {
+
+    }
+
+    public void quitarSeleccionColumna(){
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 Circle c = tablero[i][j];
@@ -318,19 +331,37 @@ public class IU_Tablero implements Observer {
     }
 
     private void ponerSeleccionColumna(int columna){
-        if (columna != -1) {
+        Timeline[] tm = new Timeline[tablero.length];
+        if (columna != -1 && colAnimTerminado) {
             if (!bloqueo) {
                 quitarSeleccionColumna();
+                ColorAdjust ca = new ColorAdjust();
+                ca.setBrightness(0.3);
                 for (int i = 0; i < tablero.length; i++) {
+                    Timeline tl = new Timeline();
                     Circle c = tablero[i][columna];
-                    c.setStrokeWidth(2);
-                    c.setStroke(Color.BLACK);
-                    ColorAdjust ca = new ColorAdjust();
-                    ca.setBrightness(0.3);
-                    c.setEffect(ca);
+                    KeyFrame kf = new KeyFrame(Duration.millis(20), new KeyValue(c.strokeWidthProperty(),2,Interpolator.EASE_IN), new KeyValue(c.strokeProperty(),Color.BLACK,Interpolator.EASE_IN), new KeyValue(c.effectProperty(),ca,Interpolator.EASE_IN));
+                    tl.getKeyFrames().addAll(kf);
+                    tm[i] = tl;
                 }
+                int actual = columna;
+                for (int i = tm.length-1;i > 0; i--){
+                    Timeline t = tm[i-1];
+                    tm[i].setOnFinished(event -> t.play());
+                }
+                tm[0].setOnFinished(event -> {
+                    colAnimTerminado = true;
+                    if (columnaJugador == -1){
+                        quitarSeleccionColumna();
+                    }
+                    else if (actual != columnaJugador) {
+                        ponerSeleccionColumna(columnaJugador);
+                    }
+                });
+                colAnimTerminado = false;
+                tm[tm.length-1].play();
             }
-        }
+            }
     }
 
     private JSONObject jugar(int pColumna, boolean turno) {
@@ -530,7 +561,7 @@ public class IU_Tablero implements Observer {
             ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2 && !bloqueo) {
+                    if (event.getClickCount() == 1 && !bloqueo) {
                         int columna = GridPane.getColumnIndex(ficha);
                         jugar(columna, turno);
                     }
