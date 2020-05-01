@@ -120,6 +120,8 @@ public class IU_Tablero implements Observer {
     private boolean turnoSav;
     private boolean contGestion = true;
     private MediaPlayer musicaFondo;
+    //esto sirve para dejar marcada la columna que usó el jugador tras la animación de la ficha
+    private int columnaJugador;
 
     @FXML
     public void initialize() throws InterruptedException {
@@ -287,6 +289,7 @@ public class IU_Tablero implements Observer {
                 int columna = columna(item);
                 if (columna != -1 && !fin) {
                     ponerSeleccionColumna(columna);
+                    columnaJugador = columna;
                 }
             }
         });
@@ -295,31 +298,37 @@ public class IU_Tablero implements Observer {
             public void handle(MouseEvent event) {
                 int columna = columna(item);
                 if (columna != -1 && !fin) {
-                    quitarSeleccionColumna(columna);
+                    quitarSeleccionColumna();
+                    columnaJugador = -1;
                 }
             }
         });
     }
 
-    private void quitarSeleccionColumna(int columna){
+    private void quitarSeleccionColumna(){
         for (int i = 0; i < tablero.length; i++) {
-            Circle c = tablero[i][columna];
-            c.setStrokeWidth(0);
-            ColorAdjust ca = new ColorAdjust();
-            ca.setBrightness(0);
-            c.setEffect(ca);
+            for (int j = 0; j < tablero[0].length; j++) {
+                Circle c = tablero[i][j];
+                c.setStrokeWidth(0);
+                ColorAdjust ca = new ColorAdjust();
+                ca.setBrightness(0);
+                c.setEffect(ca);
+            }
         }
     }
 
     private void ponerSeleccionColumna(int columna){
-        if (!bloqueo) {
-            for (int i = 0; i < tablero.length; i++) {
-                Circle c = tablero[i][columna];
-                c.setStrokeWidth(2);
-                c.setStroke(Color.BLACK);
-                ColorAdjust ca = new ColorAdjust();
-                ca.setBrightness(0.3);
-                c.setEffect(ca);
+        if (columna != -1) {
+            if (!bloqueo) {
+                quitarSeleccionColumna();
+                for (int i = 0; i < tablero.length; i++) {
+                    Circle c = tablero[i][columna];
+                    c.setStrokeWidth(2);
+                    c.setStroke(Color.BLACK);
+                    ColorAdjust ca = new ColorAdjust();
+                    ca.setBrightness(0.3);
+                    c.setEffect(ca);
+                }
             }
         }
     }
@@ -530,7 +539,6 @@ public class IU_Tablero implements Observer {
             if (!bloqueo) {
                 bloqueo = true;
                 animacionCaer(fila, columna, ficha, false);
-                listenerSeleccionCol(ficha);
             } else {
                 filaSav = fila;
                 columnaSav = columna;
@@ -551,6 +559,7 @@ public class IU_Tablero implements Observer {
         } else {
             a = getFicha(turno);
         }
+        listenerSeleccionCol(ficha);
         a.setCenterX(getCoordenadaColumna(pColumna));
         a.setCenterY(getCoordenadaFila(-1));
         pane.getChildren().add(a);
@@ -573,8 +582,11 @@ public class IU_Tablero implements Observer {
 
         timelineA.setOnFinished(event -> sonido(timelineB));
         timelineB.setOnFinished(event -> timelineC.play());
-        timelineC.setOnFinished(event -> gestionarAnimacion(a));
-        quitarSeleccionColumna(pColumna);
+        timelineC.setOnFinished(event -> {
+            gestionarAnimacion(a,pColumna);
+            ponerSeleccionColumna(this.columnaJugador);
+        });
+        quitarSeleccionColumna();
         timelineA.play();
     }
 
@@ -585,7 +597,7 @@ public class IU_Tablero implements Observer {
         timelineB.play();
     }
 
-    private void gestionarAnimacion(Circle a) {
+    private void gestionarAnimacion(Circle a,int columna) {
         pane.getChildren().remove(a);
         if(!obtenerModoJuego().equals("1vs1")){
             if (!contGestion){
