@@ -75,6 +75,8 @@ public class IU_Tablero implements Observer {
     private Slider volumen;
     @FXML
     private Button sonido;
+    @FXML
+    private Button SigCancion;
 
     //para indicar sonido ON/OFF
     private boolean sonidoBool = true;
@@ -91,6 +93,9 @@ public class IU_Tablero implements Observer {
 
     //para que no queden animaciones de columnas pendiente
     private boolean colAnimTerminado;
+
+    //Para indicar la canción actual
+    private int cancionAct = -1;
 
     private int secs = 0;
     private int mins = 0;
@@ -145,6 +150,7 @@ public class IU_Tablero implements Observer {
         volumen.setValue(100);
         listenerVolumen();
         listenerSonido();
+        listenerSigCancion();
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
@@ -179,14 +185,31 @@ public class IU_Tablero implements Observer {
         });
     }
 
+    private void listenerSigCancion(){
+        SigCancion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                musicaFondoOff();
+                musicaFondoOn();
+            }
+        });
+    }
+
 
     private void musicaFondoOn() {
 
         int random = ThreadLocalRandom.current().nextInt(1, 9);
         Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
         musicaFondo = new MediaPlayer(sound);
-        musicaFondo.play();
         musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
+
+        if (random == cancionAct){
+            musicaFondoOn();
+        }else{
+            musicaFondo.play();
+            cancionAct = random;
+        }
+
     }
 
     private void musicaFondoOff() {
