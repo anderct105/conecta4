@@ -176,6 +176,17 @@ public class IU_Menu extends Stage implements Observer {
             }
         });
         rt.play();
+
+        Stage primaryStage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/Configuracion.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setTitle("Conecta 4");
+        primaryStage.setScene(new Scene(root, 291, 100));
+        primaryStage.show();
     }
 
     public void oscurecerFondo() {
