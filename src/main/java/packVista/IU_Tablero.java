@@ -437,7 +437,7 @@ public class IU_Tablero implements Observer {
         if (json == null) {
             oscurecerFondo(pColumna);
             marcarDesmarcarColumnaLlena(pColumna);
-        }
+        } else if((boolean)json.get("lleno")) terminarPartida();
         return json;
     }
 
@@ -621,8 +621,66 @@ public class IU_Tablero implements Observer {
             timeline41.setOnFinished(event -> {
                 timeline4.play();
             });
+            timeline4.setOnFinished(event -> {terminarPartida();});
         } catch (NullPointerException n) {
 
+        }
+    }
+
+    public void terminarPartida() {
+        //EFECTO PARA OSCURECER
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
+        Stage primaryStage = new Stage();
+        try {
+            //PARA PODER PASAR UN PARÁMETRO A LA VENTANA
+            FXMLLoader root_controller = new FXMLLoader(getClass().getResource("/fxml/TerminarPartida.fxml"));
+            //DEL LOADER SE COGE EL ROOT Y SE LE PONE A LA ESCENA
+            primaryStage.setScene(new Scene((Parent)root_controller.load()));
+            //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
+            IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
+            //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
+
+            // puntuacion y quien ha ganado
+            int tiempo = hours * 3600 + mins * 60 + secs;
+            int resultado;
+            if((boolean) ganadoras.get("haGanadoA")) resultado = 1;
+            else if((boolean) ganadoras.get("haGanadoB")) resultado = 0;
+            else resultado = 2;
+            // TODO: no funciona
+            // inicializar valores
+            iu.inicializar(tiempo,resultado);
+
+
+            //FONDO TRANSPARENTE
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.getScene().setFill(Color.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
+            //CENTRAR EN TABLERO
+            Stage sAct = (Stage) panelTablero.getScene().getWindow();
+            //OCULTAR VENTANA CUANDO APAREZCA, PARA ASI PODE OBTENER SU POSICIÓN Y REAJUSTARLA
+            primaryStage.setOnShowing(ev -> primaryStage.hide());
+            //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
+            primaryStage.setOnShown(ev -> {
+                double centerXPosition = sAct.getX() + sAct.getWidth()/2;
+                double centerYPosition = sAct.getY() + sAct.getHeight()/2;
+                primaryStage.setX(centerXPosition - primaryStage.getWidth()/2);
+                primaryStage.setY(centerYPosition - primaryStage.getHeight()/2);
+                fiveSecondsWonder.stop();
+                primaryStage.show();
+            });
+            panelTablero.getScene().getRoot().setDisable(true);
+            primaryStage.show();
+            //CUANDO SE OCULTE SE QUITARÁ EL EFECTO OSCURO
+            primaryStage.setOnHiding(event -> {
+                ColorAdjust ca1 = new ColorAdjust();
+                ca1.setBrightness(0);
+                pane.getScene().getRoot().setEffect(ca1);
+            });
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
