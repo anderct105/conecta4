@@ -9,9 +9,9 @@ public class Juego  {
     private Modo modo;
 
     public Juego() {
-        //setModoJuego(new OvO());
+        setModoJuego(new OvO());
         //setModoJuego(new OrdenadorF());
-        setModoJuego(new OrdenadorD());
+        //setModoJuego(new OrdenadorD());
     }
 
     /**

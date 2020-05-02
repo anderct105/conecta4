@@ -2,6 +2,8 @@ package packVista;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,6 +31,14 @@ public class IU_Configuracion {
                 );
         modoJuego.setValue(Conecta4.getmConecta4().getModoJuego());
         modoJuego.setItems(options);
+
+        guardar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                guardar();
+                cerrar();
+            }
+        });
     }
 
     @FXML
