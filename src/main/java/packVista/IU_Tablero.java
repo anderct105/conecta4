@@ -1,21 +1,23 @@
 package packVista;
 
 import javafx.animation.*;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -158,25 +160,24 @@ public class IU_Tablero implements Observer {
         musicaFondoOn();
     }
 
-    private void listenerVolumen(){
+    private void listenerVolumen() {
         volumen.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                musicaFondo.setVolume(new_val.doubleValue()/100);
+                musicaFondo.setVolume(new_val.doubleValue() / 100);
             }
         });
     }
 
-    private void listenerSonido(){
+    private void listenerSonido() {
         sonido.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(sonido.getText().equals("ON")){
+                if (sonido.getText().equals("ON")) {
                     sonidoBool = false;
                     sonido.setText("OFF");
                     sonido.setStyle("-fx-background-color: red; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
-                }
-                else{
+                } else {
                     sonidoBool = true;
                     sonido.setText("ON");
                     sonido.setStyle("-fx-background-color: lime; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
@@ -185,7 +186,7 @@ public class IU_Tablero implements Observer {
         });
     }
 
-    private void listenerSigCancion(){
+    private void listenerSigCancion() {
         SigCancion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -203,9 +204,9 @@ public class IU_Tablero implements Observer {
         musicaFondo = new MediaPlayer(sound);
         musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
 
-        if (random == cancionAct){
+        if (random == cancionAct) {
             musicaFondoOn();
-        }else{
+        } else {
             musicaFondo.play();
             cancionAct = random;
         }
@@ -434,7 +435,7 @@ public class IU_Tablero implements Observer {
         if (json == null) {
             oscurecerFondo(pColumna);
             marcarDesmarcarColumnaLlena(pColumna);
-        } else if((boolean)json.get("lleno")) terminarPartida();
+        } else if ((boolean) json.get("lleno")) terminarPartida();
         return json;
     }
 
@@ -442,21 +443,8 @@ public class IU_Tablero implements Observer {
         BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Parent root;
                 musicaFondoOff();
-                try {
-                    musicaFondoOff();
-                    Node source = (Node) e.getSource();
-                    Stage stage = (Stage) source.getScene().getWindow();
-                    stage.close();
-                    root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-                    Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Conecta 4");
-                    primaryStage.setScene(new Scene(root, 1100, 600));
-                    primaryStage.show();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                fadeAMenu();
             }
         });
     }
@@ -476,7 +464,7 @@ public class IU_Tablero implements Observer {
 
     private void marcarGanadoras() {
         if (transfomacionColor) {
-            ganadoras.put("haGanadoA",false);
+            ganadoras.put("haGanadoA", false);
         }
         try {
             boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
@@ -619,7 +607,9 @@ public class IU_Tablero implements Observer {
             timeline41.setOnFinished(event -> {
                 timeline4.play();
             });
-            timeline4.setOnFinished(event -> {terminarPartida();});
+            timeline4.setOnFinished(event -> {
+                terminarPartida();
+            });
         } catch (NullPointerException n) {
 
         }
@@ -635,7 +625,7 @@ public class IU_Tablero implements Observer {
             //PARA PODER PASAR UN PARÁMETRO A LA VENTANA
             FXMLLoader root_controller = new FXMLLoader(getClass().getResource("/fxml/TerminarPartida.fxml"));
             //DEL LOADER SE COGE EL ROOT Y SE LE PONE A LA ESCENA
-            primaryStage.setScene(new Scene((Parent)root_controller.load()));
+            primaryStage.setScene(new Scene((Parent) root_controller.load()));
             //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
             IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
             //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
@@ -643,12 +633,12 @@ public class IU_Tablero implements Observer {
             // puntuacion y quien ha ganado
             int tiempo = hours * 3600 + mins * 60 + secs;
             int resultado;
-            if((boolean) ganadoras.get("haGanadoA")) resultado = 1;
-            else if((boolean) ganadoras.get("haGanadoB")) resultado = 0;
+            if ((boolean) ganadoras.get("haGanadoA")) resultado = 1;
+            else if ((boolean) ganadoras.get("haGanadoB")) resultado = 0;
             else resultado = 2;
             // TODO: no funciona
             // inicializar valores
-            iu.inicializar(tiempo,resultado);
+            iu.inicializar(tiempo, resultado);
 
 
             //FONDO TRANSPARENTE
@@ -661,10 +651,10 @@ public class IU_Tablero implements Observer {
             primaryStage.setOnShowing(ev -> primaryStage.hide());
             //EN CUANTO SE ENSEÑE SE AJUSTA Y SE PONE VISIBLE
             primaryStage.setOnShown(ev -> {
-                double centerXPosition = sAct.getX() + sAct.getWidth()/2;
-                double centerYPosition = sAct.getY() + sAct.getHeight()/2;
-                primaryStage.setX(centerXPosition - primaryStage.getWidth()/2);
-                primaryStage.setY(centerYPosition - primaryStage.getHeight()/2);
+                double centerXPosition = sAct.getX() + sAct.getWidth() / 2;
+                double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
+                primaryStage.setX(centerXPosition - primaryStage.getWidth() / 2);
+                primaryStage.setY(centerYPosition - primaryStage.getHeight() / 2);
                 fiveSecondsWonder.stop();
                 primaryStage.show();
             });
@@ -769,8 +759,7 @@ public class IU_Tablero implements Observer {
                     gestionarAnimacion(a, pColumna);
                     ponerSeleccionColumna(this.columnaJugador);
                     marcarGanadoras();
-                }
-                else {
+                } else {
                     if (!fin) {
                         gestionarAnimacion(a, pColumna);
                         ponerSeleccionColumna(this.columnaJugador);
@@ -790,7 +779,7 @@ public class IU_Tablero implements Observer {
     private void sonido(Timeline timelineB) {
         Media sound = new Media(new File("src/main/resources/musica/clack.mp3").toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        if(sonidoBool){
+        if (sonidoBool) {
             mediaPlayer.play();
         }
         timelineB.play();
@@ -899,33 +888,28 @@ public class IU_Tablero implements Observer {
     }
 
     private void fadeAMenu() {
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), pane.getScene().getRoot());
-        ft.setFromValue(1.0);
-        ft.setToValue(0);
-        ft.setOnFinished(new EventHandler<ActionEvent>() {
+        Timeline t = new Timeline();
+        KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(pane.getScene().getRoot().opacityProperty(), 0, Interpolator.EASE_IN));
+        t.getKeyFrames().add(kf);
+        t.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 cambiarAMenuAux();
             }
         });
-        ft.play();
+        t.play();
     }
 
-    public void cambiarAMenuAux(){
+    public void cambiarAMenuAux() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
             ColorAdjust c = new ColorAdjust();
             c.setBrightness(1);
-            //root.setEffect(c);
-            FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
-            ft.setFromValue(0);
-            ft.setToValue(1.0);
-            //ft.play();
             root.setOpacity(0);
             musicaFondoOff();
             pane.getScene().setRoot(root);
             Timeline t = new Timeline();
-            KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(root.opacityProperty(), 1,Interpolator.EASE_IN));
+            KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(root.opacityProperty(), 1, Interpolator.EASE_IN));
             t.getKeyFrames().add(kf);
             t.play();
         } catch (IOException e) {
