@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Tablero.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
         primaryStage.setTitle("Conecta 4");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root,1100,600));

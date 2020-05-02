@@ -1,6 +1,7 @@
 package packVista;
 
 import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -232,7 +233,7 @@ public class IU_Menu extends Stage implements Observer {
 
     @FXML
     public void jugar() {
-        FadeTransition ft = new FadeTransition(Duration.millis(2500), pane);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), pane);
         ft.setFromValue(1.0);
         ft.setToValue(0);
         ft.setOnFinished(new EventHandler<ActionEvent>() {
@@ -249,12 +250,18 @@ public class IU_Menu extends Stage implements Observer {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Tablero.fxml"));
             ColorAdjust c = new ColorAdjust();
-            c.setBrightness(0);
-            pane.getScene().setRoot(root);
+            c.setBrightness(1);
+            //root.setEffect(c);
             FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
             ft.setFromValue(0);
-            ft.setToValue(1);
-            ft.play();
+            ft.setToValue(1.0);
+            //ft.play();
+            root.setOpacity(0);
+            pane.getScene().setRoot(root);
+            Timeline t = new Timeline();
+            KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(root.opacityProperty(), 1,Interpolator.EASE_IN));
+            t.getKeyFrames().add(kf);
+            t.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
