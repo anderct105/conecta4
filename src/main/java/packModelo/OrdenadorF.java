@@ -21,7 +21,7 @@ public class OrdenadorF extends Modo {
      * @author Naiara Maneiro
      */
     public JSONObject jugar(int pColumna) {
-        boolean turno = false;
+        boolean turno = true;
         JSONObject json = Tablero.getmTablero().introducirFicha(pColumna, turno);
         if (json != null) {
             Integer filaA = (Integer) json.get("fila");

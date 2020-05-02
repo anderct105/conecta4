@@ -1,0 +1,47 @@
+.panelSuperior{
+    -fx-background-color:rgba(116, 58, 213, 0.8);
+
+}
+
+.turnoTiempo {
+    -fx-border-width: 8px;
+    -fx-border-insets: 5;
+    -fx-border-style: outset;
+    -fx-border-image-width: 2px;
+    -fx-opacity:1;
+    -fx-border-color: linear-gradient(to left, #e1eec3, #f05053);
+    -fx-border-color: linear-gradient(to left, #6cd7e1,#2ba7e0);
+
+
+}
+
+.tablero{
+    -fx-background-color:rgba(238, 170, 196, 0.9);
+    -fx-opacity: 0.8;
+}
+
+
+.mygridStyle Line {
+    -fx-stroke: linear-gradient(to left, #743ad5, #d53a9d);
+    -fx-stroke-width: 5;
+    -fx-opacity: 1;
+
+}
+.fondo{
+    -fx-background-image: url("../imagenes/other.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.fondoReloj{
+    -fx-background-color:linear-gradient(to left, #6cd7e1,#2ba7e0);
+    -fx-text-fill:white;
+}
+
+.fichaRoja{
+    -fx-fill:linear-gradient(to left, #ff6999,#ff212f);
+}
+
+.fichaAzul{
+    -fx-fill:linear-gradient(to left, #6cd7e1,#2ba7e0);
+}

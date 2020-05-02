@@ -3,16 +3,18 @@ package packModelo;
 import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import packVista.IU_Tablero;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Se encarga de toda la lógica del juego, almacena una matriz con todas las posiciones del tablero y en cada posición una ficha.
  */
 
-public class Tablero {
+public class Tablero extends Observable {
 
     /**
      * Atributo estático para el patrón singleton.
@@ -22,6 +24,8 @@ public class Tablero {
      * La matriz representa el tablero, es de tipo booleano de modo que true será rojo, false azul y null que la posición está vacía
      */
     private Boolean[][] matriz;
+
+    private IU_Tablero interfaz;
 
     private Tablero() {
 
@@ -56,7 +60,8 @@ public class Tablero {
             return null;
         } else {
             //SE NOTIFICARÁ A LA INTERFAZ LA X E Y EN LA QUE SE HA INTRODUCIDO
-            //notify
+            this.setChanged();
+            notifyObservers(json);
             json.put("lleno", lleno);
             return json;
         }
@@ -394,6 +399,10 @@ public class Tablero {
         combinaciones.add(i3);
         combinaciones.add(i4);
         return combinaciones;
+    }
+
+    public void setInterfaz(IU_Tablero tablero){
+        interfaz = tablero;
     }
 
 }
