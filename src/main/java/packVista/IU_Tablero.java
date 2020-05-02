@@ -446,6 +446,7 @@ public class IU_Tablero implements Observer {
             @Override
             public void handle(ActionEvent e) {
                 Parent root;
+                musicaFondoOff();
                 try {
                     Node source = (Node) e.getSource();
                     Stage stage = (Stage) source.getScene().getWindow();

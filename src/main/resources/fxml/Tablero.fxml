@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.Double?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -26,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="600.0" prefWidth="1100.0" stylesheets="@../stylesheet/tablero.css">
          <center>
@@ -82,7 +76,10 @@
                   <Button fx:id="BTerminarPartida" layoutX="919.0" layoutY="23.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="153.0" styleClass="fondoReloj" stylesheets="@../stylesheet/tablero.css" text="Terminar Partida" textFill="#f8f7f7">
                      <font>
                         <Font name="System Bold" size="13.0" />
-                     </font></Button>
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                   <AnchorPane fx:id="PaneTiempo" layoutX="434.0" prefHeight="84.0" prefWidth="233.0" styleClass="turnoTiempo" stylesheets="@../stylesheet/tablero.css">
                      <children>
                         <GridPane fx:id="PaneTemporizador" alignment="CENTER" layoutX="27.0" layoutY="33.0" prefHeight="19.0" prefWidth="184.0">
@@ -131,6 +128,9 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </AnchorPane>
@@ -343,7 +343,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="sonido" layoutX="325.0" layoutY="21.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="47.0" style="-fx-background-color: LIME; -fx-border-color: WHITE; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1;" text="ON">
+            <Button fx:id="sonido" layoutX="333.0" layoutY="21.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="47.0" style="-fx-background-color: LIME; -fx-border-color: WHITE; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1;" text="ON">
                <font>
                   <Font size="10.0" />
                </font>
