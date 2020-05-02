@@ -58,11 +58,15 @@ public class IU_TerminarPartida {
     public void ponerImagen() {
         Image image;
         switch (resultado) {
-            case 0: image = new Image("/imagenes/perdido.gif",
+            case 0: if(Conecta4.getmConecta4().getModoJuego().equals("1vs1"))
+                image = new Image("/imagenes/ganadoAzul.gif",
+                    415,275,false,false);
+            else  image = new Image("/imagenes/perdido.png",
+                        415,275,false,false);
+                break;
+            case 1: image = new Image("/imagenes/ganadoRojo.gif",
                     415,275,false,false); break;
-            case 1: image = new Image("/imagenes/ganado.gif",
-                    415,275,false,false); break;
-            default: image = new Image("/imagenes/empate.png",
+            default: image = new Image("/imagenes/empate.jpeg",
                     415,275,false,false); break;
         }
         imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
