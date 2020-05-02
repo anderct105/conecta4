@@ -48,7 +48,7 @@ public class OrdenadorD extends Modo {
                 }
                 JSONArray json3 = tablero.haGanado(Integer.parseInt(String.valueOf(posIn2.get("fila"))),
                         Integer.parseInt(String.valueOf(posIn2.get("columna"))), false);
-                if (json3 == null) res.replace("lleno", true);
+                if (json3 == null) res.replace("lleno", tablero.tableroLleno());
                 else {
                     res.put("haGanadoB", true);
                     res.replace("posicionesGanadoras", json3);
