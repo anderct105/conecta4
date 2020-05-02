@@ -443,6 +443,7 @@ public class IU_Tablero implements Observer {
             @Override
             public void handle(ActionEvent e) {
                 Parent root;
+                musicaFondoOff();
                 try {
                     musicaFondoOff();
                     Node source = (Node) e.getSource();

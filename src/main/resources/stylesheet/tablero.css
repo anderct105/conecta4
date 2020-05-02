@@ -38,6 +38,12 @@
     -fx-text-fill:white;
 }
 
+.fondoReloj:hover {
+    -fx-opacity: 0.6;
+}
+
+fondoReloj .te
+
 .fichaRoja{
     -fx-fill:linear-gradient(to left, #ff6999,#ff212f);
 }
