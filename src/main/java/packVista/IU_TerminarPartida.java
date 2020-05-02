@@ -52,15 +52,18 @@ public class IU_TerminarPartida {
     }
 
     public void ponerPuntuacion() {
-        puntuacion.setText("La puntuacion obtenida es:"+tiempo);
+        puntuacion.setText("La puntuacion obtenida es: "+tiempo);
     }
 
     public void ponerImagen() {
         Image image;
         switch (resultado) {
-            case 0: image = new Image("/imagenes/perdido.gif"); break;
-            case 1: image = new Image("/imagenes/ganado.gif"); break;
-            default: image = new Image("/imagenes/empate.png"); break;
+            case 0: image = new Image("/imagenes/perdido.gif",
+                    415,275,false,false); break;
+            case 1: image = new Image("/imagenes/ganado.gif",
+                    415,275,false,false); break;
+            default: image = new Image("/imagenes/empate.png",
+                    415,275,false,false); break;
         }
         imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));

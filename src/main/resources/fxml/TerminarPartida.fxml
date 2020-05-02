@@ -8,9 +8,9 @@
 
 <AnchorPane prefHeight="456.0" prefWidth="640.0" styleClass="pane" stylesheets="@../stylesheet/terminarPartida.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_TerminarPartida">
    <children>
-      <Pane fx:id="imagen" layoutX="162.0" layoutY="14.0" prefHeight="264.0" prefWidth="316.0" styleClass="panel" />
+      <Pane fx:id="imagen" layoutX="120.0" layoutY="14.0" prefHeight="275.0" prefWidth="415.0" styleClass="panel" />
       <Button fx:id="guardar" layoutX="151.0" layoutY="397.0" mnemonicParsing="false" onAction="#guardar" styleClass="boton" text="Guardar Partida" />
       <Button fx:id="salir" layoutX="393.0" layoutY="397.0" mnemonicParsing="false" onAction="#cerrar" styleClass="boton" text="Volver al Menu" />
-      <Label fx:id="puntuacion" contentDisplay="CENTER" layoutX="174.0" layoutY="319.0" prefHeight="25.0" prefWidth="226.0" stylesheets="@../stylesheet/terminarPartida.css" text="Label" textAlignment="CENTER" />
+      <Label fx:id="puntuacion" alignment="CENTER" contentDisplay="CENTER" layoutX="205.0" layoutY="317.0" prefHeight="25.0" prefWidth="226.0" styleClass="text" stylesheets="@../stylesheet/terminarPartida.css" text="Label" textAlignment="CENTER" />
    </children>
 </AnchorPane>
