@@ -18,6 +18,8 @@ public class IU_RegistrarPartida {
     @FXML
     private TextField puntuacionU;
 
+    private IU_TerminarPartida iu_terminarPartida;
+
     @FXML
     void pulsarGuardar(ActionEvent event){
         registrarPartida();
@@ -45,6 +47,8 @@ public class IU_RegistrarPartida {
 
     //Abrir IU_Menu JavaFX
     public void abrirVentana() {
+        iu_terminarPartida.setCerrarTodo(true);
+        /*
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
@@ -55,10 +59,15 @@ public class IU_RegistrarPartida {
         primaryStage.setTitle("Conecta 4");
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.show();
+        */
+
     }
 
     public void setPuntuacionU(int punt){
         this.puntuacionU.setText(""+punt+"");
     }
 
+    public void setIu_terminarPartida(IU_TerminarPartida iu_terminarPartida) {
+        this.iu_terminarPartida = iu_terminarPartida;
+    }
 }

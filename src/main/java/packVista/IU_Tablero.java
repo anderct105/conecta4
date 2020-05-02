@@ -1,9 +1,6 @@
 package packVista;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -677,6 +674,7 @@ public class IU_Tablero implements Observer {
                 ColorAdjust ca1 = new ColorAdjust();
                 ca1.setBrightness(0);
                 pane.getScene().getRoot().setEffect(ca1);
+                cambiarAMenu();
             });
             primaryStage.show();
         } catch (IOException e) {
@@ -890,6 +888,47 @@ public class IU_Tablero implements Observer {
             KeyFrame kf = new KeyFrame(Duration.millis(5), new KeyValue(ficha.effectProperty(), ca, Interpolator.EASE_IN));
             t.getKeyFrames().add(kf);
             t.play();
+        }
+    }
+
+    public void cambiarAMenu() {
+        Timeline t = new Timeline(new KeyFrame(Duration.millis(500)));
+        t.setOnFinished(event -> fadeAMenu());
+        t.play();
+    }
+
+    private void fadeAMenu() {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), pane.getScene().getRoot());
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                cambiarAMenuAux();
+            }
+        });
+        ft.play();
+    }
+
+    public void cambiarAMenuAux(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+            ColorAdjust c = new ColorAdjust();
+            c.setBrightness(1);
+            //root.setEffect(c);
+            FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
+            ft.setFromValue(0);
+            ft.setToValue(1.0);
+            //ft.play();
+            root.setOpacity(0);
+            musicaFondoOff();
+            pane.getScene().setRoot(root);
+            Timeline t = new Timeline();
+            KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(root.opacityProperty(), 1,Interpolator.EASE_IN));
+            t.getKeyFrames().add(kf);
+            t.play();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
