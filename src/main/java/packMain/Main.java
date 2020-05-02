@@ -30,7 +30,7 @@ public class Main extends Application {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((screenBounds.getWidth() - 1100) / 2);
         primaryStage.setY((screenBounds.getHeight() - 600) / 2);
-        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/imagenes/conecta4_icono.jpg")));
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/imagenes/Conecta4_Icono4.png")));
         primaryStage.show();
         /*
         Parent root = null;
