@@ -27,6 +27,7 @@ public class IU_Configuracion {
                         "Ordenador modo Facil",
                         "Ordenador modo Dificil"
                 );
+        modoJuego.setValue(Conecta4.getmConecta4().getModoJuego());
         modoJuego.setItems(options);
     }
 
