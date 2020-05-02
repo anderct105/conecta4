@@ -343,7 +343,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="sonido" layoutX="325.0" layoutY="21.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="47.0" style="-fx-background-color: LIME; -fx-border-color: WHITE; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1;" text="OFF">
+            <Button fx:id="sonido" layoutX="325.0" layoutY="21.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="47.0" style="-fx-background-color: LIME; -fx-border-color: WHITE; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1;" text="ON">
                <font>
                   <Font size="10.0" />
                </font>
