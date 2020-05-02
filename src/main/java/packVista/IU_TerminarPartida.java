@@ -61,7 +61,7 @@ public class IU_TerminarPartida {
             case 0: if(Conecta4.getmConecta4().getModoJuego().equals("1vs1"))
                 image = new Image("/imagenes/ganadoAzul.gif",
                     415,275,false,false);
-            else  image = new Image("/imagenes/perdido.png",
+            else  image = new Image("/imagenes/derrota.jpg",
                         415,275,false,false);
                 break;
             case 1: image = new Image("/imagenes/ganadoRojo.gif",

@@ -437,7 +437,7 @@ public class IU_Tablero implements Observer {
         if (json == null) {
             oscurecerFondo(pColumna);
             marcarDesmarcarColumnaLlena(pColumna);
-        }
+        } else if((boolean)json.get("lleno")) terminarPartida();
         return json;
     }
 
@@ -624,6 +624,7 @@ public class IU_Tablero implements Observer {
         } catch (NullPointerException n) {
 
         }
+        terminarPartida();
     }
 
     public void terminarPartida() {
@@ -640,7 +641,18 @@ public class IU_Tablero implements Observer {
             //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
             IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
             //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
-            iu.inicializar(3,1);
+
+            // puntuacion y quien ha ganado
+            int tiempo = hours * 3600 + mins * 60 + secs;
+            int resultado;
+            if((boolean) ganadoras.get("haGanadoA")) resultado = 1;
+            else if((boolean) ganadoras.get("haGanadoB")) resultado = 0;
+            else resultado = 2;
+
+            // inicializar valores
+            iu.inicializar(tiempo,resultado);
+
+
             //FONDO TRANSPARENTE
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.getScene().setFill(Color.TRANSPARENT);
