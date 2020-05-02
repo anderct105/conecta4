@@ -36,7 +36,7 @@ public class IU_TerminarPartida {
 
     @FXML
     public void guardar(){
-        // llamada a guardar partida
+        // TODO: Anadir llamada a registrar partida
     }
     @FXML
     public void cerrar(){

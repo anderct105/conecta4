@@ -648,7 +648,7 @@ public class IU_Tablero implements Observer {
             if((boolean) ganadoras.get("haGanadoA")) resultado = 1;
             else if((boolean) ganadoras.get("haGanadoB")) resultado = 0;
             else resultado = 2;
-
+            // TODO: no funciona
             // inicializar valores
             iu.inicializar(tiempo,resultado);
 
