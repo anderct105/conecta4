@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="456.0" prefWidth="640.0" styleClass="pane" stylesheets="@../stylesheet/terminarPartida.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_TerminarPartida">
+<AnchorPane prefHeight="456.0" prefWidth="640.0" styleClass="pane" stylesheets="@../stylesheet/terminarPartida.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_TerminarPartida">
    <children>
-      <Pane fx:id="imagen" layoutX="120.0" layoutY="14.0" prefHeight="275.0" prefWidth="415.0" styleClass="panel" />
+      <Pane fx:id="imagen" layoutX="120.0" layoutY="14.0" prefHeight="275.0" prefWidth="415.0" style="-fx-border-width: 2px; -fx-border-color: white;" styleClass="panel" />
       <Button fx:id="guardar" layoutX="151.0" layoutY="397.0" mnemonicParsing="false" onAction="#guardar" styleClass="boton" text="Guardar Partida" />
       <Button fx:id="salir" layoutX="393.0" layoutY="397.0" mnemonicParsing="false" onAction="#cerrar" styleClass="boton" text="Volver al Menu" />
       <Label fx:id="puntuacion" alignment="CENTER" contentDisplay="CENTER" layoutX="205.0" layoutY="317.0" prefHeight="25.0" prefWidth="226.0" styleClass="text" stylesheets="@../stylesheet/terminarPartida.css" text="Label" textAlignment="CENTER" />
