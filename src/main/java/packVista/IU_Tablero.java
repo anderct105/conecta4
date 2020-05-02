@@ -339,6 +339,9 @@ public class IU_Tablero implements Observer {
                             ganadoras = json;
                             fiveSecondsWonder.stop();
                         }
+                        if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                            ganadoras = json;
+                        }
                     }
                 }
             });
@@ -479,6 +482,9 @@ public class IU_Tablero implements Observer {
         boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
         boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
         JSONArray ja = (JSONArray) ganadoras.get("posicionesGanadoras");
+        if (ja == null) {
+            ja = new JSONArray();
+        }
         for (int i = 0; i < ja.size(); i++) {
             JSONObject objeto = (JSONObject) ja.get(i);
             Integer x = (Integer) objeto.get("x");
@@ -662,6 +668,9 @@ public class IU_Tablero implements Observer {
                             fiveSecondsWonder.stop();
                             ganadoras = json;
                         }
+                        if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                            ganadoras = json;
+                        }
                     }
                 }
             });
@@ -697,18 +706,23 @@ public class IU_Tablero implements Observer {
             timelineA.setOnFinished(event -> sonido(timelineB));
             timelineB.setOnFinished(event -> timelineC.play());
             timelineC.setOnFinished(event -> {
-                if (!fin) {
+                if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
                     gestionarAnimacion(a, pColumna);
                     ponerSeleccionColumna(this.columnaJugador);
-                } else if ((Boolean)ganadoras.get("haGanadoA")) {
                     marcarGanadoras();
                 }
-                else if ((Boolean)ganadoras.get("haGanadoB")){
-                    transfomacionColor = true;
-                    ganadoras.put("haGanadoA", true);
-                    gestionarAnimacion(a,pColumna);
+                else {
+                    if (!fin) {
+                        gestionarAnimacion(a, pColumna);
+                        ponerSeleccionColumna(this.columnaJugador);
+                    } else if ((Boolean) ganadoras.get("haGanadoA")) {
+                        marcarGanadoras();
+                    } else if ((Boolean) ganadoras.get("haGanadoB")) {
+                        transfomacionColor = true;
+                        ganadoras.put("haGanadoA", true);
+                        gestionarAnimacion(a, pColumna);
+                    }
                 }
-
             });
             timelineA.play();
         }
