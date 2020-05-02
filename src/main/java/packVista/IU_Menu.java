@@ -46,7 +46,7 @@ public class IU_Menu extends Stage implements Observer {
     @FXML
     private ImageView play;
     @FXML
-    private Label title;
+    private ImageView title;
     @FXML
     private AnchorPane pane;
     @FXML
