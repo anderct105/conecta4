@@ -621,10 +621,10 @@ public class IU_Tablero implements Observer {
             timeline41.setOnFinished(event -> {
                 timeline4.play();
             });
+            timeline4.setOnFinished(event -> {terminarPartida();});
         } catch (NullPointerException n) {
 
         }
-        terminarPartida();
     }
 
     public void terminarPartida() {
