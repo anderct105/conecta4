@@ -23,14 +23,13 @@ public class IU_RegistrarPartida {
     @FXML
     void pulsarGuardar(ActionEvent event){
         registrarPartida();
-        cerrarVentana();
         abrirVentana();
+        cerrarVentana();
     }
 
     @FXML
     void volverInicio(ActionEvent event){
         cerrarVentana();
-        abrirVentana();
     }
 
     public void registrarPartida(){
