@@ -537,12 +537,12 @@ public class IU_Tablero implements Observer {
         Circle ficha1 = tablero[5 - x1][y1];
 
         Timeline timeline11 = new Timeline();
-        KeyFrame key11 = new KeyFrame(Duration.millis(500),
+        KeyFrame key11 = new KeyFrame(Duration.millis(350),
                 new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
         timeline11.getKeyFrames().add(key11);
 
         Timeline timeline1 = new Timeline();
-        KeyFrame key1 = new KeyFrame(Duration.millis(1000),
+        KeyFrame key1 = new KeyFrame(Duration.millis(600),
                 new KeyValue(ficha1.scaleXProperty(), 1.1), new KeyValue(ficha1.scaleYProperty(), 1.1));
         timeline1.getKeyFrames().add(key1);
 
@@ -553,12 +553,12 @@ public class IU_Tablero implements Observer {
         Circle ficha2 = tablero[5 - x2][y2];
 
         Timeline timeline21 = new Timeline();
-        KeyFrame key21 = new KeyFrame(Duration.millis(500),
+        KeyFrame key21 = new KeyFrame(Duration.millis(350),
                 new KeyValue(ficha2.scaleXProperty(), 0.7), new KeyValue(ficha2.scaleYProperty(), 0.7));
         timeline21.getKeyFrames().add(key21);
 
         Timeline timeline2 = new Timeline();
-        KeyFrame key2 = new KeyFrame(Duration.millis(1000),
+        KeyFrame key2 = new KeyFrame(Duration.millis(600),
                 new KeyValue(ficha2.scaleXProperty(), 1.1), new KeyValue(ficha2.scaleYProperty(), 1.1));
         timeline2.getKeyFrames().add(key2);
 
@@ -569,12 +569,12 @@ public class IU_Tablero implements Observer {
         Circle ficha3 = tablero[5 - x3][y3];
 
         Timeline timeline31 = new Timeline();
-        KeyFrame key31 = new KeyFrame(Duration.millis(500),
+        KeyFrame key31 = new KeyFrame(Duration.millis(350),
                 new KeyValue(ficha3.scaleXProperty(), 0.7), new KeyValue(ficha3.scaleYProperty(), 0.7));
         timeline31.getKeyFrames().add(key31);
 
         Timeline timeline3 = new Timeline();
-        KeyFrame key3 = new KeyFrame(Duration.millis(1000),
+        KeyFrame key3 = new KeyFrame(Duration.millis(600),
                 new KeyValue(ficha3.scaleXProperty(), 1.1), new KeyValue(ficha3.scaleYProperty(), 1.1));
         timeline3.getKeyFrames().add(key3);
 
@@ -585,12 +585,12 @@ public class IU_Tablero implements Observer {
         Circle ficha4 = tablero[5 - x4][y4];
 
         Timeline timeline41 = new Timeline();
-        KeyFrame key41 = new KeyFrame(Duration.millis(500),
+        KeyFrame key41 = new KeyFrame(Duration.millis(350),
                 new KeyValue(ficha4.scaleXProperty(), 0.7), new KeyValue(ficha4.scaleYProperty(), 0.7));
         timeline41.getKeyFrames().add(key41);
 
         Timeline timeline4 = new Timeline();
-        KeyFrame key4 = new KeyFrame(Duration.millis(1000),
+        KeyFrame key4 = new KeyFrame(Duration.millis(600),
                 new KeyValue(ficha4.scaleXProperty(), 1.1), new KeyValue(ficha4.scaleYProperty(), 1.1));
         timeline4.getKeyFrames().add(key4);
 
