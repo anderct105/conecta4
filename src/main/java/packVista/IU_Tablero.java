@@ -88,6 +88,9 @@ public class IU_Tablero implements Observer {
     private boolean fin;
     private boolean finJugador;
 
+    private JSONObject ganadoras = new JSONObject();
+    private boolean transfomacionColor = false;
+
     // Para marcar/desmarcar la columna llena
     private boolean llena;
 
@@ -333,7 +336,7 @@ public class IU_Tablero implements Observer {
                         }
                         if (ja != null) {
                             fin = true;
-                            marcarGanadoras(json);
+                            ganadoras = json;
                             fiveSecondsWonder.stop();
                         }
                     }
@@ -473,10 +476,13 @@ public class IU_Tablero implements Observer {
         // return "modo Vs ordenador";
     }
 
-    private void marcarGanadoras(JSONObject jo) {
-        JSONArray ja = (JSONArray) jo.get("posicionesGanadoras");
-        boolean ganadoA = (boolean) jo.get("haGanadoA");
-        boolean ganadoB = (boolean) jo.get("haGanadoB");
+    private void marcarGanadoras() {
+        if (transfomacionColor) {
+            ganadoras.put("haGanadoA",false);
+        }
+        boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
+        boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
+        JSONArray ja = (JSONArray) ganadoras.get("posicionesGanadoras");
         for (int i = 0; i < ja.size(); i++) {
             JSONObject objeto = (JSONObject) ja.get(i);
             Integer x = (Integer) objeto.get("x");
@@ -658,8 +664,8 @@ public class IU_Tablero implements Observer {
                         }
                         if (ja != null) {
                             fin = true;
-                            marcarGanadoras(json);
                             fiveSecondsWonder.stop();
+                            ganadoras = json;
                         }
                     }
                 }
@@ -696,8 +702,18 @@ public class IU_Tablero implements Observer {
             timelineA.setOnFinished(event -> sonido(timelineB));
             timelineB.setOnFinished(event -> timelineC.play());
             timelineC.setOnFinished(event -> {
-                gestionarAnimacion(a, pColumna);
-                ponerSeleccionColumna(this.columnaJugador);
+                if (!fin) {
+                    gestionarAnimacion(a, pColumna);
+                    ponerSeleccionColumna(this.columnaJugador);
+                } else if ((Boolean)ganadoras.get("haGanadoA")) {
+                    marcarGanadoras();
+                }
+                else if ((Boolean)ganadoras.get("haGanadoB")){
+                    transfomacionColor = true;
+                    ganadoras.put("haGanadoA", true);
+                    gestionarAnimacion(a,pColumna);
+                }
+
             });
             timelineA.play();
         }
