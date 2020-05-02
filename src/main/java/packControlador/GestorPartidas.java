@@ -94,7 +94,8 @@ public class GestorPartidas extends Observable {
      * @author Alvaro Dueñas
      */
     public void setModoJuego(Modo pModo) {
-        notifyObservers();
         juego.setModoJuego(pModo);
+        setChanged();
+        notifyObservers();
     }
 }
