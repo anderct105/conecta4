@@ -12,12 +12,16 @@
     -fx-background-color: rgba(255,255,255,0.2);
 }
 
-.modo {
+.modo, .ayuda {
     -fx-border-color: white;
     -fx-border-width: 2px;
     -fx-text-fill: white;
     -fx-text-alignment: center;
     -fx-background-color: rgba(255,255,255,0.2);
+}
+
+.ayuda {
+    -fx-border-radius: 2px;
 }
 
 .opciones {
@@ -163,6 +167,7 @@
     -fx-background-color: linear-gradient(to left, #abbaab, #ffffff);;
     -fx-background-radius:20px;
     -fx-background-insets: 0, 1;
-
 }
+
+
 

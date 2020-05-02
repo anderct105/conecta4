@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
@@ -56,6 +53,8 @@ public class IU_Menu extends Stage implements Observer {
     private Label modo;
     @FXML
     private ProgressBar pb;
+    @FXML
+    private Button ayuda;
 
     @FXML
     public void initialize() {
@@ -286,5 +285,23 @@ public class IU_Menu extends Stage implements Observer {
 
     public void setModoJuego() {
         modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
+    }
+
+    @FXML
+    private void ayuda(){
+        Stage primaryStage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/Ayuda.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene s = new Scene(root, 560, 310);
+        primaryStage.setScene(s);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        s.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(s);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.show();
     }
 }
