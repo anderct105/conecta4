@@ -145,7 +145,7 @@ public class IU_Tablero implements Observer {
     private int columnaJugador;
 
     @FXML
-    public void initialize() throws InterruptedException {
+    public void initialize() {
         //dependiendo del modo de juego se coloca el reloj o el panel del turno
         setModoJuego();
         listenerTerminarPartida();
@@ -434,10 +434,6 @@ public class IU_Tablero implements Observer {
         if (json == null) {
             oscurecerFondo(pColumna);
             marcarDesmarcarColumnaLlena(pColumna);
-        } else {
-            //fila = (int)json.get("fila");
-            //panelTablero.add(ficha,pColumna,5-fila);
-
         }
         return json;
     }
@@ -446,7 +442,7 @@ public class IU_Tablero implements Observer {
         BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Parent root = null;
+                Parent root;
                 try {
                     Node source = (Node) e.getSource();
                     Stage stage = (Stage) source.getScene().getWindow();
@@ -544,7 +540,6 @@ public class IU_Tablero implements Observer {
         KeyFrame key11 = new KeyFrame(Duration.millis(500),
                 new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
         timeline11.getKeyFrames().add(key11);
-        //timeline11.play();
 
         Timeline timeline1 = new Timeline();
         KeyFrame key1 = new KeyFrame(Duration.millis(1000),
