@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.Cursor?>
 <AnchorPane prefHeight="323.0" prefWidth="540.0" styleClass="pane" stylesheets="@../stylesheet/ayuda.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Ayuda">
    <children>
        <Label fx:id="ins" layoutX="215.0" layoutY="21.0" styleClass="ins" stylesheets="@../stylesheet/ayuda.css" text="INSTRUCCIONES:" textFill="WHITE">
@@ -20,6 +21,9 @@
            <font>
                <Font name="Manjari Bold" size="14.0" />
            </font>
+           <cursor>
+               <Cursor fx:constant="HAND" />
+           </cursor>
        </Button>
    </children>
 </AnchorPane>
