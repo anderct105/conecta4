@@ -19,7 +19,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
@@ -72,7 +74,6 @@ public class IU_Menu extends Stage implements Observer {
             th.setDaemon(true);
             th.run();
         }
-        GestorPartidas.getmGestorPartidas().addObserver(this);
         setModoJuego();
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
@@ -84,6 +85,7 @@ public class IU_Menu extends Stage implements Observer {
             animacionInicial();
             Main.animacionInicio = false;
         }
+        GestorPartidas.getmGestorPartidas().addObserver(this);
     }
 
     public void animacionTitulo() {
@@ -172,11 +174,19 @@ public class IU_Menu extends Stage implements Observer {
         rt.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                oscurecerFondo();
+                cambiarAConfiguracion();
             }
         });
         rt.play();
 
+
+    }
+
+    private void cambiarAConfiguracion() {
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
+        pane.getScene().getRoot().setDisable(false);
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
@@ -184,34 +194,25 @@ public class IU_Menu extends Stage implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setScene(new Scene(root, 291, 100));
-        primaryStage.show();
-    }
-
-    public void oscurecerFondo() {
-        ColorAdjust ca = new ColorAdjust();
-        ca.setBrightness(-0.5);
-        pane.getScene().getRoot().setEffect(ca);
-        Stage primaryStage = new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/Configurar.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setScene(new Scene(root, 400, 200));
-        primaryStage.show();
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        primaryStage.setScene(new Scene(root, 360, 120));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.getScene().setFill(Color.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        Stage sAct = (Stage) pane.getScene().getWindow();
+        double centerXPosition = sAct.getX() + sAct.getWidth() / 2;
+        double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
+        primaryStage.setX(centerXPosition - 360 / 2);
+        primaryStage.setY(centerYPosition - 120 / 2);
+        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 ColorAdjust ca = new ColorAdjust();
                 ca.setBrightness(0);
                 pane.getScene().getRoot().setEffect(ca);
+                pane.getScene().getRoot().setDisable(false);
             }
         });
-
+        primaryStage.show();
     }
 
     @FXML

@@ -9,7 +9,6 @@ import packModelo.Modo;
 
 import java.sql.SQLException;
 import java.util.Observable;
-import java.util.Observer;
 
 public class GestorPartidas extends Observable {
 
@@ -95,7 +94,7 @@ public class GestorPartidas extends Observable {
      * @author Alvaro Dueñas
      */
     public void setModoJuego(Modo pModo) {
-        juego.setModoJuego(pModo);
         notifyObservers();
+        juego.setModoJuego(pModo);
     }
 }
