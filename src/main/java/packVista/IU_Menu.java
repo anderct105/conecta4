@@ -289,6 +289,10 @@ public class IU_Menu extends Stage implements Observer {
 
     @FXML
     private void ayuda(){
+        ColorAdjust ca = new ColorAdjust();
+        ca.setBrightness(-0.5);
+        pane.getScene().getRoot().setEffect(ca);
+        pane.getScene().getRoot().setDisable(false);
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
@@ -302,6 +306,20 @@ public class IU_Menu extends Stage implements Observer {
         s.setFill(Color.TRANSPARENT);
         primaryStage.setScene(s);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        Stage sAct = (Stage) pane.getScene().getWindow();
+        double centerXPosition = sAct.getX() + sAct.getWidth() / 2;
+        double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
+        primaryStage.setX(centerXPosition - 560 / 2);
+        primaryStage.setY(centerYPosition - 310 / 2);
+        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ColorAdjust ca = new ColorAdjust();
+                ca.setBrightness(0);
+                pane.getScene().getRoot().setEffect(ca);
+                pane.getScene().getRoot().setDisable(false);
+            }
+        });
         primaryStage.show();
     }
 }
