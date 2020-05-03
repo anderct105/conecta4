@@ -77,6 +77,9 @@ public class GestorIdiomas extends Observable {
         frases.put("texto_registrar", "Escriba el nombre que quiere que se vea en el ranking:");
         frases.put("nombre_registrar", "Nombre:");
         frases.put("puntuacion_registrar", "Puntuación:");
+        frases.put("segundos", "segundos");
+        frases.put("volver", "Volver");
+        frases.put("largura", "Nombre entre 1 y 20 carácteres");
         return frases;
     }
 
@@ -114,9 +117,10 @@ public class GestorIdiomas extends Observable {
         frases.put("texto_registrar", "Idatzi ranking-ean agertzea nahi duzun izena");
         frases.put("nombre_registrar", "Izena:");
         frases.put("puntuacion_registrar", "Puntuazioa:");
+        frases.put("segundos", "segundo");
+        frases.put("volver", "Atzera");
+        frases.put("largura", "Izena 1 eta 20 karaktere artean");
         return frases;
     }
-
-
 }
 

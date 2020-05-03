@@ -27,7 +27,6 @@ public class IU_RegistrarPartida {
     @FXML
     private Button volverInicio;
 
-
     private IU_TerminarPartida iu_terminarPartida;
 
 
@@ -37,18 +36,27 @@ public class IU_RegistrarPartida {
         nombre.setText((String)frases.get("nombre_registrar"));
         puntuacion.setText((String)frases.get("puntuacion_registrar"));
         guardar.setText((String)frases.get("guardar"));
-        volverInicio.setText((String)frases.get("volver_inicio"));
+        volverInicio.setText((String)frases.get("volver"));
     }
     @FXML
     public void initialize() {
         idioma();
+        nombreU.setPromptText("");
     }
 
     @FXML
     void pulsarGuardar(ActionEvent event){
-        registrarPartida();
-        abrirVentana();
-        cerrarVentana();
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        boolean valido = validarNombre();
+        if (valido){
+            registrarPartida();
+            abrirVentana();
+            cerrarVentana();
+        } else {
+            nombreU.setText("");
+            nombreU.setStyle("-fx-border-color: #c70005;");
+            nombreU.setPromptText((String)frases.get("largura"));
+        }
     }
 
     @FXML
@@ -58,7 +66,8 @@ public class IU_RegistrarPartida {
 
     public void registrarPartida(){
         String nombre = nombreU.getText();
-        int puntuacion = Integer.parseInt(puntuacionU.getText());
+        String[] punt = puntuacionU.getText().split(" ");
+        int puntuacion = Integer.parseInt(punt[0]);
         Conecta4.getmConecta4().guardarPartida(nombre, puntuacion);
     }
 
@@ -71,26 +80,23 @@ public class IU_RegistrarPartida {
     //Abrir IU_Menu JavaFX
     public void abrirVentana() {
         iu_terminarPartida.setCerrarTodo(true);
-        /*
-        Stage primaryStage = new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setScene(new Scene(root, 1100, 600));
-        primaryStage.show();
-        */
-
     }
 
     public void setPuntuacionU(int punt){
-        this.puntuacionU.setText(""+punt+"");
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        this.puntuacionU.setText(""+punt+" "+frases.get("segundos"));
     }
 
     public void setIu_terminarPartida(IU_TerminarPartida iu_terminarPartida) {
         this.iu_terminarPartida = iu_terminarPartida;
+    }
+
+    private boolean validarNombre(){
+        boolean valido = true;
+        String nombre = nombreU.getText();
+        if (1 > nombre.length() || nombre.length() > 20){
+            valido = false;
+        }
+        return valido;
     }
 }
