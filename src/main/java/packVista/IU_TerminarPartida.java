@@ -118,32 +118,32 @@ public class IU_TerminarPartida {
             case 0:
                 if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
                     image = new Image("/imagenes/ganadoRojo.gif",
-                            532, 325, false, false);
+                            600, 400, false, false);
                     puntuacion.setVisible(false);
                     guardar.setVisible(false);
                 }
                 else {
                     image = new Image("/imagenes/derrota.jpg",
-                            532, 325, false, false);
+                            600, 400, false, false);
                     guardar.setVisible(false);
                 }
                 break;
             case 1:
                 if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
                     image = new Image("/imagenes/ganadoAzul.gif",
-                            532, 325, false, false);
+                            600, 400, false, false);
                     puntuacion.setVisible(false);
                     guardar.setVisible(false);
                 }
                 else{
                     image = new Image("/imagenes/ganadoRojo.gif",
-                            532, 325, false, false);
+                            600, 400, false, false);
                 }
 
                 break;
             default:
                 image = new Image("/imagenes/empate.png",
-                        532, 325, false, false);
+                        600, 400, false, false);
                 puntuacion.setVisible(false);
                 guardar.setVisible(false);
                 break;

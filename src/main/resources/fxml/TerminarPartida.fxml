@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="456.0" prefWidth="640.0" styleClass="pane" stylesheets="@../stylesheet/terminarPartida.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_TerminarPartida">
+<AnchorPane prefHeight="550.0" prefWidth="750.0" styleClass="pane" stylesheets="@../stylesheet/terminarPartida.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_TerminarPartida">
    <children>
-      <Pane fx:id="imagen" layoutX="54.0" layoutY="14.0" prefHeight="325.0" prefWidth="532.0" style="-fx-border-width: 2px; -fx-border-color: white;" styleClass="panel" />
-      <Button fx:id="guardar" layoutX="54.0" layoutY="403.0" mnemonicParsing="false" onAction="#guardar" styleClass="boton" text="Guardar Partida" />
-      <Button fx:id="salir" layoutX="466.0" layoutY="403.0" mnemonicParsing="false" onAction="#cerrar" styleClass="boton" text="Volver al Menu" />
-      <Label fx:id="puntuacion" alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="355.0" prefHeight="25.0" prefWidth="226.0" styleClass="text" stylesheets="@../stylesheet/terminarPartida.css" text="Label" textAlignment="CENTER" />
+      <Pane fx:id="imagen" layoutX="75.0" layoutY="40.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-width: 2px; -fx-border-color: white;" styleClass="panel" />
+      <Button fx:id="guardar" layoutX="75.0" layoutY="507.0" mnemonicParsing="false" onAction="#guardar" styleClass="boton" text="Guardar Partida" />
+      <Button fx:id="salir" layoutX="555.0" layoutY="507.0" mnemonicParsing="false" onAction="#cerrar" styleClass="boton" text="Volver al Menu" />
+      <Label fx:id="puntuacion" alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="482.0" prefHeight="25.0" prefWidth="226.0" styleClass="text" stylesheets="@../stylesheet/terminarPartida.css" text="Label" textAlignment="CENTER" />
    </children>
 </AnchorPane>
