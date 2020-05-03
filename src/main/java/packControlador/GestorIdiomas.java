@@ -66,11 +66,11 @@ public class GestorIdiomas extends Observable {
         frases.put("modo", "Modo: ");
         frases.put("volver_inicio", "Volver al inicio");
         frases.put("instrucciones", "INSTRUCCIONES");
-        frases.put("texto_instrucciones", "1. Cada jugador, a su turno, juega una ficha de su color en la \n" +
+        frases.put("texto_instrucciones", "1. Cada jugador, a su turno, juega una ficha de su color en la" +
                 "columna de su elección.\n" +
-                "2. El primer jugador que consigue alinear 4 fichas de su color, \n" +
+                "2. El primer jugador que consigue alinear 4 fichas de su color, " +
                 "horizontalmente, verticalmente o en diagonal gana la partida. \n" +
-                "3. Si el tablero se llena completamente sin que ningún jugador \n" +
+                "3. Si el tablero se llena completamente sin que ningún jugador " +
                 "logre alinear 4 fichas de su color, la partida es declarada empate.");
         frases.put("musica", "MUSICA:");
         frases.put("sonido", "SONIDO:");
@@ -98,16 +98,16 @@ public class GestorIdiomas extends Observable {
         frases.put("ordenador_facil", "Ordenailu modu Erraza");
         frases.put("ordenador_dificil", "Ordenagailu modu Zaila");
         frases.put("guardar", "Gorde");
-        frases.put("cerrar", "Itzi");
+        frases.put("cerrar", "Itxi");
         frases.put("modo_juego", "Jolas modua:");
         frases.put("modo", "Modua: ");
         frases.put("volver_inicio", "Itzuli hasierara");
         frases.put("instrucciones", "ARGIBIDEAK");
-        frases.put("texto_instrucciones", "1. Jokalari bakoitzak, bere txandan, bere koloreko fitxa\n" +
+        frases.put("texto_instrucciones", "1. Jokalari bakoitzak, bere txandan, bere koloreko fitxa" +
                 "bat jartzen du nahi duen zutabean.\n" +
-                "2. Bere koloreko 4 fitxa horizontalean, bertikalean edo\n" +
+                "2. Bere koloreko 4 fitxa horizontalean, bertikalean edo" +
                 "diagonalean lerrokatzen dituen jokalariak partida irabazten du.\n" +
-                "3. Taula guztiz betetzen bada inork bere koloreko 4\n" +
+                "3. Taula guztiz betetzen bada inork bere koloreko 4" +
                 "fitxa lerrokatu gabe, partida berdinketan bukkatzen du.");
         frases.put("musica", "MUSIKA:");
         frases.put("sonido", "SOINUA:");
