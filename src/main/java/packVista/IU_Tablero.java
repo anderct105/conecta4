@@ -219,6 +219,7 @@ public class IU_Tablero implements Observer {
         if (random == cancionAct) {
             musicaFondoOn();
         } else {
+            musicaFondo.setVolume(volumen.getValue() / 100);
             musicaFondo.play();
             cancionAct = random;
         }
