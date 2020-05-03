@@ -4,8 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packModelo.Modo;
 
-import java.sql.SQLException;
-
 public class Conecta4 {
 
     private static Conecta4 mConecta4;
@@ -55,23 +53,11 @@ public class Conecta4 {
     }
 
     public JSONArray cargarRankingFacil() {
-        JSONArray ranking = null;
-        try {
-            ranking = GestorPartidas.getmGestorPartidas().cargarRankingFacil();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ranking;
+        return GestorPartidas.getmGestorPartidas().cargarRankingFacil();
     }
 
     public JSONArray cargarRankingDificil() {
-        JSONArray ranking = null;
-        try {
-            ranking = GestorPartidas.getmGestorPartidas().cargarRankingDificil();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ranking;
+        return GestorPartidas.getmGestorPartidas().cargarRankingDificil();
     }
 
     /**
