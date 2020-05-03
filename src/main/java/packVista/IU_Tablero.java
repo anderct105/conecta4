@@ -213,7 +213,6 @@ public class IU_Tablero implements Observer {
 
 
     private void musicaFondoOn() {
-
         int random = ThreadLocalRandom.current().nextInt(1, 9);
         Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
         musicaFondo = new MediaPlayer(sound);
@@ -321,6 +320,7 @@ public class IU_Tablero implements Observer {
         llena = false;
         bloqueo = false;
         finJugador = false;
+        BTerminarPartida.setDisable(false);
         int filas = panelTablero.getRowConstraints().size();
         int columnas = panelTablero.getColumnConstraints().size();
         for (int i = 0; i < filas; i++) {
@@ -602,6 +602,7 @@ public class IU_Tablero implements Observer {
 
             timeline11.setOnFinished(event -> {
                 timeline1.play();
+                BTerminarPartida.setDisable(true);
             });
             timeline11.play();
             timeline1.setOnFinished(event -> {
