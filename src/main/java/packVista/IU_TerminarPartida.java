@@ -14,7 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packControlador.GestorIdiomas;
 
 import java.io.IOException;
 
@@ -35,10 +37,15 @@ public class IU_TerminarPartida {
     public IU_TerminarPartida() {
     }
 
+    public void idioma(){
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        guardar.setText((String)frases.get("guardar_partida"));
+        salir.setText((String)frases.get("volver_inicio"));
+    }
+
 
     @FXML
     public void initialize() {
-
     }
 
     @FXML
@@ -86,6 +93,7 @@ public class IU_TerminarPartida {
     }
 
     public void inicializar(int tiempo, int resultado) {
+        idioma();
         this.tiempo = tiempo;
         this.resultado = resultado;
         ponerPuntuacion();
@@ -93,7 +101,7 @@ public class IU_TerminarPartida {
     }
 
     public void ponerPuntuacion() {
-        puntuacion.setText("La puntuacion obtenida es: " + tiempo);
+        puntuacion.setText((String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("puntuacion") + tiempo);
     }
 
     public void ponerImagen() {

@@ -6,9 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packControlador.GestorIdiomas;
+
+import java.awt.geom.GeneralPath;
 import java.io.IOException;
 
 public class IU_RegistrarPartida {
@@ -17,8 +23,33 @@ public class IU_RegistrarPartida {
     private TextField nombreU;
     @FXML
     private TextField puntuacionU;
+    @FXML
+    private Text textoRegistrar;
+    @FXML
+    private TextArea nombre;
+    @FXML
+    private TextArea puntuacion;
+    @FXML
+    private Button guardar;
+    @FXML
+    private Button volverInicio;
+
 
     private IU_TerminarPartida iu_terminarPartida;
+
+
+    public void idioma(){
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        textoRegistrar.setText((String)frases.get("texto_registrar"));
+        nombre.setText((String)frases.get("nombre_registrar"));
+        puntuacion.setText((String)frases.get("puntuacion_registrar"));
+        guardar.setText((String)frases.get("guardar"));
+        volverInicio.setText((String)frases.get("volver_inicio"));
+    }
+    @FXML
+    public void initialize() {
+        idioma();
+    }
 
     @FXML
     void pulsarGuardar(ActionEvent event){

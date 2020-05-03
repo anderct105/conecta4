@@ -25,12 +25,14 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packControlador.GestorIdiomas;
 import packModelo.Tablero;
 
 import java.io.File;
@@ -76,6 +78,10 @@ public class IU_Tablero implements Observer {
     private Button sonido;
     @FXML
     private Button SigCancion;
+    @FXML
+    private Label musicaText;
+    @FXML
+    private Label sonidoText;
 
     //para indicar sonido ON/OFF
     private boolean sonidoBool = true;
@@ -143,6 +149,15 @@ public class IU_Tablero implements Observer {
     //esto sirve para dejar marcada la columna que usó el jugador tras la animación de la ficha
     private int columnaJugador;
 
+    public void idioma(){
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        BTerminarPartida.setText((String)frases.get("terminar"));
+        SigCancion.setText((String)frases.get("siguiente_cancion"));
+        musicaText.setText((String)frases.get("musica"));
+        sonidoText.setText((String)frases.get("sonido"));
+        LabelTurno.setText((String)frases.get("turno"));
+    }
+
     @FXML
     public void initialize() {
         //dependiendo del modo de juego se coloca el reloj o el panel del turno
@@ -156,7 +171,7 @@ public class IU_Tablero implements Observer {
         Conecta4.getmConecta4().inicializarTablero();
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
-
+        idioma();
         musicaFondoOn();
     }
 
@@ -451,9 +466,9 @@ public class IU_Tablero implements Observer {
 
     private void setTurno() {
         if (turno) {
-            NombreTurno.setText("Jugador rojo");
+            NombreTurno.setText((String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_rojo"));
         } else {
-            NombreTurno.setText("Jugador azul");
+            NombreTurno.setText((String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_azul"));
         }
     }
 

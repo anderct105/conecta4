@@ -80,6 +80,7 @@ public class IU_Menu extends Stage implements Observer {
         table_dificil.setPlaceholder(new Label((String)frases.get("tabla_vacia")));
         rankingDificil.setText((String)frases.get("dificil"));
         rankingFacil.setText((String)frases.get("facil"));
+        setModoJuego();
     }
 
 
