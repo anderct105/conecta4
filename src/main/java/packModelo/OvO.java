@@ -5,10 +5,11 @@ import org.json.simple.JSONObject;
 
 public class OvO extends Modo {
 
-    private boolean turno;
+    private boolean turno=true;
 
     public OvO() {
         super("1vs1");
+
     }
 
     /**
@@ -30,12 +31,14 @@ public class OvO extends Modo {
             json.put("haGanadoB",false);
             if (ganado == null) {
                 cambiarTurno();
-            } else {
+            }
+            else {
+
                 if (turno) {
-                    json.put("haGanadoA", true);
+                    json.put("haGanadoB", true);
                 }
                 else {
-                    json.put("haGanadoB", true);
+                    json.put("haGanadoA", true);
                 }
                 json.put("posicionesGanadoras", ganado);
             }
