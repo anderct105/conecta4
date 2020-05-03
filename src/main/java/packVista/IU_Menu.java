@@ -1,7 +1,6 @@
 package packVista;
 
 import javafx.animation.*;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -15,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packControlador.GestorIdiomas;
 import packControlador.GestorPartidas;
 import packMain.Main;
 
@@ -55,6 +56,32 @@ public class IU_Menu extends Stage implements Observer {
     private ProgressBar pb;
     @FXML
     private Button ayuda;
+    @FXML
+    private Tab rankingFacil;
+    @FXML
+    private Tab rankingDificil;
+    @FXML
+    private ImageView idi_es;
+    @FXML
+    private ImageView idi_eu;
+
+    public void idioma(){
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        ayuda.setText((String)frases.get("ayuda"));
+        TableColumn a = (TableColumn)table_facil.getColumns().get(0);
+        a.setText((String)frases.get("nombre"));
+        a = (TableColumn)table_facil.getColumns().get(1);
+        a.setText((String)frases.get("tiempo"));
+        a = (TableColumn)table_dificil.getColumns().get(0);
+        a.setText((String)frases.get("nombre"));
+        a = (TableColumn)table_dificil.getColumns().get(1);
+        a.setText((String)frases.get("tiempo"));
+        table_facil.setPlaceholder(new Label((String)frases.get("tabla_vacia")));
+        table_dificil.setPlaceholder(new Label((String)frases.get("tabla_vacia")));
+        rankingDificil.setText((String)frases.get("dificil"));
+        rankingFacil.setText((String)frases.get("facil"));
+    }
+
 
     @FXML
     public void initialize() {
@@ -73,6 +100,8 @@ public class IU_Menu extends Stage implements Observer {
             th.setDaemon(true);
             th.run();
         }
+        listenerIdiomas();
+        GestorIdiomas.getmGestorIdiomas().setIdioma(1);
         setModoJuego();
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
@@ -85,6 +114,26 @@ public class IU_Menu extends Stage implements Observer {
             Main.animacionInicio = false;
         }
         GestorPartidas.getmGestorPartidas().addObserver(this);
+        idioma();
+    }
+
+    public void listenerIdiomas(){
+        idi_es.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                GestorIdiomas.getmGestorIdiomas().setIdioma(0);
+                idioma();
+            }
+        });
+        idi_eu.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                GestorIdiomas.getmGestorIdiomas().setIdioma(1);
+                idioma();
+            }
+        });
     }
 
     public void animacionTitulo() {
@@ -284,7 +333,17 @@ public class IU_Menu extends Stage implements Observer {
     }
 
     public void setModoJuego() {
-        modo.setText("Modo: " + Conecta4.getmConecta4().getModoJuego());
+        JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
+        String modoJuego = Conecta4.getmConecta4().getModoJuego();
+        if(GestorIdiomas.getmGestorIdiomas().getIdioma(0).get("ordenador_facil").equals(modoJuego)){
+            modo.setText(frases.get("modo") + (String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("ordenador_facil"));
+        }
+        else if(GestorIdiomas.getmGestorIdiomas().getIdioma(0).get("ordenador_dificil").equals(modoJuego)){
+            modo.setText(frases.get("modo") + (String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("ordenador_dificil"));
+        }
+        else{
+            modo.setText(frases.get("modo") + "1vs1");
+        }
     }
 
     @FXML

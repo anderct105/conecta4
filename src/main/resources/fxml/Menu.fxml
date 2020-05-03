@@ -11,9 +11,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="1100.0" styleClass="pane" stylesheets="@../stylesheet/menu.css" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Menu">
    <children>
       <AnchorPane layoutY="-1.0" prefHeight="104.0" prefWidth="1100.0" styleClass="menubar" stylesheets="@../stylesheet/menu.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -34,7 +35,7 @@
        </Button>
       <TabPane fx:id="tabpane" layoutX="100.0" layoutY="148.0" prefHeight="403.0" prefWidth="380.0" styleClass="ranking" stylesheets="@../stylesheet/menu.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="620.0">
         <tabs>
-          <Tab closable="false" styleClass="mitab" text="Facil">
+          <Tab fx:id="rankingFacil" closable="false" styleClass="mitab" text="Facil">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -51,7 +52,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab styleClass="mitab" text="Dificil">
+          <Tab fx:id="rankingDificil" styleClass="mitab" text="Dificil">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -100,10 +101,30 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="entryAnimation" prefHeight="600.0" prefWidth="1100.0" styleClass="entryAnimation" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="936.0" layoutY="524.0" prefHeight="62.0" prefWidth="150.0">
+         <children>
+            <ImageView fx:id="idi_es" fitHeight="48.0" fitWidth="48.0" layoutX="86.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" styleClass="boton">
+               <image>
+                  <Image url="@../imagenes/español.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="idi_eu" fitHeight="48.0" fitWidth="57.0" layoutX="24.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" styleClass="boton">
+               <image>
+                  <Image url="@../imagenes/euskera.jpg" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane fx:id="entryAnimation" layoutY="-12.0" prefHeight="666.0" prefWidth="1100.0" styleClass="entryAnimation" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-12.0">
          <children>
             <ProgressBar fx:id="pb" layoutX="221.0" layoutY="363.0" prefHeight="20.0" prefWidth="684.0" progress="0.0" stylesheets="@../stylesheet/menu.css" />
-            <ImageView fitHeight="310.0" fitWidth="710.0" layoutX="208.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="310.0" fitWidth="710.0" layoutX="208.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/Conecta4_Logo.png" />
                </image>
