@@ -343,7 +343,7 @@ public class Tablero extends Observable {
                 }
             }
             coordenadas.addAll(coordenadas_inversas);
-            if (coordenadas.size() == 4) {
+            if (coordenadas.size() >= 4) {
                 obtenidas = true;
                 break;
             }
@@ -400,9 +400,4 @@ public class Tablero extends Observable {
         combinaciones.add(i4);
         return combinaciones;
     }
-
-    public void setInterfaz(IU_Tablero tablero){
-        interfaz = tablero;
-    }
-
 }
