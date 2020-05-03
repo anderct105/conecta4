@@ -233,7 +233,7 @@ public class IU_Menu extends Stage implements Observer {
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(-0.5);
         pane.getScene().getRoot().setEffect(ca);
-        pane.getScene().getRoot().setDisable(false);
+        pane.getScene().getRoot().setDisable(true);
         Stage primaryStage = new Stage();
         Parent root = null;
         try {

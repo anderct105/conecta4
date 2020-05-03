@@ -44,7 +44,6 @@ public class IU_TerminarPartida {
         idioma= (String) frases.get("idioma");
     }
 
-
     @FXML
     public void initialize() {
     }
