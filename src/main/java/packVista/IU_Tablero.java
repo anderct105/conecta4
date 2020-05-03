@@ -775,6 +775,9 @@ public class IU_Tablero implements Observer {
                     ponerSeleccionColumna(this.columnaJugador);
                     marcarGanadoras();
                 } else {
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")){
+                        marcarGanadoras();
+                    }
                     if (!fin) {
                         gestionarAnimacion(a, pColumna);
                         ponerSeleccionColumna(this.columnaJugador);
