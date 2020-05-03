@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="fondo" stylesheets="@../stylesheet/tablero.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Tablero">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="600.0" prefWidth="1100.0" stylesheets="@../stylesheet/tablero.css">
          <center>
@@ -57,7 +57,7 @@
             </GridPane>
          </center>
          <top>
-            <AnchorPane depthTest="ENABLE" prefHeight="54.0" prefWidth="1100.0" styleClass="panelSuperior" stylesheets="@../stylesheet/tablero.css" BorderPane.alignment="CENTER">
+            <AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="1123.0" styleClass="panelSuperior" stylesheets="@../stylesheet/tablero.css" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane fx:id="PaneTurno" layoutX="435.0" layoutY="2.0" prefHeight="80.0" prefWidth="235.0" styleClass="turnoTiempo" stylesheets="@../stylesheet/tablero.css">
                      <children>
