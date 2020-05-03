@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import org.json.simple.JSONObject;
-import packControlador.GestorIdiomas;
 
 public class IU_Ayuda {
     @FXML

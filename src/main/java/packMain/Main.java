@@ -6,12 +6,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.io.IOException;
+import packVista.GestorIdiomas;
 
 public class Main extends Application {
 
@@ -23,6 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        GestorIdiomas.getmGestorIdiomas().setIdioma(0);
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
         primaryStage.setTitle("Conecta 4");
         primaryStage.setResizable(false);

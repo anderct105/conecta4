@@ -24,7 +24,6 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
-import packControlador.GestorIdiomas;
 import packControlador.GestorPartidas;
 import packMain.Main;
 
@@ -102,7 +101,6 @@ public class IU_Menu extends Stage implements Observer {
             th.run();
         }
         listenerIdiomas();
-        GestorIdiomas.getmGestorIdiomas().setIdioma(0);
         setModoJuego();
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);

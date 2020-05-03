@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
-import packControlador.GestorIdiomas;
 
 
 public class IU_Configuracion {

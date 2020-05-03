@@ -16,7 +16,6 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
-import packControlador.GestorIdiomas;
 
 import java.io.IOException;
 
