@@ -66,7 +66,7 @@ public class GestorIdiomas extends Observable {
         frases.put("modo", "Modo: ");
         frases.put("volver_inicio", "Volver al inicio");
         frases.put("instrucciones", "INSTRUCCIONES");
-        frases.put("texto_instrucciones", "1. Cada jugador, a su turno, juega una ficha de su color en la" +
+        frases.put("texto_instrucciones", "1. Cada jugador, a su turno, juega una ficha de su color en la " +
                 "columna de su elección.\n" +
                 "2. El primer jugador que consigue alinear 4 fichas de su color, " +
                 "horizontalmente, verticalmente o en diagonal gana la partida. \n" +
@@ -108,7 +108,7 @@ public class GestorIdiomas extends Observable {
                 "2. Bere koloreko 4 fitxa horizontalean, bertikalean edo" +
                 "diagonalean lerrokatzen dituen jokalariak partida irabazten du.\n" +
                 "3. Taula guztiz betetzen bada inork bere koloreko 4" +
-                "fitxa lerrokatu gabe, partida berdinketan bukkatzen du.");
+                "fitxa lerrokatu gabe, partida berdinketan bukatzen du.");
         frases.put("musica", "MUSIKA:");
         frases.put("sonido", "SOINUA:");
         frases.put("terminar", "Bukatu partida");
