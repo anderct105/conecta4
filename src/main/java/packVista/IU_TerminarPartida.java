@@ -32,6 +32,7 @@ public class IU_TerminarPartida {
     private int tiempo;
     private int resultado;
     private boolean cerrarTodo = false;
+    private String idioma;
 
     public IU_TerminarPartida() {
     }
@@ -40,6 +41,7 @@ public class IU_TerminarPartida {
         JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
         guardar.setText((String)frases.get("guardar_partida"));
         salir.setText((String)frases.get("volver_inicio"));
+        idioma= (String) frases.get("idioma");
     }
 
 
@@ -112,40 +114,76 @@ public class IU_TerminarPartida {
 
     public void ponerImagen() {
         Image image;
-        switch (resultado) {
+        if(idioma=="castellano") {
 
-            case 0:
-                if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
-                    image = new Image("/imagenes/ganadoRojo.gif",
+            switch (resultado) {
+
+                case 0:
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                        image = new Image("/imagenes/ganadoRojo.gif",
+                                600, 400, false, false);
+                        puntuacion.setVisible(false);
+                        guardar.setVisible(false);
+                    } else {
+                        image = new Image("/imagenes/derrota.jpg",
+                                600, 400, false, false);
+                        guardar.setVisible(false);
+                    }
+                    break;
+                case 1:
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                        image = new Image("/imagenes/ganadoAzul.gif",
+                                600, 400, false, false);
+                        puntuacion.setVisible(false);
+                        guardar.setVisible(false);
+                    } else {
+                        image = new Image("/imagenes/ganadoRojo.gif",
+                                600, 400, false, false);
+                    }
+
+                    break;
+                default:
+                    image = new Image("/imagenes/empate.png",
                             600, 400, false, false);
                     puntuacion.setVisible(false);
                     guardar.setVisible(false);
-                }
-                else {
-                    image = new Image("/imagenes/derrota.jpg",
-                            600, 400, false, false);
-                    guardar.setVisible(false);
-                }
-                break;
-            case 1:
-                if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
-                    image = new Image("/imagenes/ganadoAzul.gif",
+                    break;
+            }
+        }
+        else{
+            switch (resultado) {
+
+                case 0:
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                        image = new Image("/imagenes/irabaziG.gif",
+                                600, 400, false, false);
+                        puntuacion.setVisible(false);
+                        guardar.setVisible(false);
+                    } else {
+                        image = new Image("/imagenes/Porrot.jpg",
+                                600, 400, false, false);
+                        guardar.setVisible(false);
+                    }
+                    break;
+                case 1:
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                        image = new Image("/imagenes/irabaziU.gif",
+                                600, 400, false, false);
+                        puntuacion.setVisible(false);
+                        guardar.setVisible(false);
+                    } else {
+                        image = new Image("/imagenes/irabaziG.gif",
+                                600, 400, false, false);
+                    }
+
+                    break;
+                default:
+                    image = new Image("/imagenes/berdinketa.png",
                             600, 400, false, false);
                     puntuacion.setVisible(false);
                     guardar.setVisible(false);
-                }
-                else{
-                    image = new Image("/imagenes/ganadoRojo.gif",
-                            600, 400, false, false);
-                }
-
-                break;
-            default:
-                image = new Image("/imagenes/empate.png",
-                        600, 400, false, false);
-                puntuacion.setVisible(false);
-                guardar.setVisible(false);
-                break;
+                    break;
+            }
         }
         imagen.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
