@@ -39,14 +39,24 @@ public class GestorPartidas extends Observable {
         return juego.jugarPartida(pColumna);
     }
 
-    public JSONArray cargarRankingFacil() throws SQLException {
+    public JSONArray cargarRankingFacil() {
         OrdenadorFDAOImpl ordenador = new OrdenadorFDAOImpl();
-        return ordenador.cargarRanking();
+        try {
+            return ordenador.cargarRanking();
+        } catch (NullPointerException | SQLException e) {
+            System.out.println("No se ha podido conectar a la base de datos");
+        }
+        return new JSONArray();
     }
 
-    public JSONArray cargarRankingDificil() throws SQLException {
-        OrdenadorDDAOImpl ordenador = new OrdenadorDDAOImpl();
-        return ordenador.cargarRanking();
+    public JSONArray cargarRankingDificil() {
+        try {
+            OrdenadorDDAOImpl ordenador = new OrdenadorDDAOImpl();
+            return ordenador.cargarRanking();
+        } catch (NullPointerException | SQLException e) {
+            System.out.println("No se ha podido conectar a la base de datos");
+        }
+        return new JSONArray();
     }
 
     /**

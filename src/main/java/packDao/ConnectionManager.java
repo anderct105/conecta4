@@ -31,7 +31,7 @@ public class ConnectionManager {
 			else {
 				query.executeUpdate(sql);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException e) {
 			System.out.println(e);
 			System.out.println("No se ha podido ejecutar la sql");
 		}

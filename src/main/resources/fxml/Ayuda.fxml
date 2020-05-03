@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.Cursor?>
 
-<AnchorPane prefHeight="323.0" prefWidth="540.0" styleClass="pane" stylesheets="@../stylesheet/ayuda.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Ayuda">
+<AnchorPane prefHeight="303.0" prefWidth="510.0" styleClass="pane" stylesheets="@../stylesheet/ayuda.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packVista.IU_Ayuda">
    <children>
        <Label fx:id="ins" layoutX="215.0" layoutY="21.0" styleClass="ins" stylesheets="@../stylesheet/ayuda.css" text="INSTRUCCIONES:" textFill="WHITE">
            <font>
                <Font name="Manjari Bold" size="18.0" />
            </font>
        </Label>
-       <TextArea fx:id="instrucciones" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="170.0" prefWidth="513.0" styleClass="instrucciones" stylesheets="@../stylesheet/ayuda.css" text="1. Cada jugador, a su turno, juega una ficha de su color &#10;en la columna de su elección.&#10;&#10;2. El primer jugador que consigue alinear 4 fichas de su &#10;color, horizontalmente, verticalmente o en diagonal gana&#10;la partida. &#10;&#10;3. Si el tablero se llena completamente sin que ningún&#10; jugador logre alinear 4 fichas de su color, la partida es &#10;declarada empate.">
+       <TextArea fx:id="instrucciones" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="145.0" prefWidth="485.0" styleClass="instrucciones" stylesheets="@../stylesheet/ayuda.css" text="1. Cada jugador, a su turno, juega una ficha de su color &#10;en la columna de su elección.&#10;&#10;2. El primer jugador que consigue alinear 4 fichas de su &#10;color, horizontalmente, verticalmente o en diagonal gana&#10;la partida. &#10;&#10;3. Si el tablero se llena completamente sin que ningún&#10; jugador logre alinear 4 fichas de su color, la partida es &#10;declarada empate.">
            <font>
-               <Font name="System Bold" size="14.0" />
+               <Font name="System Bold" size="15.0" />
            </font>
        </TextArea>
-       <Button fx:id="volverInicio" layoutX="224.0" layoutY="250.0" mnemonicParsing="false" onAction="#volverInicio" styleClass="volver" stylesheets="@../stylesheet/ayuda.css" text="Volver al inicio">
+       <Button fx:id="volverInicio" layoutX="224.0" layoutY="230.0" mnemonicParsing="false" onAction="#volverInicio" styleClass="volver" stylesheets="@../stylesheet/ayuda.css" text="Volver al inicio">
            <font>
                <Font name="Manjari Bold" size="14.0" />
            </font>
@@ -27,6 +25,5 @@
                <Cursor fx:constant="HAND" />
            </cursor>
        </Button>
-      <ScrollBar layoutX="521.0" layoutY="62.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="17.0" />
    </children>
 </AnchorPane>

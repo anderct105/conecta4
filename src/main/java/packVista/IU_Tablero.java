@@ -211,7 +211,6 @@ public class IU_Tablero implements Observer {
 
 
     private void musicaFondoOn() {
-
         int random = ThreadLocalRandom.current().nextInt(1, 9);
         Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
         musicaFondo = new MediaPlayer(sound);
@@ -319,6 +318,7 @@ public class IU_Tablero implements Observer {
         llena = false;
         bloqueo = false;
         finJugador = false;
+        BTerminarPartida.setDisable(false);
         int filas = panelTablero.getRowConstraints().size();
         int columnas = panelTablero.getColumnConstraints().size();
         for (int i = 0; i < filas; i++) {
@@ -483,31 +483,6 @@ public class IU_Tablero implements Observer {
             boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
             boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
             JSONArray ja = (JSONArray) ganadoras.get("posicionesGanadoras");
-            for (int i = 0; i < ja.size(); i++) {
-                JSONObject objeto = (JSONObject) ja.get(i);
-                Integer x = (Integer) objeto.get("x");
-                Integer y = (Integer) objeto.get("y");
-                Stop[] stops = null;
-                Stop[] borde;
-                LinearGradient lg1 = null;
-                Circle ficha = tablero[5 - x][y];
-                if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")) {
-                    stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
-                    borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
-                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                } else if (ganadoB && !obtenerModoJuego().equals("1vs1") || !ganadoB && obtenerModoJuego().equals("1vs1")) {
-                    stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
-                    borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
-                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                }
-                ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
-                ficha.setStrokeWidth(2.5);
-                ficha.setStroke(lg1);
-                if (ganadoA && !obtenerModoJuego().equals("1vs1")) {
-                    finJugador = true;
-                }
-            }
-
             //Ordenamos las fichas
             HashMap<Integer, JSONObject> fichas = new HashMap<>();
             boolean igual = false;
@@ -533,6 +508,31 @@ public class IU_Tablero implements Observer {
             }
             List<Integer> empleados = new ArrayList<>(fichas.keySet());
             Collections.sort(empleados);
+
+            for (int i = 0; i < 4; i++) {
+                JSONObject objetoF = fichas.get(empleados.get(i));
+                Integer xF = (Integer) objetoF.get("x");
+                Integer yF = (Integer) objetoF.get("y");
+                Stop[] stops = null;
+                Stop[] borde;
+                LinearGradient lg1 = null;
+                Circle ficha = tablero[5 - xF][yF];
+                if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")) {
+                    stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
+                    borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
+                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+                } else if (ganadoB && !obtenerModoJuego().equals("1vs1") || !ganadoB && obtenerModoJuego().equals("1vs1")) {
+                    stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
+                    borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
+                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+                }
+                ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
+                ficha.setStrokeWidth(2.5);
+                ficha.setStroke(lg1);
+                if (ganadoA && !obtenerModoJuego().equals("1vs1")) {
+                    finJugador = true;
+                }
+            }
 
             //FICHA 1
             JSONObject objeto1 = fichas.get(empleados.get(0));
@@ -600,6 +600,7 @@ public class IU_Tablero implements Observer {
 
             timeline11.setOnFinished(event -> {
                 timeline1.play();
+                BTerminarPartida.setDisable(true);
             });
             timeline11.play();
             timeline1.setOnFinished(event -> {
@@ -773,6 +774,9 @@ public class IU_Tablero implements Observer {
                     ponerSeleccionColumna(this.columnaJugador);
                     marcarGanadoras();
                 } else {
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")){
+                        marcarGanadoras();
+                    }
                     if (!fin) {
                         gestionarAnimacion(a, pColumna);
                         ponerSeleccionColumna(this.columnaJugador);

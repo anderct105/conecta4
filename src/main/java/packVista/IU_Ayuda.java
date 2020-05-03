@@ -19,6 +19,7 @@ public class IU_Ayuda {
         JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
         volverInicio.setText((String)frases.get("volver_inicio"));
         ins.setText((String)frases.get("instrucciones"));
+        instrucciones.setWrapText(true);
         instrucciones.setText((String)frases.get("texto_instrucciones"));
     }
 
