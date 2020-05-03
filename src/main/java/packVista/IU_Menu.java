@@ -102,7 +102,7 @@ public class IU_Menu extends Stage implements Observer {
             th.run();
         }
         listenerIdiomas();
-        GestorIdiomas.getmGestorIdiomas().setIdioma(1);
+        GestorIdiomas.getmGestorIdiomas().setIdioma(0);
         setModoJuego();
         table_facil.setSelectionModel(null);
         table_dificil.setSelectionModel(null);
