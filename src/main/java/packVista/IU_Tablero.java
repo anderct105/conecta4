@@ -25,14 +25,12 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
-import packControlador.GestorIdiomas;
 import packModelo.Tablero;
 
 import java.io.File;

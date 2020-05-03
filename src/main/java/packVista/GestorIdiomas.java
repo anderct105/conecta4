@@ -1,14 +1,7 @@
-package packControlador;
+package packVista;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import packDao.OrdenadorDDAOImpl;
-import packDao.OrdenadorFDAOImpl;
-import packModelo.Juego;
-import packModelo.Modo;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Observable;
 
 public class GestorIdiomas extends Observable {

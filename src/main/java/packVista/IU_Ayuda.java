@@ -1,14 +1,11 @@
 package packVista;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import org.json.simple.JSONObject;
-import packControlador.GestorIdiomas;
 
 public class IU_Ayuda {
     @FXML
