@@ -603,6 +603,7 @@ public class IU_Tablero implements Observer {
                 timeline1.play();
                 BTerminarPartida.setDisable(true);
             });
+            quitarSeleccionColumna();
             timeline11.play();
             timeline1.setOnFinished(event -> {
                 timeline21.play();
@@ -775,9 +776,6 @@ public class IU_Tablero implements Observer {
                     ponerSeleccionColumna(this.columnaJugador);
                     marcarGanadoras();
                 } else {
-                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")){
-                        marcarGanadoras();
-                    }
                     if (!fin) {
                         gestionarAnimacion(a, pColumna);
                         ponerSeleccionColumna(this.columnaJugador);
