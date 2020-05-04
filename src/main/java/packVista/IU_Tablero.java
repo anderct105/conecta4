@@ -1,6 +1,9 @@
 package packVista;
 
-import javafx.animation.*;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -84,6 +87,7 @@ public class IU_Tablero implements Observer {
     //para indicar sonido ON/OFF
     private boolean sonidoBool = true;
 
+
     //Para marcar las fichas ganadoras
     private Circle[][] tablero;
 
@@ -147,13 +151,13 @@ public class IU_Tablero implements Observer {
     //esto sirve para dejar marcada la columna que usó el jugador tras la animación de la ficha
     private int columnaJugador;
 
-    public void idioma(){
+    public void idioma() {
         JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
-        BTerminarPartida.setText((String)frases.get("terminar"));
-        SigCancion.setText((String)frases.get("siguiente_cancion"));
-        musicaText.setText((String)frases.get("musica"));
-        sonidoText.setText((String)frases.get("sonido"));
-        LabelTurno.setText((String)frases.get("turno"));
+        BTerminarPartida.setText((String) frases.get("terminar"));
+        SigCancion.setText((String) frases.get("siguiente_cancion"));
+        musicaText.setText((String) frases.get("musica"));
+        sonidoText.setText((String) frases.get("sonido"));
+        LabelTurno.setText((String) frases.get("turno"));
     }
 
     @FXML
@@ -372,9 +376,6 @@ public class IU_Tablero implements Observer {
         return -1;
     }
 
-    public void clickJuego() {
-
-    }
 
     public void listenerSeleccionCol(Node item) {
         item.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -413,7 +414,7 @@ public class IU_Tablero implements Observer {
 
     private void ponerSeleccionColumna(int columna) {
         Timeline[] tm = new Timeline[tablero.length];
-        if (columna != -1 && colAnimTerminado) {
+        if (columna != -1 && colAnimTerminado && !finJugador) {
             if (!bloqueo) {
                 quitarSeleccionColumna();
                 ColorAdjust ca = new ColorAdjust();
@@ -465,9 +466,9 @@ public class IU_Tablero implements Observer {
 
     private void setTurno() {
         if (turno) {
-            NombreTurno.setText((String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_rojo"));
+            NombreTurno.setText((String) GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_rojo"));
         } else {
-            NombreTurno.setText((String)GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_azul"));
+            NombreTurno.setText((String) GestorIdiomas.getmGestorIdiomas().getIdiomaActual().get("jugador_azul"));
         }
     }
 
@@ -476,159 +477,194 @@ public class IU_Tablero implements Observer {
         // return "modo Vs ordenador";
     }
 
-    private void marcarGanadoras() {
-        if (transfomacionColor) {
-            ganadoras.put("haGanadoA", false);
+    public ArrayList<Integer> ordenarFichas(HashMap<Integer, JSONObject> fichas) {
+        //Ordenamos las fichas
+        JSONArray ja = (JSONArray) ganadoras.get("posicionesGanadoras");
+        boolean igual = false;
+        JSONObject objeto = (JSONObject) ja.get(0);
+        JSONObject objetoB = (JSONObject) ja.get(1);
+        Integer x = (Integer) objeto.get("x");
+        Integer xB = (Integer) objetoB.get("x");
+        Integer y = (Integer) objeto.get("y");
+        Integer yB = (Integer) objetoB.get("y");
+        if (x + y == xB + yB) {
+            igual = true;
         }
-        try {
+
+        for (int i = 0; i < ja.size(); i++) {
+            objeto = (JSONObject) ja.get(i);
+            x = (Integer) objeto.get("x");
+            y = (Integer) objeto.get("y");
+            if (!igual) {
+                fichas.put(x + y, objeto);
+            } else {
+                fichas.put(y, objeto);
+            }
+        }
+        ArrayList<Integer> empleados = new ArrayList<>(fichas.keySet());
+        Collections.sort(empleados);
+        return empleados;
+    }
+
+    private void marcarGanadorasJugador() {
+        if (ganadoras.get("posicionesGanadoras") != null) {
+            finJugador = true;
             boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
             boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
-            JSONArray ja = (JSONArray) ganadoras.get("posicionesGanadoras");
-            //Ordenamos las fichas
             HashMap<Integer, JSONObject> fichas = new HashMap<>();
-            boolean igual = false;
-            JSONObject objeto = (JSONObject) ja.get(0);
-            JSONObject objetoB = (JSONObject) ja.get(1);
-            Integer x = (Integer) objeto.get("x");
-            Integer xB = (Integer) objetoB.get("x");
-            Integer y = (Integer) objeto.get("y");
-            Integer yB = (Integer) objetoB.get("y");
-            if (x + y == xB + yB) {
-                igual = true;
-            }
-
-            for (int i = 0; i < ja.size(); i++) {
-                objeto = (JSONObject) ja.get(i);
-                x = (Integer) objeto.get("x");
-                y = (Integer) objeto.get("y");
-                if (!igual) {
-                    fichas.put(x + y, objeto);
-                } else {
-                    fichas.put(y, objeto);
-                }
-            }
-            List<Integer> empleados = new ArrayList<>(fichas.keySet());
-            Collections.sort(empleados);
-
+            ArrayList<Integer> empleados = ordenarFichas(fichas);
             for (int i = 0; i < 4; i++) {
                 JSONObject objetoF = fichas.get(empleados.get(i));
                 Integer xF = (Integer) objetoF.get("x");
                 Integer yF = (Integer) objetoF.get("y");
-                Stop[] stops = null;
-                Stop[] borde;
-                LinearGradient lg1 = null;
                 Circle ficha = tablero[5 - xF][yF];
-                if (ganadoA && !obtenerModoJuego().equals("1vs1") || !ganadoA && obtenerModoJuego().equals("1vs1")) {
-                    stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
-                    borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
-                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                } else if (ganadoB && !obtenerModoJuego().equals("1vs1") || !ganadoB && obtenerModoJuego().equals("1vs1")) {
-                    stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
-                    borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
-                    lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
-                }
-                ficha.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
-                ficha.setStrokeWidth(2.5);
-                ficha.setStroke(lg1);
-                if (ganadoA && !obtenerModoJuego().equals("1vs1")) {
-                    finJugador = true;
+                if (!ganadoA) {
+                    asignarGradiente(false, ficha);
+                } else if (!ganadoB) {
+                    asignarGradiente(true, ficha);
                 }
             }
-
-            //FICHA 1
-            JSONObject objeto1 = fichas.get(empleados.get(0));
-            Integer x1 = (Integer) objeto1.get("x");
-            Integer y1 = (Integer) objeto1.get("y");
-            Circle ficha1 = tablero[5 - x1][y1];
-
-            Timeline timeline11 = new Timeline();
-            KeyFrame key11 = new KeyFrame(Duration.millis(350),
-                    new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
-            timeline11.getKeyFrames().add(key11);
-
-            Timeline timeline1 = new Timeline();
-            KeyFrame key1 = new KeyFrame(Duration.millis(600),
-                    new KeyValue(ficha1.scaleXProperty(), 1.1), new KeyValue(ficha1.scaleYProperty(), 1.1));
-            timeline1.getKeyFrames().add(key1);
-
-            //FICHA 2
-            JSONObject objeto2 = fichas.get(empleados.get(1));
-            Integer x2 = (Integer) objeto2.get("x");
-            Integer y2 = (Integer) objeto2.get("y");
-            Circle ficha2 = tablero[5 - x2][y2];
-
-            Timeline timeline21 = new Timeline();
-            KeyFrame key21 = new KeyFrame(Duration.millis(350),
-                    new KeyValue(ficha2.scaleXProperty(), 0.7), new KeyValue(ficha2.scaleYProperty(), 0.7));
-            timeline21.getKeyFrames().add(key21);
-
-            Timeline timeline2 = new Timeline();
-            KeyFrame key2 = new KeyFrame(Duration.millis(600),
-                    new KeyValue(ficha2.scaleXProperty(), 1.1), new KeyValue(ficha2.scaleYProperty(), 1.1));
-            timeline2.getKeyFrames().add(key2);
-
-            //FICHA 3
-            JSONObject objeto3 = fichas.get(empleados.get(2));
-            Integer x3 = (Integer) objeto3.get("x");
-            Integer y3 = (Integer) objeto3.get("y");
-            Circle ficha3 = tablero[5 - x3][y3];
-
-            Timeline timeline31 = new Timeline();
-            KeyFrame key31 = new KeyFrame(Duration.millis(350),
-                    new KeyValue(ficha3.scaleXProperty(), 0.7), new KeyValue(ficha3.scaleYProperty(), 0.7));
-            timeline31.getKeyFrames().add(key31);
-
-            Timeline timeline3 = new Timeline();
-            KeyFrame key3 = new KeyFrame(Duration.millis(600),
-                    new KeyValue(ficha3.scaleXProperty(), 1.1), new KeyValue(ficha3.scaleYProperty(), 1.1));
-            timeline3.getKeyFrames().add(key3);
-
-            //FICHA 4
-            JSONObject objeto4 = fichas.get(empleados.get(3));
-            Integer x4 = (Integer) objeto4.get("x");
-            Integer y4 = (Integer) objeto4.get("y");
-            Circle ficha4 = tablero[5 - x4][y4];
-
-            Timeline timeline41 = new Timeline();
-            KeyFrame key41 = new KeyFrame(Duration.millis(350),
-                    new KeyValue(ficha4.scaleXProperty(), 0.7), new KeyValue(ficha4.scaleYProperty(), 0.7));
-            timeline41.getKeyFrames().add(key41);
-
-            Timeline timeline4 = new Timeline();
-            KeyFrame key4 = new KeyFrame(Duration.millis(600),
-                    new KeyValue(ficha4.scaleXProperty(), 1.1), new KeyValue(ficha4.scaleYProperty(), 1.1));
-            timeline4.getKeyFrames().add(key4);
-
-            timeline11.setOnFinished(event -> {
-                timeline1.play();
-                BTerminarPartida.setDisable(true);
-            });
-            quitarSeleccionColumna();
-            timeline11.play();
-            timeline1.setOnFinished(event -> {
-                timeline21.play();
-            });
-            timeline21.setOnFinished(event -> {
-                timeline2.play();
-            });
-            timeline2.setOnFinished(event -> {
-                timeline31.play();
-            });
-            timeline31.setOnFinished(event -> {
-                timeline3.play();
-            });
-            timeline3.setOnFinished(event -> {
-                timeline41.play();
-            });
-            timeline41.setOnFinished(event -> {
-                timeline4.play();
-            });
-            timeline4.setOnFinished(event -> {
-                terminarPartida();
-            });
-        } catch (NullPointerException n) {
-
+            efectoGanadoras(fichas, empleados);
         }
+    }
+
+    private void efectoGanadoras(HashMap<Integer, JSONObject> fichas, List<Integer> empleados) {
+        //FICHA 1
+        JSONObject objeto1 = fichas.get(empleados.get(0));
+        Integer x1 = (Integer) objeto1.get("x");
+        Integer y1 = (Integer) objeto1.get("y");
+        Circle ficha1 = tablero[5 - x1][y1];
+
+        Timeline timeline11 = new Timeline();
+        KeyFrame key11 = new KeyFrame(Duration.millis(350),
+                new KeyValue(ficha1.scaleXProperty(), 0.7), new KeyValue(ficha1.scaleYProperty(), 0.7));
+        timeline11.getKeyFrames().add(key11);
+
+        Timeline timeline1 = new Timeline();
+        KeyFrame key1 = new KeyFrame(Duration.millis(600),
+                new KeyValue(ficha1.scaleXProperty(), 1.1), new KeyValue(ficha1.scaleYProperty(), 1.1));
+        timeline1.getKeyFrames().add(key1);
+
+        //FICHA 2
+        JSONObject objeto2 = fichas.get(empleados.get(1));
+        Integer x2 = (Integer) objeto2.get("x");
+        Integer y2 = (Integer) objeto2.get("y");
+        Circle ficha2 = tablero[5 - x2][y2];
+
+        Timeline timeline21 = new Timeline();
+        KeyFrame key21 = new KeyFrame(Duration.millis(350),
+                new KeyValue(ficha2.scaleXProperty(), 0.7), new KeyValue(ficha2.scaleYProperty(), 0.7));
+        timeline21.getKeyFrames().add(key21);
+
+        Timeline timeline2 = new Timeline();
+        KeyFrame key2 = new KeyFrame(Duration.millis(600),
+                new KeyValue(ficha2.scaleXProperty(), 1.1), new KeyValue(ficha2.scaleYProperty(), 1.1));
+        timeline2.getKeyFrames().add(key2);
+
+        //FICHA 3
+        JSONObject objeto3 = fichas.get(empleados.get(2));
+        Integer x3 = (Integer) objeto3.get("x");
+        Integer y3 = (Integer) objeto3.get("y");
+        Circle ficha3 = tablero[5 - x3][y3];
+
+        Timeline timeline31 = new Timeline();
+        KeyFrame key31 = new KeyFrame(Duration.millis(350),
+                new KeyValue(ficha3.scaleXProperty(), 0.7), new KeyValue(ficha3.scaleYProperty(), 0.7));
+        timeline31.getKeyFrames().add(key31);
+
+        Timeline timeline3 = new Timeline();
+        KeyFrame key3 = new KeyFrame(Duration.millis(600),
+                new KeyValue(ficha3.scaleXProperty(), 1.1), new KeyValue(ficha3.scaleYProperty(), 1.1));
+        timeline3.getKeyFrames().add(key3);
+
+        //FICHA 4
+        JSONObject objeto4 = fichas.get(empleados.get(3));
+        Integer x4 = (Integer) objeto4.get("x");
+        Integer y4 = (Integer) objeto4.get("y");
+        Circle ficha4 = tablero[5 - x4][y4];
+
+        Timeline timeline41 = new Timeline();
+        KeyFrame key41 = new KeyFrame(Duration.millis(350),
+                new KeyValue(ficha4.scaleXProperty(), 0.7), new KeyValue(ficha4.scaleYProperty(), 0.7));
+        timeline41.getKeyFrames().add(key41);
+
+        Timeline timeline4 = new Timeline();
+        KeyFrame key4 = new KeyFrame(Duration.millis(600),
+                new KeyValue(ficha4.scaleXProperty(), 1.1), new KeyValue(ficha4.scaleYProperty(), 1.1));
+        timeline4.getKeyFrames().add(key4);
+
+        timeline11.setOnFinished(event -> {
+            timeline1.play();
+            BTerminarPartida.setDisable(true);
+        });
+        quitarSeleccionColumna();
+        timeline11.play();
+        timeline1.setOnFinished(event -> {
+            timeline21.play();
+        });
+        timeline21.setOnFinished(event -> {
+            timeline2.play();
+        });
+        timeline2.setOnFinished(event -> {
+            timeline31.play();
+        });
+        timeline31.setOnFinished(event -> {
+            timeline3.play();
+        });
+        timeline3.setOnFinished(event -> {
+            timeline41.play();
+        });
+        timeline41.setOnFinished(event -> {
+            timeline4.play();
+        });
+        timeline4.setOnFinished(event -> {
+            terminarPartida();
+        });
+    }
+
+    private void marcarGanadorasOrdenador() {
+        if (ganadoras.get("posicionesGanadoras") != null) {
+            finJugador = true;
+            if (transfomacionColor) {
+                ganadoras.put("haGanadoA", false);
+            }
+            boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
+            boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
+            //Ordenamos las fichas
+            HashMap<Integer, JSONObject> fichas = new HashMap<>();
+            ArrayList<Integer> empleados = ordenarFichas(fichas);
+            for (int i = 0; i < 4; i++) {
+                JSONObject objetoF = fichas.get(empleados.get(i));
+                Integer xF = (Integer) objetoF.get("x");
+                Integer yF = (Integer) objetoF.get("y");
+                Circle ficha = tablero[5 - xF][yF];
+                if (ganadoA) {
+                    asignarGradiente(false, ficha);
+                } else if (ganadoB) {
+                    asignarGradiente(true, ficha);
+                }
+                finJugador = true;
+                efectoGanadoras(fichas, empleados);
+            }
+        }
+    }
+
+    public void asignarGradiente(boolean azul, Circle c) {
+        Stop[] stops;
+        Stop[] borde;
+        LinearGradient lg1;
+        if (!azul) {
+            stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
+            borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
+            lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+        } else {
+            stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
+            borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
+            lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
+        }
+        c.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
+        c.setStrokeWidth(2.5);
+        c.setStroke(lg1);
     }
 
     public void terminarPartida() {
@@ -720,7 +756,7 @@ public class IU_Tablero implements Observer {
             ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado) {
+                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
                         //int columna = GridPane.getColumnIndex(item);
                         //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
                         JSONObject json = jugar(columnaJugador, turno);
@@ -770,24 +806,26 @@ public class IU_Tablero implements Observer {
 
             timelineA.setOnFinished(event -> sonido(timelineB));
             timelineB.setOnFinished(event -> timelineC.play());
-            timelineC.setOnFinished(event -> {
-                if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+            if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                timelineC.setOnFinished(event -> {
                     gestionarAnimacion(a, pColumna);
+                    marcarGanadorasJugador();
                     ponerSeleccionColumna(this.columnaJugador);
-                    marcarGanadoras();
-                } else {
+                });
+            } else {
+                timelineC.setOnFinished(event -> {
                     if (!fin) {
                         gestionarAnimacion(a, pColumna);
                         ponerSeleccionColumna(this.columnaJugador);
                     } else if ((Boolean) ganadoras.get("haGanadoA")) {
-                        marcarGanadoras();
+                        marcarGanadorasOrdenador();
                     } else if ((Boolean) ganadoras.get("haGanadoB")) {
                         transfomacionColor = true;
                         ganadoras.put("haGanadoA", true);
                         gestionarAnimacion(a, pColumna);
                     }
-                }
-            });
+                });
+            }
             timelineA.play();
         }
     }
