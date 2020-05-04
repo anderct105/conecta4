@@ -146,7 +146,7 @@ public class IU_Menu extends Stage implements Observer {
         sc.setNode(title);
         sc.setDuration(new Duration(1200));
         sc.setAutoReverse(true);
-        sc.setCycleCount(6);
+        sc.setCycleCount(Animation.INDEFINITE);
         sc.play();
 
 

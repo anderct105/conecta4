@@ -337,30 +337,7 @@ public class IU_Tablero implements Observer {
             }
         }
         panelTablero.getChildren().forEach(item -> {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado) {
-                        //int columna = GridPane.getColumnIndex(item);
-                        //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
-                        JSONObject json = jugar(columnaJugador, turno);
-                        JSONArray ja = null;
-                        if (json != null) {
-                            ja = (JSONArray) json.get("posicionesGanadoras");
-                        } else {
-                            marcarDesmarcarColumnaLlena(columnaJugador);
-                        }
-                        if (ja != null) {
-                            fin = true;
-                            ganadoras = json;
-                            fiveSecondsWonder.stop();
-                        }
-                        if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
-                            ganadoras = json;
-                        }
-                    }
-                }
-            });
+            listenerFicha(item);
             listenerSeleccionCol(item);
         });
     }
@@ -518,9 +495,9 @@ public class IU_Tablero implements Observer {
                 Integer xF = (Integer) objetoF.get("x");
                 Integer yF = (Integer) objetoF.get("y");
                 Circle ficha = tablero[5 - xF][yF];
-                if (!ganadoA) {
+                if (!turno) {
                     asignarGradiente(false, ficha);
-                } else if (!ganadoB) {
+                } else if (turno) {
                     asignarGradiente(true, ficha);
                 }
             }
@@ -644,8 +621,8 @@ public class IU_Tablero implements Observer {
                     asignarGradiente(true, ficha);
                 }
                 finJugador = true;
-                efectoGanadoras(fichas, empleados);
             }
+            efectoGanadoras(fichas, empleados);
         }
     }
 
@@ -753,28 +730,7 @@ public class IU_Tablero implements Observer {
             tablero[pFila][pColumna] = ficha;
             //SE LE PONE LOS LISTENERS A LA FICHA
             listenerSeleccionCol(ficha);
-            ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
-                        //int columna = GridPane.getColumnIndex(item);
-                        //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
-                        JSONObject json = jugar(columnaJugador, turno);
-                        JSONArray ja = null;
-                        if (json != null) {
-                            ja = (JSONArray) json.get("posicionesGanadoras");
-                        }
-                        if (ja != null) {
-                            fin = true;
-                            fiveSecondsWonder.stop();
-                            ganadoras = json;
-                        }
-                        if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
-                            ganadoras = json;
-                        }
-                    }
-                }
-            });
+            listenerFicha(ficha);
             //SE HACE INVISIBLE EN LA POSICIÓN Y SE CREA A, QUE VA A SER LA QUE CAIGA
             ficha.setOpacity(0);
             Circle a;
@@ -881,6 +837,31 @@ public class IU_Tablero implements Observer {
                 return 121;
         }
         return -1;
+    }
+
+    public void listenerFicha(Node ficha) {
+        ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
+                    //int columna = GridPane.getColumnIndex(item);
+                    //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
+                    JSONObject json = jugar(columnaJugador, turno);
+                    JSONArray ja = null;
+                    if (json != null) {
+                        ja = (JSONArray) json.get("posicionesGanadoras");
+                    }
+                    if (ja != null) {
+                        fin = true;
+                        fiveSecondsWonder.stop();
+                        ganadoras = json;
+                    }
+                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                        ganadoras = json;
+                    }
+                }
+            }
+        });
     }
 
     private double getCoordenadaColumna(int pColumna) {
