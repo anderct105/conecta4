@@ -13,8 +13,7 @@ import java.sql.Timestamp;
 
 public class OrdenadorDDAOImpl implements IPartidaDAO {
 
-    public OrdenadorDDAOImpl() {
-    }
+    public OrdenadorDDAOImpl() {}
 
     /**
      * Método que devuelve el ranking de las partidas jugadas en modo ordenador fácil

@@ -2,17 +2,11 @@ package packModelo;
 
 import org.json.simple.JSONObject;
 
-import java.util.Observable;
-
 public class Juego  {
 
     private Modo modo;
 
-    public Juego() {
-        setModoJuego(new OvO());
-        //setModoJuego(new OrdenadorF());
-        //setModoJuego(new OrdenadorD());
-    }
+    public Juego() { setModoJuego(new OvO()); }
 
     /**
      * El método obtiene el modo en el que el usuario está jugando
@@ -57,5 +51,4 @@ public class Juego  {
     public void inicializarTablero() {
         Tablero.getmTablero().inicializarTablero();
     }
-
 }

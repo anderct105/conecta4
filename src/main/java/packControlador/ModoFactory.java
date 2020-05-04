@@ -31,5 +31,4 @@ public class ModoFactory {
         else if ("Ordenador modo Facil".equals(pModo)) return new OrdenadorF();
         return new OvO();
     }
-
 }

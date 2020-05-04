@@ -3,7 +3,6 @@ package packModelo;
 import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import packVista.IU_Tablero;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,11 +24,7 @@ public class Tablero extends Observable {
      */
     private Boolean[][] matriz;
 
-    private IU_Tablero interfaz;
-
-    private Tablero() {
-
-    }
+    private Tablero() {}
 
     public static Tablero getmTablero() {
         if (mTablero == null) {
@@ -122,7 +117,7 @@ public class Tablero extends Observable {
      */
     public JSONArray haGanado(int pFila, int pColumna, boolean pColor) {
         int colindantes = getColindantes(pFila, pColumna, pColor);
-        JSONArray json = new JSONArray();
+        JSONArray json;
         if (colindantes == 3) {
             json = getCoordenadasGanadoras(pFila, pColumna, pColor);
         } else {
@@ -313,7 +308,6 @@ public class Tablero extends Observable {
                     }
                 }
             }
-
         }
         return optimo;
     }
@@ -330,7 +324,7 @@ public class Tablero extends Observable {
     public JSONArray getCoordenadasGanadoras(int pFila, int pColumna, boolean pColor) {
         Collection<int[]> combinaciones = getPosiblesCombinaciones();
         JSONArray j = new JSONArray();
-        ArrayList<int[]> coordenadas = new ArrayList<int[]>(), coordenadas_inversas = new ArrayList<int[]>();
+        ArrayList<int[]> coordenadas = new ArrayList<>(), coordenadas_inversas = new ArrayList<int[]>();
         boolean obtenidas = false;
         for (int[] c : combinaciones) {
             coordenadas = listaSeguidas(pFila, pColumna, 0, new ArrayList<int[]>(), c, pColor);
@@ -389,7 +383,7 @@ public class Tablero extends Observable {
      * @author Ander Cejudo
      */
     public Collection<int[]> getPosiblesCombinaciones() {
-        ArrayList<int[]> combinaciones = new ArrayList<int[]>();
+        ArrayList<int[]> combinaciones = new ArrayList<>();
         int[] i1 = {1, 0};
         int[] i2 = {0, 1};
         int[] i3 = {1, 1};
