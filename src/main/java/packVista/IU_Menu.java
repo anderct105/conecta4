@@ -222,6 +222,7 @@ public class IU_Menu extends Stage implements Observer {
             @Override
             public void handle(ActionEvent event) {
                 cambiarAConfiguracion();
+
             }
         });
         rt.play();
@@ -298,7 +299,9 @@ public class IU_Menu extends Stage implements Observer {
         ft.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                play.setDisable(true);
                 cambiarATablero();
+
             }
         });
         ft.play();
