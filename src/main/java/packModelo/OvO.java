@@ -48,11 +48,10 @@ public class OvO extends Modo {
         }
     }
 
-    /*Cambia el turno al contrario
+    /**Cambia el turno al contrario
      * @author Nuria Lebeña
      */
     public void cambiarTurno() {
         turno = !turno;
     }
-
 }

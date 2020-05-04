@@ -42,8 +42,6 @@ public class IU_Menu extends Stage implements Observer {
     @FXML
     private ImageView config;
     @FXML
-    private AnchorPane botones;
-    @FXML
     private ImageView play;
     @FXML
     private ImageView title;
@@ -148,8 +146,6 @@ public class IU_Menu extends Stage implements Observer {
         sc.setAutoReverse(true);
         sc.setCycleCount(Animation.INDEFINITE);
         sc.play();
-
-
     }
 
 
@@ -181,7 +177,6 @@ public class IU_Menu extends Stage implements Observer {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //entryAnimation.setVisible(false);
             }
         };
 
@@ -222,12 +217,9 @@ public class IU_Menu extends Stage implements Observer {
             @Override
             public void handle(ActionEvent event) {
                 cambiarAConfiguracion();
-
             }
         });
         rt.play();
-
-
     }
 
     private void cambiarAConfiguracion() {
@@ -305,7 +297,6 @@ public class IU_Menu extends Stage implements Observer {
             }
         });
         ft.play();
-
     }
 
     public void cambiarATablero() {
@@ -313,11 +304,9 @@ public class IU_Menu extends Stage implements Observer {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Tablero.fxml"));
             ColorAdjust c = new ColorAdjust();
             c.setBrightness(1);
-            //root.setEffect(c);
             FadeTransition ft = new FadeTransition(Duration.millis(2500), root);
             ft.setFromValue(0);
             ft.setToValue(1.0);
-            //ft.play();
             root.setOpacity(0);
             pane.getScene().setRoot(root);
             Timeline t = new Timeline();

@@ -40,7 +40,6 @@ public class IU_Configuracion {
         modoLabel.setText((String)frases.get("modo_juego"));
     }
 
-
     @FXML
     public void initialize(){
         idioma();
@@ -73,6 +72,4 @@ public class IU_Configuracion {
         Stage stage = (Stage) cerrar.getScene().getWindow();
         stage.close();
     }
-
-
 }

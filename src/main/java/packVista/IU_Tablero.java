@@ -57,18 +57,11 @@ public class IU_Tablero implements Observer {
     @FXML
     private Label NombreTurno;
     @FXML
-    private GridPane PaneTemporizador;
-    @FXML
     private TextField TimeHours;
     @FXML
     private TextField TimeMinutes;
     @FXML
     private TextField TimeSeconds;
-
-    @FXML
-    private Circle fichaRoja;
-    @FXML
-    private Circle fichaAzul;
 
     @FXML
     private AnchorPane PaneTurno;
@@ -114,7 +107,6 @@ public class IU_Tablero implements Observer {
 
         @Override
         public void handle(ActionEvent event) {
-            // int secs=Integer.parseInt(TimeSeconds.getText());
             secs = secs + 1;
             if (secs < 10) {
                 TimeSeconds.setText("0" + (secs));
@@ -220,7 +212,6 @@ public class IU_Tablero implements Observer {
         Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
         musicaFondo = new MediaPlayer(sound);
         musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
-
         if (random == cancionAct) {
             musicaFondoOn();
         } else {
@@ -228,7 +219,6 @@ public class IU_Tablero implements Observer {
             musicaFondo.play();
             cancionAct = random;
         }
-
     }
 
     private void musicaFondoOff() {
@@ -366,7 +356,6 @@ public class IU_Tablero implements Observer {
                 }
             }
         });
-
     }
 
     @FXML
@@ -423,7 +412,7 @@ public class IU_Tablero implements Observer {
         }
     }
 
-    private JSONObject jugar(int pColumna, boolean turno) {
+    private JSONObject jugar(int pColumna) {
         JSONObject json = Conecta4.getmConecta4().jugarPartida(pColumna);
         if (json == null) {
             oscurecerFondo(pColumna);
@@ -452,7 +441,6 @@ public class IU_Tablero implements Observer {
 
     private String obtenerModoJuego() {
         return Conecta4.getmConecta4().getModoJuego();
-        // return "modo Vs ordenador";
     }
 
     public ArrayList<Integer> ordenarFichas(HashMap<Integer, JSONObject> fichas) {
@@ -487,8 +475,6 @@ public class IU_Tablero implements Observer {
     private void marcarGanadorasJugador() {
         if (ganadoras.get("posicionesGanadoras") != null) {
             finJugador = true;
-            boolean ganadoA = (boolean) ganadoras.get("haGanadoA");
-            boolean ganadoB = (boolean) ganadoras.get("haGanadoB");
             HashMap<Integer, JSONObject> fichas = new HashMap<>();
             ArrayList<Integer> empleados = ordenarFichas(fichas);
             for (int i = 0; i < 4; i++) {
@@ -765,21 +751,21 @@ public class IU_Tablero implements Observer {
             timelineB.setOnFinished(event -> timelineC.play());
             if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
                 timelineC.setOnFinished(event -> {
-                    gestionarAnimacion(a, pColumna);
+                    gestionarAnimacion(a);
                     marcarGanadorasJugador();
                     ponerSeleccionColumna(this.columnaJugador);
                 });
             } else {
                 timelineC.setOnFinished(event -> {
                     if (!fin) {
-                        gestionarAnimacion(a, pColumna);
+                        gestionarAnimacion(a);
                         ponerSeleccionColumna(this.columnaJugador);
                     } else if ((Boolean) ganadoras.get("haGanadoA")) {
                         marcarGanadorasOrdenador();
                     } else if ((Boolean) ganadoras.get("haGanadoB")) {
                         transfomacionColor = true;
                         ganadoras.put("haGanadoA", true);
-                        gestionarAnimacion(a, pColumna);
+                        gestionarAnimacion(a);
                     }
                 });
             }
@@ -796,7 +782,7 @@ public class IU_Tablero implements Observer {
         timelineB.play();
     }
 
-    private void gestionarAnimacion(Circle a, int columna) {
+    private void gestionarAnimacion(Circle a) {
         pane.getChildren().remove(a);
         if (!obtenerModoJuego().equals("1vs1")) {
             if (!contGestion) {
@@ -845,9 +831,7 @@ public class IU_Tablero implements Observer {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
-                    //int columna = GridPane.getColumnIndex(item);
-                    //LO COMENTO PARA QUE NO DE EXCEPCIÓN EN LOS BORDES
-                    JSONObject json = jugar(columnaJugador, turno);
+                    JSONObject json = jugar(columnaJugador);
                     JSONArray ja = null;
                     if (json != null) {
                         ja = (JSONArray) json.get("posicionesGanadoras");

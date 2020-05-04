@@ -60,5 +60,4 @@ public class OrdenadorD extends Modo {
         }
         return res;
     }
-
 }

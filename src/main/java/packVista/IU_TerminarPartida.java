@@ -45,10 +45,6 @@ public class IU_TerminarPartida {
     }
 
     @FXML
-    public void initialize() {
-    }
-
-    @FXML
     public void guardar() {
         ColorAdjust ca = new ColorAdjust();
         ca.setBrightness(-0.5);
@@ -57,7 +53,7 @@ public class IU_TerminarPartida {
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrarPartida.fxml"));
         try {
-            primaryStage.setScene(new Scene((Parent) loader.load(), 520, 300));
+            primaryStage.setScene(new Scene(loader.load(), 520, 300));
         } catch (IOException e) {
             e.printStackTrace();
         }
