@@ -34,6 +34,7 @@ import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
+import packMain.Main;
 import packModelo.Tablero;
 
 import java.io.File;
@@ -86,7 +87,6 @@ public class IU_Tablero implements Observer {
 
     //para indicar sonido ON/OFF
     private boolean sonidoBool = true;
-
 
     //Para marcar las fichas ganadoras
     private Circle[][] tablero;
@@ -166,7 +166,6 @@ public class IU_Tablero implements Observer {
         setModoJuego();
         listenerTerminarPartida();
         listenerTablero();
-        volumen.setValue(100);
         listenerVolumen();
         listenerSonido();
         listenerSigCancion();
@@ -174,6 +173,7 @@ public class IU_Tablero implements Observer {
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
         idioma();
+        volumen.setValue(Main.volumen);
         musicaFondoOn();
     }
 
@@ -182,6 +182,7 @@ public class IU_Tablero implements Observer {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
                 musicaFondo.setVolume(new_val.doubleValue() / 100);
+                Main.volumen = new_val.doubleValue();
             }
         });
     }
