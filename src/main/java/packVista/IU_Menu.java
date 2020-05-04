@@ -209,6 +209,8 @@ public class IU_Menu extends Stage implements Observer {
 
     @FXML
     public void config() {
+        play.setDisable(true);
+        config.setDisable(true);
         RotateTransition rt = new RotateTransition(Duration.millis(1000), config);
         rt.setByAngle(180);
         rt.setCycleCount(1);
@@ -216,6 +218,8 @@ public class IU_Menu extends Stage implements Observer {
         rt.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                play.setDisable(false);
+                config.setDisable(false);
                 cambiarAConfiguracion();
             }
         });
@@ -288,10 +292,11 @@ public class IU_Menu extends Stage implements Observer {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), pane);
         ft.setFromValue(1.0);
         ft.setToValue(0);
+        play.setDisable(true);
+        config.setDisable(true);
         ft.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                play.setDisable(true);
                 cambiarATablero();
 
             }
