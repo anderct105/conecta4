@@ -39,6 +39,7 @@ import packModelo.Tablero;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -173,18 +174,24 @@ public class IU_Tablero implements Observer {
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
         idioma();
+        volumen = new Slider(0,100,100);
         volumen.setValue(Main.volumen);
         musicaFondoOn();
     }
 
     private void listenerVolumen() {
-        volumen.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                musicaFondo.setVolume(new_val.doubleValue() / 100);
-                Main.volumen = new_val.doubleValue();
-            }
-        });
+        try{
+            volumen.valueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                                    Number old_val, Number new_val) {
+                    musicaFondo.setVolume(new_val.doubleValue() / 100);
+                    Main.volumen = new_val.doubleValue();
+                }
+            });
+        } catch (NullPointerException e){
+
+        }
+
     }
 
     private void listenerSonido() {
@@ -217,7 +224,12 @@ public class IU_Tablero implements Observer {
 
     private void musicaFondoOn() {
         int random = ThreadLocalRandom.current().nextInt(1, 9);
-        Media sound = new Media(new File("src/main/resources/musica/background" + random + ".mp3").toURI().toString());
+        Media sound = null;
+        try {
+            sound = new Media(getClass().getClassLoader().getResource("musica/background" + random + ".mp3").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         musicaFondo = new MediaPlayer(sound);
         musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
 
@@ -788,7 +800,8 @@ public class IU_Tablero implements Observer {
     }
 
     private void sonido(Timeline timelineB) {
-        Media sound = new Media(new File("src/main/resources/musica/clack.mp3").toURI().toString());
+        Media sound = new Media(getClass().getClassLoader().getResource("musica/clack.mp3").toExternalForm());
+
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         if (sonidoBool) {
             mediaPlayer.play();
