@@ -14,7 +14,7 @@ public class Main extends Application {
 
     public static boolean animacionInicio = true;
 
-    public static double volumen = 100;
+    public static double volumen = 66;
 
     public static void main(String[] args) {
         launch(args);

@@ -37,9 +37,11 @@ import packControlador.Conecta4;
 import packMain.Main;
 import packModelo.Tablero;
 
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -98,8 +100,10 @@ public class IU_Tablero implements Observer {
     //para que no queden animaciones de columnas pendiente
     private boolean colAnimTerminado;
 
-    //Para indicar la canción actual
+    //Para indicar la canción actual y las dos anteriores
     private int cancionAct = -1;
+    private int cancionPrev = -1;
+    private int cancionPrevPrev = -1;
 
     private int secs = 0;
     private int mins = 0;
@@ -140,7 +144,7 @@ public class IU_Tablero implements Observer {
     private int columnaSav;
     private boolean turnoSav;
     private boolean contGestion = true;
-    private MediaPlayer musicaFondo;
+    private Clip musicaFondo;
     //esto sirve para dejar marcada la columna que usó el jugador tras la animación de la ficha
     private int columnaJugador;
 
@@ -166,24 +170,25 @@ public class IU_Tablero implements Observer {
         Tablero.getmTablero().addObserver(this);
         colAnimTerminado = true;
         idioma();
-        volumen = new Slider(0,100,100);
+        volumen.setMin(0);
+        volumen.setMax(100);
         volumen.setValue(Main.volumen);
         musicaFondoOn();
     }
 
     private void listenerVolumen() {
-        try{
-            volumen.valueProperty().addListener(new ChangeListener<Number>() {
-                public void changed(ObservableValue<? extends Number> ov,
-                                    Number old_val, Number new_val) {
-                    musicaFondo.setVolume(new_val.doubleValue() / 100);
-                    Main.volumen = new_val.doubleValue();
+        volumen.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                try{
+                    FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
+                    volume.setValue((float)(-80.0 + (new_val.floatValue() * 86.0206)/100));
+                    Main.volumen = new_val.floatValue();
+                }catch (NullPointerException e){
+
                 }
-            });
-        } catch (NullPointerException e){
-
-        }
-
+            }
+        });
     }
 
     private void listenerSonido() {
@@ -216,7 +221,31 @@ public class IU_Tablero implements Observer {
 
     private void musicaFondoOn() {
         int random = ThreadLocalRandom.current().nextInt(1, 9);
-        Media sound = null;
+        try{
+            if (random == cancionAct || random == cancionPrev || random == cancionPrevPrev) {
+                musicaFondoOn();
+            } else {
+                URL url = this.getClass().getResource("/musica/background" + random + ".wav");
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+                musicaFondo = AudioSystem.getClip();
+                musicaFondo.open(audioIn);
+                FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
+                volume.setValue((float)(-80.0 + (Main.volumen * 86.0206)/100));
+                musicaFondo.start();
+                cancionPrevPrev = cancionPrev;
+                cancionPrev = cancionAct;
+                cancionAct = random;
+            }
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+
+        /*Media sound = null;
         try {
             sound = new Media(getClass().getClassLoader().getResource("musica/background" + random + ".mp3").toExternalForm());
         } catch (Exception e) {
@@ -230,7 +259,7 @@ public class IU_Tablero implements Observer {
             musicaFondo.setVolume(volumen.getValue() / 100);
             musicaFondo.play();
             cancionAct = random;
-        }
+        }*/
     }
 
     private void musicaFondoOff() {
@@ -786,11 +815,26 @@ public class IU_Tablero implements Observer {
     }
 
     private void sonido(Timeline timelineB) {
-        Media sound = new Media(getClass().getClassLoader().getResource("musica/clack.mp3").toExternalForm());
+        /*Media sound = new Media(getClass().getClassLoader().getResource("musica/clack.mp3").toExternalForm());
 
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         if (sonidoBool) {
             mediaPlayer.play();
+        }*/
+        try {
+            if(sonidoBool){
+                URL url = this.getClass().getResource("/musica/clack.wav");
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+                Clip clack = AudioSystem.getClip();
+                clack.open(audioIn);
+                clack.start();
+            }
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
         }
         timelineB.play();
     }
