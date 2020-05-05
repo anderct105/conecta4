@@ -828,7 +828,7 @@ public class IU_Tablero implements Observer {
                 Clip clack = AudioSystem.getClip();
                 clack.open(audioIn);
                 FloatControl volume = (FloatControl) clack.getControl(FloatControl.Type.MASTER_GAIN);
-                volume.setValue((float)(-10.0));
+                volume.setValue((float)(-30.0));
                 clack.start();
             }
         } catch (UnsupportedAudioFileException e) {
