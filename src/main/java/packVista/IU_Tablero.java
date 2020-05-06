@@ -211,7 +211,8 @@ public class IU_Tablero implements Observer {
             if (random == cancionAct || random == cancionPrev || random == cancionPrevPrev) {
                 musicaFondoOn();
             } else {
-                URL url = this.getClass().getResource("/musica/background" + random + ".wav");
+                //URL url = this.getClass().getResource("/musica/background" + random + ".wav");
+                URL url = this.getClass().getResource("/musica/background4.wav");
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
                 musicaFondo = AudioSystem.getClip();
                 LineListener listener = new LineListener() {
@@ -233,10 +234,6 @@ public class IU_Tablero implements Observer {
 
             }
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }catch (IllegalArgumentException e){
             //NO HACER NADA
