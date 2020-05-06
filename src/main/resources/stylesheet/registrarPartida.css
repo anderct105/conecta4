@@ -1,0 +1,50 @@
+.root {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+
+.pane {
+    -fx-background-color: rgba(27, 27, 27, 0.7);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2pt;
+}
+
+.guardar {
+    -fx-border-radius: 2pt;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.guardar:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}
+
+.volverInicio {
+    -fx-border-radius: 2pt;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.volverInicio:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}
+
+.nombre, .puntuacion {
+    -fx-text-fill: #000000;
+    -fx-border-color: #0c8777;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2pt;
+}
+
+.nombreU, .puntuacionU {
+    -fx-text-fill: #000000;
+    -fx-border-color: #38c7a1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2pt;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
