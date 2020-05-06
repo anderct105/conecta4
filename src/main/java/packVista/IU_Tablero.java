@@ -148,6 +148,8 @@ public class IU_Tablero implements Observer {
     //esto sirve para dejar marcada la columna que usó el jugador tras la animación de la ficha
     private int columnaJugador;
 
+    private boolean terminarPulsado = false;
+
     public void idioma() {
         JSONObject frases = GestorIdiomas.getmGestorIdiomas().getIdiomaActual();
         BTerminarPartida.setText((String) frases.get("terminar"));
@@ -228,6 +230,15 @@ public class IU_Tablero implements Observer {
                 URL url = this.getClass().getResource("/musica/background" + random + ".wav");
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
                 musicaFondo = AudioSystem.getClip();
+                LineListener listener = new LineListener() {
+                    public void update(LineEvent event) {
+                        if (event.getType() == LineEvent.Type.STOP && terminarPulsado == false) {
+                            musicaFondoOff();
+                            musicaFondoOn();
+                        }
+                    }
+                };
+                musicaFondo.addLineListener(listener);
                 musicaFondo.open(audioIn);
                 FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
                 volume.setValue((float)(-80.0 + (Main.volumen * 86.0206)/100));
@@ -235,6 +246,7 @@ public class IU_Tablero implements Observer {
                 cancionPrevPrev = cancionPrev;
                 cancionPrev = cancionAct;
                 cancionAct = random;
+
             }
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
@@ -242,6 +254,8 @@ public class IU_Tablero implements Observer {
             e.printStackTrace();
         } catch (LineUnavailableException e) {
             e.printStackTrace();
+        }catch (IllegalArgumentException e){
+            //NO HACER NADA
         }
 
 
@@ -466,6 +480,7 @@ public class IU_Tablero implements Observer {
         BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                terminarPulsado = true;
                 musicaFondoOff();
                 fadeAMenu();
             }
