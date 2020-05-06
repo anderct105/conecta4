@@ -4,8 +4,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,11 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -38,9 +33,7 @@ import packMain.Main;
 import packModelo.Tablero;
 
 import javax.sound.sampled.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -177,44 +170,35 @@ public class IU_Tablero implements Observer {
     }
 
     private void listenerVolumen() {
-        volumen.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                try{
-                    FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
-                    volume.setValue((float)(-80.0 + (new_val.floatValue() * 86.0206)/100));
-                    Main.volumen = new_val.floatValue();
-                }catch (NullPointerException e){
+        volumen.valueProperty().addListener((ov, old_val, new_val) -> {
+            try{
+                FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
+                volume.setValue((float)(-80.0 + (new_val.floatValue() * 86.0206)/100));
+                Main.volumen = new_val.floatValue();
+            }catch (NullPointerException ignored){
 
-                }
             }
         });
     }
 
     private void listenerSonido() {
-        sonido.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (sonido.getText().equals("ON")) {
-                    sonidoBool = false;
-                    sonido.setText("OFF");
-                    sonido.setStyle("-fx-background-color: red; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
-                } else {
-                    sonidoBool = true;
-                    sonido.setText("ON");
-                    sonido.setStyle("-fx-background-color: lime; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
-                }
+        sonido.setOnAction(event -> {
+            if (sonido.getText().equals("ON")) {
+                sonidoBool = false;
+                sonido.setText("OFF");
+                sonido.setStyle("-fx-background-color: red; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
+            } else {
+                sonidoBool = true;
+                sonido.setText("ON");
+                sonido.setStyle("-fx-background-color: lime; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 4; -fx-background-radius: 12; -fx-background-insets: 1");
             }
         });
     }
 
     private void listenerSigCancion() {
-        SigCancion.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                musicaFondoOff();
-                musicaFondoOn();
-            }
+        SigCancion.setOnAction(event -> {
+            musicaFondoOff();
+            musicaFondoOn();
         });
     }
 
@@ -236,11 +220,7 @@ public class IU_Tablero implements Observer {
                 cancionPrev = cancionAct;
                 cancionAct = random;
             }
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
 
@@ -332,9 +312,7 @@ public class IU_Tablero implements Observer {
         double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
         primaryStage.setX(centerXPosition - 291 / 2);
         primaryStage.setY(centerYPosition - 100 / 2);
-        primaryStage.setOnShown(ev -> {
-            fiveSecondsWonder.stop();
-        });
+        primaryStage.setOnShown(ev -> fiveSecondsWonder.stop());
         panelTablero.getScene().getRoot().setDisable(true);
         primaryStage.show();
         //CUANDO SE OCULTE SE QUITARÁ EL EFECTO OSCURO
@@ -375,9 +353,9 @@ public class IU_Tablero implements Observer {
     }
 
     public int columna(Node c) {
-        for (int i = 0; i < tablero.length; i++) {
+        for (Circle[] circles : tablero) {
             for (int j = 0; j < tablero[0].length; j++) {
-                if (tablero[i][j] == c) {
+                if (circles[j] == c) {
                     return j;
                 }
             }
@@ -387,14 +365,11 @@ public class IU_Tablero implements Observer {
 
 
     public void listenerSeleccionCol(Node item) {
-        item.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                int columna = columna(item);
-                if (columna != -1 && !fin) {
-                    ponerSeleccionColumna(columna);
-                    columnaJugador = columna;
-                }
+        item.setOnMouseEntered(event -> {
+            int columna = columna(item);
+            if (columna != -1 && !fin) {
+                ponerSeleccionColumna(columna);
+                columnaJugador = columna;
             }
         });
     }
@@ -407,9 +382,9 @@ public class IU_Tablero implements Observer {
 
 
     public void quitarSeleccionColumna() {
-        for (int i = 0; i < tablero.length; i++) {
+        for (Circle[] circles : tablero) {
             for (int j = 0; j < tablero[0].length; j++) {
-                Circle c = tablero[i][j];
+                Circle c = circles[j];
                 if (!fin) {
                     c.setStrokeWidth(0);
                 }
@@ -434,7 +409,6 @@ public class IU_Tablero implements Observer {
                     tl.getKeyFrames().addAll(kf);
                     tm[i] = tl;
                 }
-                int actual = columna;
                 for (int i = tm.length - 1; i > 0; i--) {
                     Timeline t = tm[i - 1];
                     tm[i].setOnFinished(event -> t.play());
@@ -443,7 +417,7 @@ public class IU_Tablero implements Observer {
                     colAnimTerminado = true;
                     if (columnaJugador == -1) {
                         quitarSeleccionColumna();
-                    } else if (actual != columnaJugador) {
+                    } else if (columna != columnaJugador) {
                         ponerSeleccionColumna(columnaJugador);
                     }
                 });
@@ -463,12 +437,9 @@ public class IU_Tablero implements Observer {
     }
 
     private void listenerTerminarPartida() {
-        BTerminarPartida.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                musicaFondoOff();
-                fadeAMenu();
-            }
+        BTerminarPartida.setOnAction(e -> {
+            musicaFondoOff();
+            fadeAMenu();
         });
     }
 
@@ -497,9 +468,8 @@ public class IU_Tablero implements Observer {
         if (x + y == xB + yB) {
             igual = true;
         }
-
-        for (int i = 0; i < ja.size(); i++) {
-            objeto = (JSONObject) ja.get(i);
+        for (Object o : ja) {
+            objeto = (JSONObject) o;
             x = (Integer) objeto.get("x");
             y = (Integer) objeto.get("y");
             if (!igual) {
@@ -525,7 +495,7 @@ public class IU_Tablero implements Observer {
                 Circle ficha = tablero[5 - xF][yF];
                 if (!turno) {
                     asignarGradiente(false, ficha);
-                } else if (turno) {
+                } else {
                     asignarGradiente(true, ficha);
                 }
             }
@@ -604,27 +574,13 @@ public class IU_Tablero implements Observer {
         });
         quitarSeleccionColumna();
         timeline11.play();
-        timeline1.setOnFinished(event -> {
-            timeline21.play();
-        });
-        timeline21.setOnFinished(event -> {
-            timeline2.play();
-        });
-        timeline2.setOnFinished(event -> {
-            timeline31.play();
-        });
-        timeline31.setOnFinished(event -> {
-            timeline3.play();
-        });
-        timeline3.setOnFinished(event -> {
-            timeline41.play();
-        });
-        timeline41.setOnFinished(event -> {
-            timeline4.play();
-        });
-        timeline4.setOnFinished(event -> {
-            terminarPartida();
-        });
+        timeline1.setOnFinished(event -> timeline21.play());
+        timeline21.setOnFinished(event -> timeline2.play());
+        timeline2.setOnFinished(event -> timeline31.play());
+        timeline31.setOnFinished(event -> timeline3.play());
+        timeline3.setOnFinished(event -> timeline41.play());
+        timeline41.setOnFinished(event -> timeline4.play());
+        timeline4.setOnFinished(event -> terminarPartida());
     }
 
     private void marcarGanadorasOrdenador() {
@@ -661,12 +617,11 @@ public class IU_Tablero implements Observer {
         if (!azul) {
             stops = new Stop[]{new Stop(0, Color.rgb(255, 0, 77)), new Stop(1, Color.RED)};
             borde = new Stop[]{new Stop(0, Color.rgb(252, 234, 187)), new Stop(1, Color.rgb(248, 181, 0))};
-            lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
         } else {
             stops = new Stop[]{new Stop(0, Color.rgb(96, 192, 228)), new Stop(1, Color.rgb(53, 63, 196))};
             borde = new Stop[]{new Stop(0, Color.rgb(255, 255, 255)), new Stop(1, Color.rgb(192, 192, 192))};
-            lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
         }
+        lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, borde);
         c.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops));
         c.setStrokeWidth(2.5);
         c.setStroke(lg1);
@@ -684,7 +639,7 @@ public class IU_Tablero implements Observer {
             //DEL LOADER SE COGE EL ROOT Y SE LE PONE A LA ESCENA
             primaryStage.setScene(new Scene((Parent) root_controller.load()));
             //DEL LOADER SE COGE EL CONTROLADOR -> TENEMOS LA INSTANCIA CONTROLADOR DE LA INTERFAZ
-            IU_TerminarPartida iu = root_controller.<IU_TerminarPartida>getController();
+            IU_TerminarPartida iu = root_controller.getController();
             //PASAMOS LOS PARÁMETROS, EN ESTE MÉTODO SE ACTUALIZAN LOS VALORES
 
             // puntuacion y quien ha ganado
@@ -831,11 +786,7 @@ public class IU_Tablero implements Observer {
                 volume.setValue((float)(-30.0));
                 clack.start();
             }
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
         timelineB.play();
@@ -886,23 +837,20 @@ public class IU_Tablero implements Observer {
     }
 
     public void listenerFicha(Node ficha) {
-        ficha.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
-                    JSONObject json = jugar(columnaJugador);
-                    JSONArray ja = null;
-                    if (json != null) {
-                        ja = (JSONArray) json.get("posicionesGanadoras");
-                    }
-                    if (ja != null) {
-                        fin = true;
-                        fiveSecondsWonder.stop();
-                        ganadoras = json;
-                    }
-                    if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
-                        ganadoras = json;
-                    }
+        ficha.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1 && !bloqueo && colAnimTerminado && !finJugador) {
+                JSONObject json = jugar(columnaJugador);
+                JSONArray ja = null;
+                if (json != null) {
+                    ja = (JSONArray) json.get("posicionesGanadoras");
+                }
+                if (ja != null) {
+                    fin = true;
+                    fiveSecondsWonder.stop();
+                    ganadoras = json;
+                }
+                if (Conecta4.getmConecta4().getModoJuego().equals("1vs1")) {
+                    ganadoras = json;
                 }
             }
         });
@@ -970,12 +918,7 @@ public class IU_Tablero implements Observer {
         Timeline t = new Timeline();
         KeyFrame kf = new KeyFrame(Duration.millis(1000), new KeyValue(pane.getScene().getRoot().opacityProperty(), 0, Interpolator.EASE_IN));
         t.getKeyFrames().add(kf);
-        t.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                cambiarAMenuAux();
-            }
-        });
+        t.setOnFinished(event -> cambiarAMenuAux());
         t.play();
     }
 

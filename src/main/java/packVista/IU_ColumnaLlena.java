@@ -7,20 +7,19 @@ import javafx.stage.Stage;
 
 public class IU_ColumnaLlena {
 
-    @FXML
-    private Button aceptar;
-    @FXML
-    private Label mensaje;
+	@FXML
+	private Button aceptar;
+	@FXML
+	private Label mensaje;
 
-    @FXML
-    public void initialize() {
-        mensaje.setText("Esta columna está llena. Elige otra.");
-    }
+	@FXML
+	public void initialize() {
+		mensaje.setText("Esta columna está llena. Elige otra.");
+	}
 
-    @FXML
-    public void cerrar(){
-        Stage stage = (Stage) aceptar.getScene().getWindow();
-        stage.close();
-    }
-
+	@FXML
+	public void cerrar() {
+		Stage stage = (Stage) aceptar.getScene().getWindow();
+		stage.close();
+	}
 }

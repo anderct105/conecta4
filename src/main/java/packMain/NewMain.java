@@ -1,5 +1,4 @@
 package packMain;
-
 //EL COMPILADOR NECESITA UNA CLASE MAIN QUE NO EXTIENDA DE NINGUNA OTRA
 //POR ESO SE HA CREADO ESTA CLASE QUE LLAMA AL MAIN DE VERDAD
 //LA CREACIÓN DEL JAR SE HA PROBADO CON JAVA 11
@@ -17,7 +16,7 @@ package packMain;
 
 public class NewMain {
 
-    public static void main(String[] args) {
-        Main.main(args);
-    }
+	public static void main(String[] args) {
+		Main.main(args);
+	}
 }

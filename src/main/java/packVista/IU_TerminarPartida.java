@@ -1,9 +1,7 @@
 package packVista;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import org.json.simple.JSONObject;
 import packControlador.Conecta4;
 
@@ -57,7 +54,7 @@ public class IU_TerminarPartida {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        IU_RegistrarPartida iu = loader.<IU_RegistrarPartida>getController();
+        IU_RegistrarPartida iu = loader.getController();
         iu.setPuntuacionU(tiempo);
         iu.setIu_terminarPartida(this);
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -68,15 +65,12 @@ public class IU_TerminarPartida {
         double centerYPosition = sAct.getY() + sAct.getHeight() / 2;
         primaryStage.setX(centerXPosition - 520 / 2);
         primaryStage.setY(centerYPosition - 300 / 2);
-        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                ColorAdjust ca1 = new ColorAdjust();
-                ca1.setBrightness(0);
-                guardar.getScene().getRoot().setEffect(ca1);
-                if (cerrarTodo) {
-                    cerrar();
-                }
+        primaryStage.setOnHiding(event -> {
+            ColorAdjust ca1 = new ColorAdjust();
+            ca1.setBrightness(0);
+            guardar.getScene().getRoot().setEffect(ca1);
+            if (cerrarTodo) {
+                cerrar();
             }
         });
         primaryStage.show();
@@ -109,7 +103,7 @@ public class IU_TerminarPartida {
 
     public void ponerImagen() {
         Image image;
-        if(idioma=="castellano") {
+        if(idioma.equals("castellano")) {
 
             switch (resultado) {
 
