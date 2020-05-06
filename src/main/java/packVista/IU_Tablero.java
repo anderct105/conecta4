@@ -211,13 +211,12 @@ public class IU_Tablero implements Observer {
             if (random == cancionAct || random == cancionPrev || random == cancionPrevPrev) {
                 musicaFondoOn();
             } else {
-                //URL url = this.getClass().getResource("/musica/background" + random + ".wav");
-                URL url = this.getClass().getResource("/musica/background4.wav");
+                URL url = this.getClass().getResource("/musica/background" + random + ".wav");
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
                 musicaFondo = AudioSystem.getClip();
                 LineListener listener = new LineListener() {
                     public void update(LineEvent event) {
-                        if (event.getType() == LineEvent.Type.STOP && terminarPulsado == false) {
+                        if (event.getType() == LineEvent.Type.STOP && !terminarPulsado && ganadoras == null) {
                             musicaFondoOff();
                             musicaFondoOn();
                         }
@@ -231,30 +230,12 @@ public class IU_Tablero implements Observer {
                 cancionPrevPrev = cancionPrev;
                 cancionPrev = cancionAct;
                 cancionAct = random;
-
             }
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }catch (IllegalArgumentException e){
             //NO HACER NADA
         }
-
-
-        /*Media sound = null;
-        try {
-            sound = new Media(getClass().getClassLoader().getResource("musica/background" + random + ".mp3").toExternalForm());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        musicaFondo = new MediaPlayer(sound);
-        musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
-        if (random == cancionAct) {
-            musicaFondoOn();
-        } else {
-            musicaFondo.setVolume(volumen.getValue() / 100);
-            musicaFondo.play();
-            cancionAct = random;
-        }*/
     }
 
     private void musicaFondoOff() {
