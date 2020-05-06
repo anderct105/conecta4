@@ -12,44 +12,26 @@ import packVista.GestorIdiomas;
 
 public class Main extends Application {
 
-    public static boolean animacionInicio = true;
+	public static boolean animacionInicio = true;
 
-    public static double volumen = 75;
+	public static double volumen = 75;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        GestorIdiomas.getmGestorIdiomas().setIdioma(0);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root,1100,600));
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((screenBounds.getWidth() - 1100) / 2);
-        primaryStage.setY((screenBounds.getHeight() - 600) / 2);
-        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/imagenes/Conecta4_Icono4.png")));
-        primaryStage.setOnHiding(event -> System.exit(0));
-        primaryStage.show();
-        /*
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/Ayuda.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene s = new Scene(root, 565, 323);
-        primaryStage.setScene(s);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        s.setFill(Color.TRANSPARENT);
-        primaryStage.setScene(s);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.show();*/
-    }
-
-
-
-
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		GestorIdiomas.getmGestorIdiomas().setIdioma(0);
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+		primaryStage.setTitle("Conecta 4");
+		primaryStage.setResizable(false);
+		primaryStage.setScene(new Scene(root, 1100, 600));
+		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+		primaryStage.setX((screenBounds.getWidth() - 1100) / 2);
+		primaryStage.setY((screenBounds.getHeight() - 600) / 2);
+		primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/imagenes/Conecta4_Icono4.png")));
+		primaryStage.setOnHiding(event -> System.exit(0));
+		primaryStage.show();
+	}
 }

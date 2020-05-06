@@ -4,18 +4,17 @@ import java.sql.*;
 
 public class ConnectionManager {
 
-	private static String bd="conecta4";
-	private static String driverName = "jdbc:mysql";
-	private static String username="adminConecta4";
-	private static String password="adminConecta4";
-	private static String server = "localhost";
-	private static String port = "3306";
+	private static final String bd = "conecta4";
+	private static final String driverName = "jdbc:mysql";
+	private static final String username = "adminConecta4";
+	private static final String password = "adminConecta4";
+	private static final String server = "localhost";
+	private static final String port = "3306";
 	private Connection connection;
 
 	public ConnectionManager() {
 		try {
-			Connection conexion = DriverManager.getConnection(driverName + "://" + server + ":" + port + "/ " + bd+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",username,password);
-			this.connection = conexion;
+			this.connection = DriverManager.getConnection(driverName + "://" + server + ":" + port + "/ " + bd + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, password);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -27,8 +26,7 @@ public class ConnectionManager {
 			Statement query = connection.createStatement();
 			if (sql.toLowerCase().contains("select")) {
 				res = query.executeQuery(sql);
-			}
-			else {
+			} else {
 				query.executeUpdate(sql);
 			}
 		} catch (SQLException | NullPointerException e) {
