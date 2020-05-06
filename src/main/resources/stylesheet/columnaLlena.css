@@ -1,0 +1,21 @@
+.root {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.pane {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.aceptar {
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.aceptar:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}

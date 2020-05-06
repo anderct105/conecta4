@@ -1,0 +1,33 @@
+.root {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.pane {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.instrucciones {
+    -fx-background-color: rgba(0, 0, 0, 0.67);
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+.volver {
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.volver:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}
+
+.ins, .instrucciones {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
