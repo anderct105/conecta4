@@ -202,58 +202,40 @@ public class IU_Tablero implements Observer {
 			musicaFondoOn();
 		});
 	}
+	
 
-
-	private void musicaFondoOn() {
-		int random = ThreadLocalRandom.current().nextInt(1, 9);
-		try {
-			if (random == cancionAct || random == cancionPrev || random == cancionPrevPrev) {
-				musicaFondoOn();
-			} else {
-				//URL url = this.getClass().getResource("/musica/background" + random + ".wav");
-				URL url = this.getClass().getResource("/musica/background4.wav");
-				AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
-				musicaFondo = AudioSystem.getClip();
-				LineListener listener = new LineListener() {
-					public void update(LineEvent event) {
-						if (event.getType() == LineEvent.Type.STOP && terminarPulsado == false) {
-							musicaFondoOff();
-							musicaFondoOn();
-						}
-					}
-				};
-				musicaFondo.addLineListener(listener);
-				musicaFondo.open(audioIn);
-				FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
-				volume.setValue((float) (-80.0 + (Main.volumen * 86.0206) / 100));
-				musicaFondo.start();
-				cancionPrevPrev = cancionPrev;
-				cancionPrev = cancionAct;
-				cancionAct = random;
-			}
-		} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			//NO HACER NADA
-		}
-
-
-        /*Media sound = null;
-        try {
-            sound = new Media(getClass().getClassLoader().getResource("musica/background" + random + ".mp3").toExternalForm());
-        } catch (Exception e) {
+    private void musicaFondoOn() {
+        int random = ThreadLocalRandom.current().nextInt(1, 9);
+        try{
+            if (random == cancionAct || random == cancionPrev || random == cancionPrevPrev) {
+                musicaFondoOn();
+            } else {
+                URL url = this.getClass().getResource("/musica/background" + random + ".wav");
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+                musicaFondo = AudioSystem.getClip();
+                LineListener listener = new LineListener() {
+                    public void update(LineEvent event) {
+                        if (event.getType() == LineEvent.Type.STOP && !terminarPulsado && ganadoras == null) {
+                            musicaFondoOff();
+                            musicaFondoOn();
+                        }
+                    }
+                };
+                musicaFondo.addLineListener(listener);
+                musicaFondo.open(audioIn);
+                FloatControl volume = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
+                volume.setValue((float)(-80.0 + (Main.volumen * 86.0206)/100));
+                musicaFondo.start();
+                cancionPrevPrev = cancionPrev;
+                cancionPrev = cancionAct;
+                cancionAct = random;
+            }
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
+        }catch (IllegalArgumentException e){
+            //NO HACER NADA
         }
-        musicaFondo = new MediaPlayer(sound);
-        musicaFondo.setOnEndOfMedia(() -> musicaFondoOn());
-        if (random == cancionAct) {
-            musicaFondoOn();
-        } else {
-            musicaFondo.setVolume(volumen.getValue() / 100);
-            musicaFondo.play();
-            cancionAct = random;
-        }*/
-	}
+    }
 
 	private void musicaFondoOff() {
 		musicaFondo.stop();
