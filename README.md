@@ -40,19 +40,19 @@ Tanto en el modo fácil como en el difícil aparecerá un temporizador
 ```
 sudo apt-get install mysql-server-5.7
 ```
+```
+# Creamos la base de datos
+create database conecta4
 
-- Creamos la base de datos -> create database conecta4
--Creamos el usuario adminConecta4
-```
-create user adminConecta4 defined by ‘adminConecta4’
-```
-- Entrar en mySQL como adminConecta4
-```
+# Creamos el usuario adminConecta4
+create user adminConecta4 identified by ‘adminConecta4’
+
+# Entrar en mySQL como adminConecta4
 mysql -u adminConecta4 -p
-```
-- Importamos el .sql
-```
+
+# Importamos el .sql
 mysql -u adminConecta4 -p conecta4 <  
 https://github.com/anderct105/conecta4/blob/master/src/main/resources/conecta4.sql
 ```
+
 
