@@ -15,4 +15,4 @@ llegado a la pantalla. Este innovador Conecta 4 incorpora nuevas característica
 La pantalla principal dispone de un sinfín de elementos como los que
 se muestran a continuación:
 
-Imagen Nuria
+![Image of Nuria](https://github.com/anderct105/conecta4/blob/feature/readme/src/main/resources/imagenes/InstruccionesPantallaPPal.png)
