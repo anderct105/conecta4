@@ -33,20 +33,20 @@ Tanto en el modo fácil como en el difícil aparecerá un temporizador
 ## Windows
 - conecta4_v1.0.exe (WIP)
 ## Linux
-- <a href=https://github.com/anderct105/conecta4/blob/feature/readme/src/main/resources/ejecutables/conecta4_1.0_all.deb>conecta4_v1.0.deb</a>
+- <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/ejecutables/conecta4_1.0_all.deb'>conecta4_v1.0.deb</a>
 ```
 sudo dpkg -i conecta4_v1.0.deb
 ```
 ## Base de datos (Opcional)
 ### Descarga:
-<a href='https://github.com/anderct105/conecta4/blob/master/src/main/resources/conecta4.sql'>conecta4.sql</a>
+- <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/conecta4.sql'>conecta4.sql</a>
 ### Instalación:
--
   - <a href='https://dev.mysql.com/downloads/mysql/'>Windows</a>
   - Linux
 ```
 sudo apt-get install mysql-server-5.7
-
+```
+```
 # Creamos la base de datos
 create database conecta4
 
