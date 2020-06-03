@@ -1,9 +1,5 @@
-#CONECTA 5
-##double
-###triple
-####quadruple
-#####quintuple
-######sextuple
+# CONECTA4
+
 
 El juego de mesa más famoso en su versión mejorada ha 
 llegado a la pantalla. Este innovador Conecta 4 incorpora nuevas características:
