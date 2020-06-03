@@ -21,9 +21,10 @@ se muestran a continuación:
 
 Durante la partida es posible cambiar la música y encender y apagar los efectos sonoros:
 
-![Tablero_ayuda1](https://github.com/anderct105/conecta4/blob/feature/readme/src/main/resources/imagenes/Tablero_ayuda1.png)
+![Tablero_ayuda1](https://github.com/anderct105/conecta4/blob/feature/readme/src/main/resources/imagenes/Tablero.png)
 
 En el modo jugador 1 contra 1 se indica a qué jugador le toca jugar después
+
 ![Tablero_ayuda2](https://github.com/anderct105/conecta4/blob/feature/readme/src/main/resources/imagenes/tablero_ayuda2.png)
 
 Tanto en el modo fácil como en el difícil aparecerá un temporizador
