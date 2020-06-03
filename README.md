@@ -1,19 +1,14 @@
-Conecta4
+#CONECTA 5
+##double
+###triple
+####quadruple
+El juego de mesa más famoso en su versión mejorada ha 
+llegado a la pantalla. Este innovador Conecta 4 incorpora nuevas características:
 
-#Cerrar ventana JavaFX - Añadir el import {javafx.scene.control."El tipo del elemento pane"}
-        (pane es cualquie elemento de la ventana)
-        Stage stage = (Stage) pane.getScene().getWindow();
-        stage.close();
-        
-#Abrir cualquier ventana JavaFX
+- 3 desafiantes modos de juego.
+- 1 ranking donde poder competir contra tus amigos por la **VICTORIA!**
+- Dos idiomas para elegir.
+- Animaciones impresionantes que te dejaran con la boca abierta!
+- Instrucciones para que hasta el mas novato sepa jugar.
+- Juega al ritmo de la musica con las maravillosas canciones que puedes escuchar a lo largo de la partida.
 
-        Stage primaryStage = new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setTitle("Conecta 4");
-        primaryStage.setScene(new Scene(root, 1100, 600));
-        primaryStage.show();
