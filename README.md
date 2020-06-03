@@ -57,7 +57,7 @@ create user adminConecta4 identified by ‘adminConecta4’
 mysql -u adminConecta4 -p
 
 # Importamos el .sql
-- mysql -u adminConecta4 -p conecta4 <  conecta4.sql
+mysql -u adminConecta4 -p conecta4 <  conecta4.sql
 ```
 
 
