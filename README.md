@@ -33,6 +33,10 @@ Tanto en el modo fácil como en el difícil aparecerá un temporizador
 - conecta4_v1.0.exe
 ## Linux
 - conecta4_v1.0.deb
+```
+sudo dpkg -i conecta4_v1.0.deb
+```
+
 ## Base de datos
 - Instalación:
   - <a href='https://dev.mysql.com/downloads/mysql/'>Windows</a>
