@@ -31,7 +31,7 @@ Tanto en el modo fácil como en el difícil aparecerá un temporizador
 
 # Instalación
 ## Windows
-- conecta4_v1.0.exe (WIP)
+- <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/ejecutables/setup_conecta4_v1.0.exe'>conecta4_v1.0.exe</a>
 ## Linux
 - <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/ejecutables/conecta4_1.0_all.deb'>conecta4_v1.0.deb</a>
 ```
@@ -52,6 +52,9 @@ create database conecta4
 
 # Creamos el usuario adminConecta4
 create user adminConecta4 identified by ‘adminConecta4’
+
+# Le damos permisos sobre la base de datos
+grant all privileges on conecta4.* to adminConecta4
 
 # Entrar en mySQL como adminConecta4
 mysql -u adminConecta4 -p
