@@ -31,7 +31,6 @@ Tanto en el modo fácil como en el difícil aparecerá un temporizador
 
 # Instalación
 ## Windows
-- conecta4_v1.0.exe (WIP)
 - <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/ejecutables/setup_conecta4_v1.0.exe'>conecta4_v1.0.exe</a>
 ## Linux
 - <a href='https://github.com/anderct105/conecta4/raw/feature/readme/src/main/resources/ejecutables/conecta4_1.0_all.deb'>conecta4_v1.0.deb</a>
