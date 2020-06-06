@@ -53,6 +53,9 @@ create database conecta4
 # Creamos el usuario adminConecta4
 create user adminConecta4 identified by ‘adminConecta4’
 
+# Le damos permisos sobre la base de datos
+grant all privileges on conecta4.* to adminConecta4
+
 # Entrar en mySQL como adminConecta4
 mysql -u adminConecta4 -p
 
